@@ -2825,7 +2825,7 @@ function paramSociete(c) {
 function paramUsers(c) {
   var us = DB.utilisateurs || [];
   c.innerHTML = '<p class="doux">Tous les associés ont les mêmes droits. Chaque action est tracée avec son auteur dans le journal d’activité.</p><div class="barre"><button class="btn prim" id="inv">Donner accès à un associé</button></div>' +
-    tableau([{ t: 'Nom', v: function (u) { return esc(u.nom); } }, { t: 'E-mail', v: function (u) { return esc(u.email); } }, { t: 'Dernière connexion', mob: false, v: function (u) { return u.derniere_connexion ? dfr(u.derniere_connexion) : '<span class="doux">jamais</span>'; } }, { t: 'État', v: function (u) { return u.actif ? (u.doit_changer ? puce('invité', 'bleu') : puce('actif', 'vert')) : puce('désactivé', 'gris'); } }, { t: '', v: function (u) { return '<button class="btn petit" data-r="' + u.id + '">Nouveau mot de passe</button> ' + (u.id !== MOI.id ? '<button class="btn petit" data-d="' + u.id + '" data-a="' + (u.actif ? 0 : 1) + '">' + (u.actif ? 'Désactiver' : 'Réactiver') + '</button>' : ''); } }], us);
+    tableau([{ t: 'Nom', v: function (u) { return esc(u.nom); } }, { t: 'E-mail', v: function (u) { return esc(u.email); } }, { t: 'Dernière connexion', mob: false, v: function (u) { return u.derniere_connexion ? dfr(u.derniere_connexion) : '<span class="doux">jamais</span>'; } }, { t: 'État', v: function (u) { return u.actif ? (u.doit_changer ? puce('invité', 'bleu') : puce('actif', 'vert')) : puce('désactivé', 'gris'); } }, { t: '', v: function (u) { return '<button class="btn petit" data-r="' + u.id + '">Nouveau mot de passe</button> <button class="btn petit" data-e="' + u.id + '">Changer l’e-mail</button> ' + (u.id !== MOI.id ? '<button class="btn petit" data-d="' + u.id + '" data-a="' + (u.actif ? 0 : 1) + '">' + (u.actif ? 'Désactiver' : 'Réactiver') + '</button>' : ''); } }], us);
   function resultat(r) { modal({ titre: 'Accès', corps: '<p>' + (r.envoye ? 'Un e-mail a été envoyé à <b>' + esc(r.email) + '</b>.' : 'L’e-mail n’a pas pu être envoyé : transmettez ces informations vous-même.') + '</p><div class="carte"><dl class="kv"><dt>Adresse</dt><dd style="word-break:break-all">' + esc(DB.url) + '</dd><dt>Identifiant</dt><dd>' + esc(r.email) + '</dd><dt>Mot de passe provisoire</dt><dd><b>' + esc(r.mdp) + '</b></dd></dl></div><p class="doux">Il sera demandé de le changer à la première connexion.</p>' }); }
   $('#inv', c).onclick = function () {
     var opts = optAssocies().filter(function (o) { return !us.some(function (u) { return u.associe_id === o[0]; }); });
@@ -2834,6 +2834,17 @@ function paramUsers(c) {
       boutons: [{ lib: 'Annuler' }, { lib: 'Créer l’accès', prim: true, action: function (corps) { var v = lireForm(corps, [{ k: 'associe_id', lib: 'Associé', requis: true }, { k: 'email', lib: 'E-mail', requis: true }]); var a = byId('associes', v.associe_id); return appel('inviter', { associe_id: v.associe_id, email: v.email, nom: nomA(a), envoyer: !!v.envoyer }).then(function (r) { if (a && !a.email) enregistrer('associes', Object.assign({}, a, { email: v.email })); return appel('charger', {}, { silencieux: true }).then(function (d) { DB.utilisateurs = d.utilisateurs; rendre(); resultat(r); }); }); } }] });
   };
   $$('[data-r]', c).forEach(function (b) { b.onclick = function () { var u = us.find(function (x) { return x.id === b.dataset.r; }); confirmer('Générer un nouveau mot de passe provisoire pour ' + esc(u.nom) + ' ?', 'Générer').then(function (o) { if (o) appel('inviter', { email: u.email, nom: u.nom, associe_id: u.associe_id }).then(resultat).catch(erreur); }); }; });
+  $$('[data-e]', c).forEach(function (b) { b.onclick = function () {
+    var u = us.find(function (x) { return x.id === b.dataset.e; });
+    var ch = [{ k: 'email', lib: 'Nouvelle adresse e-mail', type: 'email', requis: true, large: true }, { k: 'envoyer', lib: 'Envoyer l’invitation à la nouvelle adresse', type: 'case', defaut: 1 }];
+    modal({ titre: 'Changer l’e-mail – ' + u.nom, corps: '<p>Adresse actuelle : <b>' + esc(u.email) + '</b></p>' + formulaire(ch, {}) + '<p class="doux" style="font-size:12.5px">La nouvelle adresse devient son identifiant de connexion ; l’ancienne ne fonctionnera plus. Un nouveau mot de passe provisoire est créé et envoyé à la nouvelle adresse. L’adresse de sa fiche associé (agenda, rappels) est mise à jour aussi.</p>',
+      boutons: [{ lib: 'Annuler' }, { lib: 'Changer et inviter', prim: true, action: function (corps) {
+        var v = lireForm(corps, ch);
+        return appel('changerEmail', { id: u.id, email: v.email, envoyer: !!v.envoyer }).then(function (r) {
+          return appel('charger', {}, { silencieux: true }).then(function (d) { DB.utilisateurs = d.utilisateurs; DB.associes = d.associes; rendre(); resultat(r); });
+        });
+      } }] });
+  }; });
   $$('[data-d]', c).forEach(function (b) { b.onclick = function () { appel('desactiver', { id: b.dataset.d, actif: b.dataset.a === '1' }).then(function () { return appel('charger', {}, { silencieux: true }); }).then(function (d) { DB.utilisateurs = d.utilisateurs; rendre(); }).catch(erreur); }; });
 }
 function paramCats(c) {
