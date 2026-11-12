@@ -1205,6 +1205,43 @@ var Imports = (function () {
     throw new Error("Colonnes attendues : date, capital (amortissement), intérêts, et si possible assurance et capital restant dû.");
   }
 
+  // ---------- tableau d'amortissement BNP en PDF (« PLAN DE REMBOURSEMENT ») ----------
+  function textePdfLignes(buffer) {
+    if (typeof pdfjsLib === 'undefined') return Promise.reject(new Error('Lecteur PDF non chargé.'));
+    return pdfjsLib.getDocument({ data: new Uint8Array(buffer.slice(0)) }).promise.then(function (pdf) {
+      var pages = [];
+      for (var i = 1; i <= pdf.numPages; i++) pages.push(i);
+      return Promise.all(pages.map(function (k) {
+        return pdf.getPage(k).then(function (p) { return p.getTextContent(); }).then(function (tc) {
+          var parY = {};
+          tc.items.forEach(function (it) { if (!String(it.str).trim()) return; var y = Math.round(it.transform[5] / 2); (parY[y] = parY[y] || []).push({ x: it.transform[4], s: it.str }); });
+          return Object.keys(parY).map(Number).sort(function (a, b) { return b - a; }).map(function (y) { return parY[y].sort(function (a, b) { return a.x - b.x; }).map(function (o) { return o.s.trim(); }).join(' '); });
+        });
+      })).then(function (ps) { return [].concat.apply([], ps); });
+    });
+  }
+  function nombreFr(x) { return parseFloat(String(x).replace(/\./g, '').replace(',', '.')); }
+  // lignes : DATE  PRELEVEMENT  INTERETS  ASSURANCE  CAPITAL AMORTI  CHARGES REPORTEES  CAPITAL RESTANT DU  CREANCE
+  function amortissementTexte(lignes) {
+    var txt = lignes.join('\n'), out = [], info = {};
+    var re = /(\d{2})\.(\d{2})\.(\d{4})\s+((?:[\d.]+,\d{2}\s+){6}[\d.]+,\d{2})/g, m;
+    while ((m = re.exec(txt))) {
+      var v = m[4].trim().split(/\s+/).map(nombreFr);
+      if (!(v[0] > 0)) continue;   // période de déblocage : pas de prélèvement
+      out.push({ date: m[3] + '-' + m[2] + '-' + m[1], capital: Compta.r2(v[3]), interets: Compta.r2(v[1]), assurance: Compta.r2(v[2]), crd: Compta.r2(v[5]), prelevement: Compta.r2(v[0]) });
+    }
+    var g = function (r) { var x = txt.match(r); return x ? x[1] : ''; };
+    info.capital = nombreFr(g(/MONTANT DU PRET\s*:?\s*([\d.]+,\d{2})/i)) || '';
+    info.taux = nombreFr(g(/TAUX NOMINAL[^:]*:\s*([\d,]+)\s*%/i)) || '';
+    var fin = g(/DATE DE FIN DE CREDIT\s*:?\s*(\d{2}\.\d{2}\.\d{4})/i); info.fin = fin ? fin.split('.').reverse().join('-') : '';
+    info.numero = g(/RIB\s*:?\s*\d{5}\s+\d{5}\s+\d{3}(\d{8})/i) || g(/(\d{8})\s*$/m);
+    if (!out.length) throw new Error('Aucune échéance reconnue dans ce PDF (format attendu : plan de remboursement BNP).');
+    out.sort(function (a, b) { return a.date.localeCompare(b.date); });
+    var faux = out.filter(function (l) { return Math.abs(l.prelevement - l.capital - l.interets - l.assurance) > 0.011; });
+    info.incoherences = faux.length;
+    return { lignes: out, info: info };
+  }
+
   // ---------- factures électroniques ----------
   function xmlFacture(xmlTexte) {
     var doc = new DOMParser().parseFromString(xmlTexte, 'application/xml');
@@ -1296,7 +1333,7 @@ var Imports = (function () {
     return { montants: montants.map(function (x) { return x.v; }).filter(function (v, i, a) { return a.indexOf(v) === i; }), principal: principal, dates: dates.filter(function (v, i, a) { return a.indexOf(v) === i; }), fournisseur: lignes[0] || '', numero: numFac, texte: n };
   }
 
-  return { analyserTexte: analyserTexte, releve: releve, ofx: ofx, tableau: tableau, csvVersLignes: csvVersLignes, amortissement: amortissement, xmlFacture: xmlFacture, facture: facture, dateFr: dateFr, isoDepuisExcel: isoDepuisExcel, empreintes: empreintes };
+  return { analyserTexte: analyserTexte, releve: releve, ofx: ofx, tableau: tableau, csvVersLignes: csvVersLignes, amortissement: amortissement, amortissementTexte: amortissementTexte, textePdfLignes: textePdfLignes, xmlFacture: xmlFacture, facture: facture, dateFr: dateFr, isoDepuisExcel: isoDepuisExcel, empreintes: empreintes };
 })();
 
 
@@ -2673,26 +2710,44 @@ VUES.emprunts = function (c, etat) {
   var v = etat.voir || (L('emprunts')[0] || {}).id; if (v) voir(v);
 };
 function importerAmortissement(e) {
-  var m = modal({ titre: 'Tableau d’amortissement – ' + e.libelle, corps: '<p>Fichier Excel ou CSV avec au minimum les colonnes <b>date</b>, <b>capital</b> (amortissement), <b>intérêts</b>, et si possible <b>assurance</b> et <b>capital restant dû</b>. Le tableau importé remplace le calcul estimé et les échéances déjà rapprochées sont reprises.</p><div class="depot" id="dz">Déposez le tableau</div><div id="res"></div>', boutons: [{ lib: 'Fermer' }] });
-  zoneDepot($('#dz', m.corps), '.xls,.xlsx,.csv', false, function (fs) {
+  var m = modal({ titre: 'Tableau d’amortissement – ' + e.libelle, corps: '<p>Déposez le <b>plan de remboursement PDF de la BNP</b>, ou un fichier Excel / CSV avec au minimum les colonnes <b>date</b>, <b>capital</b> (amortissement), <b>intérêts</b>, et si possible <b>assurance</b> et <b>capital restant dû</b>. Le tableau importé remplace le calcul estimé et les échéances déjà rapprochées sont reprises.</p><div class="depot" id="dz">Déposez le tableau (PDF, Excel ou CSV)</div><div id="res"></div>', boutons: [{ lib: 'Fermer' }] });
+  zoneDepot($('#dz', m.corps), '.pdf,.xls,.xlsx,.csv', false, function (fs) {
     var f = fs[0]; if (!f) return;
-    lib('xlsx').then(function () { return lireFichier(f); }).then(function (buf) {
+    var pdf = /\.pdf$/i.test(f.name) || f.type === 'application/pdf', info = {};
+    lib(pdf ? 'pdf' : 'xlsx').then(function () { return lireFichier(f); }).then(function (buf) {
+      if (pdf) return Imports.textePdfLignes(buf).then(function (lg) { var r = Imports.amortissementTexte(lg); info = r.info; return r.lignes; });
       var wb = XLSX.read(buf, { type: 'array' }); var rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: '' });
-      var lignes = Imports.amortissement(rows);
-      $('#res', m.corps).innerHTML = '<div class="alerte bleu" style="margin-top:10px">' + lignes.length + ' échéances du ' + dfr(lignes[0].date) + ' au ' + dfr(lignes[lignes.length - 1].date) + '.</div><button class="btn prim" id="go">Remplacer le tableau</button>';
+      return Imports.amortissement(rows);
+    }).then(function (lignes) {
+      var auj = aujourdhui(), passe = lignes.filter(function (l) { return l.date <= auj; }), proch = lignes.find(function (l) { return l.date > auj; });
+      var crd = passe.length ? passe[passe.length - 1].crd : '';
+      var an = lignes.filter(function (l) { return Compta.annee(l.date) === ANNEE; });
+      var autreNumero = info.numero && e.numero && String(e.numero).replace(/\D/g, '').indexOf(info.numero) < 0;
+      $('#res', m.corps).innerHTML = '<div class="alerte ' + (autreNumero || info.incoherences ? '' : 'vert') + '" style="margin-top:10px"><b>' + lignes.length + ' échéances</b> du ' + dfr(lignes[0].date) + ' au ' + dfr(lignes[lignes.length - 1].date) + '.' +
+        (info.capital ? '<br>Prêt de ' + eur(info.capital) + (info.taux ? ' à ' + String(info.taux).replace('.', ',') + ' %' : '') + (info.numero ? ' · n° ' + esc(info.numero) : '') + '.' : '') +
+        (crd !== '' ? '<br>Capital restant dû aujourd’hui : <b>' + eur(crd) + '</b>' + (proch ? ' · prochaine échéance le ' + dfr(proch.date) + ' : ' + eur(proch.capital + proch.interets + proch.assurance) : '') + '.' : '') +
+        (an.length ? '<br>' + ANNEE + ' : capital ' + eur(an.reduce(function (a, x) { return a + x.capital; }, 0)) + ' · intérêts ' + eur(an.reduce(function (a, x) { return a + x.interets; }, 0)) + (an.some(function (x) { return x.assurance; }) ? ' · assurance ' + eur(an.reduce(function (a, x) { return a + x.assurance; }, 0)) : '') + '.' : '') +
+        (info.incoherences ? '<br><span class="neg">' + info.incoherences + ' ligne(s) où le prélèvement ne correspond pas à capital + intérêts + assurance : vérifiez le PDF.</span>' : '') +
+        (autreNumero ? '<br><span class="neg">Attention : ce tableau porte le n° ' + esc(info.numero) + ', l’emprunt sélectionné le n° ' + esc(e.numero) + '.</span>' : '') +
+        '</div><button class="btn prim" id="go">Remplacer le tableau</button>';
       $('#go', m.corps).onclick = function () {
         var anciens = L('emprunt_echeances').filter(function (x) { return x.emprunt_id === e.id; }).map(function (x) { return x.id; });
         var anciensLettrages = L('lettrages').filter(function (l) { return l.cible_type === 'emprunt' && l.cible_ref === e.id; });
-        var nouv = lignes.map(function (l, i) { return Object.assign({ id: e.id + '-' + l.date + '-' + i, emprunt_id: e.id }, l); });
+        var nouv = lignes.map(function (l, i) { var o = Object.assign({ id: e.id + '-' + l.date + '-' + i, emprunt_id: e.id }, l); delete o.prelevement; return o; });
+        var majE = Object.assign({}, e, { estime: 0 });
+        if (info.capital) majE.capital = info.capital;
+        if (info.taux) majE.taux = info.taux;
+        if (pdf) { var dern = lignes[lignes.length - 1], cst = lignes[Math.floor(lignes.length / 2)]; majE.echeance_mensuelle = cst.capital + cst.interets + cst.assurance; majE.date_premiere_echeance = lignes[0].date; majE.duree_mois = lignes.length; majE.crd_depart = Compta.r2(lignes[0].crd + lignes[0].capital); if (!e.numero && info.numero) majE.numero = info.numero; }
         (anciens.length ? supprimer('emprunt_echeances', anciens) : Promise.resolve())
           .then(function () { return inserer('emprunt_echeances', nouv, 'tableau d’amortissement ' + e.libelle); })
           .then(function () { return anciensLettrages.length ? supprimer('lettrages', anciensLettrages.map(function (l) { return l.id; })) : null; })
-          .then(function () { return enregistrer('emprunts', Object.assign({}, e, { estime: 0 })); })
+          .then(function () { return enregistrer('emprunts', majE); })
           .then(function () {
             var txs = anciensLettrages.map(function (l) { return byId('transactions', l.transaction_id); }).filter(Boolean);
+            txs = txs.concat(L('transactions').filter(function (t) { return etatTx(t) === 'à traiter' && num(t.montant) < 0; }));
             var props = Compta.autoLettrage(DB, txs, aujourdhui()).map(function (l) { l.id = nid('LT'); return l; });
-            return inserer('lettrages', props, 'rapprochement échéances de prêt');
-          }).then(function () { m.fermer(); toast('Tableau importé.'); rendre(); }).catch(erreur);
+            return props.length ? inserer('lettrages', props, 'rapprochement automatique (échéances de prêt)') : null;
+          }).then(function () { m.fermer(); toast('Tableau importé : ' + lignes.length + ' échéances.'); rendre(); }).catch(erreur);
       };
     }).catch(erreur);
   });
