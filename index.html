@@ -2144,7 +2144,14 @@ VUES.banque = function (c, etat) {
   h += tableau([
     { t: 'Date', v: function (t) { return dfr(t.date); } },
     { t: 'Libellé', v: function (t) { return (pj[t.id] ? '📎 ' : '') + esc(t.libelle) + (t.note ? '<div class="doux" style="font-size:12px">' + esc(t.note) + '</div>' : ''); } },
-    { t: 'Affectation', mob: false, v: function (t) { var ls = lpt[t.id] || []; return ls.map(function (l) { return '<div style="font-size:12px">' + esc(libCible(l)) + '</div>'; }).join('') + (t.categorie ? '<div style="font-size:12px">' + esc(libCategorie(t.categorie)) + '</div>' : ''); } },
+    { t: 'Affectation', mob: false, v: function (t) {
+      var ls = lpt[t.id] || [], g = {}, ordre = [];
+      ls.forEach(function (l) { var k = l.cible_type + '|' + l.cible_id; if (!g[k]) { g[k] = { lib: libCible(l), m: 0 }; ordre.push(k); } g[k].m = r2(g[k].m + num(l.montant)); });
+      var somme = r2(ls.reduce(function (a, l) { return a + num(l.montant); }, 0)), ecart = r2(num(t.montant) - somme);
+      return ordre.map(function (k) { return '<div style="font-size:12px">' + esc(g[k].lib) + (ordre.length > 1 || Compta.c(ecart) ? ' <span class="doux">' + eur(g[k].m) + '</span>' : '') + '</div>'; }).join('') +
+        (t.categorie ? '<div style="font-size:12px">' + esc(libCategorie(t.categorie)) + '</div>' : '') +
+        (ls.length && Compta.c(ecart) && !t.categorie ? '<div style="font-size:12px" class="neg">' + (ecart > 0 ? 'reste ' + eur(ecart) + ' à affecter' : 'rapproché ' + eur(-ecart) + ' de trop') + '</div>' : '');
+    } },
     { t: 'État', v: function (t) { return puceStatut(etatTx(t, lpt)); } },
     { t: 'Montant', n: 1, v: function (t) { return eurS(t.montant); } }
   ], liste, { clic: 1, pied: ['', liste.length + ' opération(s)', '', '', eurS(tot)], vide: etat.filtre === 'traiter' ? 'Aucune opération à traiter : tout est rapproché.' : 'Aucune opération. Importez un relevé.',
@@ -2192,8 +2199,13 @@ function importerReleve(compteId) {
   });
 }
 function rapprocherAuto(txs, prefixe) {
-  var props = Compta.autoLettrage(DB, txs, aujourdhui()).map(function (l) { l.id = nid('LT'); return l; });
-  var p = props.length ? inserer('lettrages', props, 'rapprochement automatique') : Promise.resolve([]);
+  var props = [];
+  var p = (TRAITEMENT.enCours || Promise.resolve()).then(function () { return reparerDoublons(); }).then(function () {
+    var lpt = lettragesParTx();
+    txs = txs.filter(function (t) { return etatTx(t, lpt) === 'à traiter'; });
+    props = Compta.autoLettrage(DB, txs, aujourdhui()).map(function (l) { l.id = nid('LT'); return l; });
+    return props.length ? inserer('lettrages', props, 'rapprochement automatique') : [];
+  });
   var nPieces = 0;
   return p.then(function () { return rattacherPiecesEnAttente().then(function (k) { nPieces = k; }); }).then(function () {
     var n = new Set(props.map(function (l) { return l.transaction_id; })).size;
@@ -3425,7 +3437,23 @@ function ficheATrier(doc) {
 var SYNCHRO = { enCours: false };
 
 // Traitement automatique : rapprochements, règles de classement, pièces en attente
+var TRAITEMENT = { enCours: null };
 function traitementAutomatique(silencieux) {
+  if (TRAITEMENT.enCours) return TRAITEMENT.enCours;   // pas deux traitements en même temps
+  TRAITEMENT.enCours = reparerDoublons().then(function () { return traitementAuto2(silencieux); });
+  return TRAITEMENT.enCours.then(function (r) { TRAITEMENT.enCours = null; return r; }, function (e) { TRAITEMENT.enCours = null; throw e; });
+}
+// Retire les rapprochements en double (montant rapproché supérieur au virement)
+function reparerDoublons() {
+  var lpt = lettragesParTx();
+  var trop = L('transactions').some(function (t) { var s = (lpt[t.id] || []).reduce(function (a, l) { return a + num(l.montant); }, 0); return Math.abs(s) > Math.abs(num(t.montant)) + 0.004; });
+  if (!trop) return Promise.resolve(0);
+  return appel('reparerLettrages', {}, { silencieux: true }).then(function (r) {
+    (r.retires || []).forEach(function (id) { var x = DB.lettrages.find(function (l) { return l.id === id; }); if (x) x.supprime = '1'; });
+    return (r.retires || []).length;
+  }).catch(function () { return 0; });
+}
+function traitementAuto2(silencieux) {
   var lpt = lettragesParTx();
   var aTraiter = L('transactions').filter(function (t) { return etatTx(t, lpt) === 'à traiter'; });
   if (!aTraiter.length) return Promise.resolve({ lettrees: 0, classees: 0, pieces: 0 });
