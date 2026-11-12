@@ -950,9 +950,101 @@ var Compta = (function () {
     return mois;
   }
 
+  // ---------- tout ce que chaque associé (ou locataire) a versé à la SCI sur une année ----------
+  var NATURES_VERS = [['loyer', 'Loyers'], ['prov', 'Provisions sur charges'], ['tf', 'Taxe foncière / OM'], ['appel', 'Appels de fonds et versements sur charges'], ['regul', 'Régularisations'], ['autre', 'Autres versements'], ['solde', 'Soldes antérieurs'], ['cca', 'Apports en compte courant'], ['libre', 'Règlements non affectés'], ['atraiter', 'À traiter (non rapprochés)']];
+  function versementsAssocies(DB, an) {
+    var mapK = { loyer: 'loyer', prov_charges: 'prov', tf: 'tf', om: 'tf', regul: 'regul', appel: 'appel', autre: 'autre' };
+    var qui = {}, ordre = [];
+    function entree(k, nom, associe) { if (qui[k]) return; qui[k] = { cle: k, nom: nom, associe: associe, totaux: {}, total: 0, lignes: {} }; ordre.push(k); }
+    function cleBail(b) { return b.associe_id && byId(DB, 'associes', b.associe_id) ? 'A:' + b.associe_id : 'B:' + b.id; }
+    associesOrdonnes(DB).forEach(function (a) { entree('A:' + a.id, nomAssocie(a), a); });
+    L(DB, 'baux').forEach(function (b) { if (cleBail(b).indexOf('B:') === 0) entree('B:' + b.id, b.locataire || b.id, null); });
+    function ajout(k, nat, m, t, det) {
+      var q = qui[k]; m = r2(m); if (!q || !c(m)) return;
+      q.totaux[nat] = r2((q.totaux[nat] || 0) + m); q.total = r2(q.total + m);
+      var g = q.lignes[t.id] || (q.lignes[t.id] = { transaction_id: t.id, date: t.date, libelle: t.libelle, montantBanque: num(t.montant), montant: 0, details: [] });
+      g.montant = r2(g.montant + m); g.details.push({ nature: nat, montant: m, lib: det });
+    }
+    var soldes = {}; soldesInitiaux(DB).forEach(function (x) { soldes[x.id] = x; });
+    var lettrages = L(DB, 'lettrages');
+    L(DB, 'transactions').filter(function (t) { return annee(t.date) === String(an); }).forEach(function (t) {
+      var ls = lettrages.filter(function (l) { return l.transaction_id === t.id; }), reste = num(t.montant);
+      ls.forEach(function (l) {
+        var m = num(l.montant), b = null, det = '';
+        if (l.cible_type === 'echeance') {
+          var e = byId(DB, 'echeances', l.cible_id); b = e && byId(DB, 'baux', e.bail_id); if (!b) return;
+          reste -= m; det = e.libelle || e.periode || '';
+          var parts = LIGNES_ECH.map(function (x) { return { k: mapK[x.k], v: num(e[x.k]) }; }).filter(function (x) { return c(x.v); });
+          var tot = parts.reduce(function (a, x) { return a + x.v; }, 0);
+          if (!parts.length || !c(tot)) { ajout(cleBail(b), 'autre', m, t, det); return; }
+          var cumul = 0;
+          parts.forEach(function (x, i) { var v = i === parts.length - 1 ? r2(m - cumul) : r2(m * x.v / tot); cumul = r2(cumul + v); ajout(cleBail(b), x.k, v, t, det); });
+        } else if (l.cible_type === 'solde_initial') {
+          var so = soldes[l.cible_id]; b = so && L(DB, 'baux').find(function (y) { return y.code_client === so.code; }); if (!b) return;
+          reste -= m; ajout(cleBail(b), 'solde', m, t, 'Solde antérieur au ' + so.date.split('-').reverse().join('/'));
+        }
+      });
+      reste = r2(reste);
+      if (!c(reste)) return;
+      var vent = parseJSON(t.ventilation, []) || [], cats = vent.length ? vent.map(function (v) { return { k: v.categorie, m: num(v.montant) }; }) : [{ k: t.categorie, m: reste }], affecte = false;
+      cats.forEach(function (x) {
+        var k = String(x.k || '');
+        if (k.indexOf('CCA:') === 0) { ajout('A:' + k.slice(4), 'cca', x.m, t, 'Apport en compte courant'); affecte = true; }
+        else if (k.indexOf('BAIL:') === 0) { var b2 = byId(DB, 'baux', k.slice(5)); if (b2) { ajout(cleBail(b2), 'libre', x.m, t, 'Règlement non affecté à une échéance'); affecte = true; } }
+      });
+      if (!affecte && !t.categorie && !vent.length && reste > 0) { var b3 = bailDepuisLibelle(DB, t.libelle); if (b3) ajout(cleBail(b3), 'atraiter', reste, t, 'Virement reconnu par le nom, pas encore rapproché'); }
+    });
+    var rows = ordre.map(function (k) { var q = qui[k]; q.lignes = Object.keys(q.lignes).map(function (i) { return q.lignes[i]; }).sort(function (a, b) { return a.date.localeCompare(b.date); }); return q; })
+      .filter(function (q) { return q.associe || q.lignes.length; });
+    var natures = NATURES_VERS.filter(function (n) { return rows.some(function (q) { return c(q.totaux[n[0]] || 0); }); });
+    var totaux = {}; NATURES_VERS.forEach(function (n) { totaux[n[0]] = r2(rows.reduce(function (a, q) { return a + (q.totaux[n[0]] || 0); }, 0)); });
+    return { annee: String(an), natures: natures, rows: rows, totaux: totaux, total: r2(rows.reduce(function (a, q) { return a + q.total; }, 0)) };
+  }
+
+  // ---------- situation de l'exercice : dû, payé, reste à payer, versé en plus ----------
+  function estVersementLibre(e) { return e.origine === 'versement_libre' || /Versement libre/.test(String(e.notes || '')); }
+  function situationAssocies(DB, an, auj) {
+    an = String(an);
+    var v = versementsAssocies(DB, an), soldes = soldesInitiaux(DB).filter(function (x) { return annee(x.date) === an; });
+    var rows = v.rows.map(function (q) {
+      var baux = L(DB, 'baux').filter(function (b) { return q.associe ? b.associe_id === q.associe.id : 'B:' + b.id === q.cle; });
+      var ids = baux.map(function (b) { return b.id; }), codes = baux.map(function (b) { return b.code_client; }).filter(Boolean);
+      var items = [], plus = [];
+      L(DB, 'echeances').filter(function (e) { return ids.indexOf(e.bail_id) >= 0 && annee(dateEcheance(e)) === an; }).forEach(function (e) {
+        var st = statutEcheance(DB, e, auj);
+        if (estVersementLibre(e)) { if (c(st.paye)) plus.push({ type: 'libre', date: dateEcheance(e), lib: e.libelle || 'Versement libre', montant: st.paye }); return; }
+        items.push({ type: 'echeance', id: e.id, date: dateEcheance(e), lib: e.libelle || e.periode, du: st.du, paye: st.paye, reste: st.reste, statut: st.statut });
+      });
+      soldes.filter(function (x) { return codes.indexOf(x.code) >= 0; }).forEach(function (x) {
+        items.push({ type: 'solde', id: x.id, date: x.date, lib: 'Solde au ' + x.date.split('-').reverse().join('/') + ' (exercice précédent)', du: x.montant, paye: x.paye, reste: x.reste, statut: Math.abs(c(x.reste)) ? (x.paye ? 'partiel' : 'impayé') : 'payé' });
+      });
+      items.sort(function (a, b) { return a.date.localeCompare(b.date); });
+      var du = 0, paye = 0, reste = 0, echu = 0, sciDoit = 0;
+      items.forEach(function (x) {
+        du += x.du;
+        if (x.du >= 0) {
+          if (x.reste > 0) { reste += x.reste; if (x.date <= auj) echu += x.reste; paye += x.paye; }
+          else { paye += x.du; if (x.reste < 0) plus.push({ type: 'trop', date: x.date, lib: 'Payé en trop sur : ' + x.lib, montant: -x.reste }); }
+        } else {   // somme que la SCI doit à l'associé (régularisation en sa faveur…)
+          if (x.reste < 0) sciDoit += -x.reste; else if (x.reste > 0) reste += x.reste;
+          paye += x.paye;
+        }
+      });
+      [['cca', 'Apport en compte courant'], ['libre', 'Règlement non affecté'], ['atraiter', 'Virement pas encore rapproché']].forEach(function (n) {
+        q.lignes.forEach(function (g) { g.details.forEach(function (d) { if (d.nature === n[0]) plus.push({ type: n[0], date: g.date, lib: n[1] + ' – ' + g.libelle, montant: d.montant, transaction_id: g.transaction_id }); }); });
+      });
+      plus.sort(function (a, b) { return a.date.localeCompare(b.date); });
+      return { cle: q.cle, nom: q.nom, associe: q.associe, items: items, plus: plus, versements: q,
+        du: r2(du), paye: r2(paye), reste: r2(reste), echu: r2(echu), sciDoit: r2(sciDoit),
+        enPlus: r2(plus.reduce(function (a, x) { return a + x.montant; }, 0)), verseAnnee: q.total };
+    });
+    var T = function (k) { return r2(rows.reduce(function (a, r) { return a + r[k]; }, 0)); };
+    return { annee: an, rows: rows, totaux: { du: T('du'), paye: T('paye'), reste: T('reste'), echu: T('echu'), sciDoit: T('sciDoit'), enPlus: T('enPlus'), verseAnnee: T('verseAnnee') }, versements: v };
+  }
+
   return {
     num: num, c: c, r2: r2, eur: eur, annee: annee, L: L, byId: byId, vivant: vivant, addMonths: addMonths, finMois: finMois, jours: jours, parseJSON: parseJSON,
-    SYS: SYS, LIGNES_ECH: LIGNES_ECH, JOURNAUX: JOURNAUX, comptesLibelles: comptesLibelles, nomAssocie: nomAssocie,
+    SYS: SYS, LIGNES_ECH: LIGNES_ECH, versementsAssocies: versementsAssocies, NATURES_VERS: NATURES_VERS, situationAssocies: situationAssocies, estVersementLibre: estVersementLibre, JOURNAUX: JOURNAUX, comptesLibelles: comptesLibelles, nomAssocie: nomAssocie,
     partsA: partsA, poidsAnnee: poidsAnnee, repartir: repartir, associesOrdonnes: associesOrdonnes,
     categorie: categorie, toutesCategories: toutesCategories,
     echeancierEmprunt: echeancierEmprunt, trouverEcheanceEmprunt: trouverEcheanceEmprunt,
@@ -2171,7 +2263,7 @@ function versementLibre(t, reste, apres) {
       var v = lireForm(corps, ch), mt = r2(num(v.montant));
       if (!(mt > 0)) throw new Error('Montant incorrect.');
       if (mt > r2(reste) + 0.004) throw new Error('Le montant dépasse ce qui reste à affecter sur ce virement (' + eur(reste) + ').');
-      var e = { id: nid('EC'), bail_id: v.bail_id, type: v.nature, date: v.date, periode: String(v.date).slice(0, 7), libelle: v.libelle, notes: (v.notes ? v.notes + ' – ' : '') + 'Versement libre du ' + dfr(t.date) };
+      var e = { id: nid('EC'), origine: 'versement_libre', bail_id: v.bail_id, type: v.nature, date: v.date, periode: String(v.date).slice(0, 7), libelle: v.libelle, notes: (v.notes ? v.notes + ' – ' : '') + 'Versement libre du ' + dfr(t.date) };
       e[v.nature] = mt;
       return inserer('echeances', [e], 'versement libre : ' + v.libelle).then(function (r) {
         var id = (r && r[0] && r[0].id) || e.id;
@@ -2208,10 +2300,74 @@ function choisirFacture(t, reste, apres) {
 
 // ---------- LOYERS ----------
 VUES.loyers = function (c, etat) {
-  var o = onglets(c, etat, [['grille', 'Tableau annuel'], ['appels', 'Appels'], ['fonds', 'Appel de fonds'], ['baux', 'Baux']]);
+  var o = onglets(c, etat, [['grille', 'Tableau annuel'], ['versements', 'Situation par associé'], ['appels', 'Appels'], ['fonds', 'Appel de fonds'], ['baux', 'Baux']]);
   var d = elt('<div></div>'); c.appendChild(d);
-  ({ grille: loyersGrille, appels: loyersAppels, fonds: loyersFonds, baux: loyersBaux })[o](d, etat);
+  ({ grille: loyersGrille, versements: loyersVersements, appels: loyersAppels, fonds: loyersFonds, baux: loyersBaux })[o](d, etat);
 };
+// Situation de chacun pour l'exercice : dû, payé, reste à payer, versé en plus
+function loyersVersements(c, etat) {
+  var auj = aujourdhui(), S = Compta.situationAssocies(DB, ANNEE, auj), T = S.totaux;
+  var h = '<p class="doux" style="margin-top:0">Pour chaque associé, sur l’exercice ' + ANNEE + ' : ce qu’il doit (loyers, provisions, taxe foncière, appels de fonds, régularisations, solde de l’exercice précédent), ce qu’il a payé dessus, ce qui lui reste à payer, et tout ce qu’il a versé <b>en plus</b> (trop-versés, versements libres, apports en compte courant, virements non affectés). Cliquez sur une ligne pour le détail.</p>' +
+    '<div class="grille" style="margin-bottom:14px">' + carte('Reste à payer', eur(T.reste), 'dont ' + eur(T.echu) + ' déjà échu') + carte('Versé en plus', eur(T.enPlus), 'au-delà de ce qui est dû') + carte('Payé sur le dû ' + ANNEE, eur(T.paye), 'sur ' + eur(T.du) + ' dû') + (T.sciDoit >= 1 ? carte('La SCI doit', eur(T.sciDoit), 'à rembourser aux associés') : '') + '</div>' +
+    '<div class="barre"><button class="btn" id="vx">Exporter (Excel)</button></div>';
+  var cols = [
+    { t: 'Associé / locataire', v: function (r) { return '<b>' + esc(r.nom) + '</b>'; } },
+    { t: 'Dû ' + ANNEE, n: 1, mob: false, v: function (r) { return eur(r.du); } },
+    { t: 'Payé sur le dû', n: 1, mob: false, v: function (r) { return eur(r.paye); } },
+    { t: 'Reste à payer', n: 1, v: function (r) { return Compta.c(r.reste) ? '<b class="neg">' + eur(r.reste) + '</b>' + (Compta.c(r.reste - r.echu) ? '<div class="doux" style="font-size:11.5px">' + (Compta.c(r.echu) ? 'dont échu ' + eur(r.echu) : 'rien d’échu') + '</div>' : '<div class="doux" style="font-size:11.5px">échu</div>') : puce('à jour', 'vert'); } },
+    { t: 'Versé en plus', n: 1, v: function (r) { return Compta.c(r.enPlus) ? '<b class="pos">' + eur(r.enPlus) + '</b>' : '<span class="doux">–</span>'; } }
+  ];
+  if (T.sciDoit) cols.push({ t: 'La SCI lui doit', n: 1, mob: false, v: function (r) { return Compta.c(r.sciDoit) ? eur(r.sciDoit) : '<span class="doux">–</span>'; } });
+  cols.push({ t: 'Total versé en ' + ANNEE, n: 1, mob: false, v: function (r) { return eur(r.verseAnnee); } });
+  var pied = ['Total', eur(T.du), eur(T.paye), eur(T.reste), eur(T.enPlus)].concat(T.sciDoit ? [eur(T.sciDoit)] : []).concat([eur(T.verseAnnee)]);
+  h += tableau(cols, S.rows, { clic: 1, pied: pied, mobListe: function (r) {
+    return '<div class="l1"><b>' + esc(r.nom) + '</b>' + (Compta.c(r.reste) ? '<b class="neg">reste ' + eur(r.reste) + '</b>' : puce('à jour', 'vert')) + '</div><div class="doux" style="font-size:12px">Dû ' + eur(r.du) + ' · payé ' + eur(r.paye) + (Compta.c(r.enPlus) ? ' · <span class="pos">en plus ' + eur(r.enPlus) + '</span>' : '') + '</div>';
+  } });
+  c.innerHTML = h;
+  brancherClics(c, S.rows, function (r) { detailSituation(r); });
+  $('#vx', c).onclick = function () {
+    if (typeof XLSX === 'undefined') return erreur(new Error('Le module Excel n’est pas chargé : vérifiez la connexion Internet puis rechargez la page.'));
+    var wb = XLSX.utils.book_new();
+    var a1 = [['Associé / locataire', 'Dû ' + ANNEE, 'Payé sur le dû', 'Reste à payer', 'dont échu', 'Versé en plus', 'La SCI lui doit', 'Total versé en ' + ANNEE]].concat(S.rows.map(function (r) { return [r.nom, r.du, r.paye, r.reste, r.echu, r.enPlus, r.sciDoit, r.verseAnnee]; })).concat([['Total', T.du, T.paye, T.reste, T.echu, T.enPlus, T.sciDoit, T.verseAnnee]]);
+    var a2 = [['Associé / locataire', 'Date', 'Libellé', 'Dû', 'Payé', 'Reste', 'État']]; S.rows.forEach(function (r) { r.items.forEach(function (x) { a2.push([r.nom, dfr(x.date), x.lib, x.du, x.paye, x.reste, x.statut]); }); });
+    var a3 = [['Associé / locataire', 'Date', 'Versé en plus', 'Montant']]; S.rows.forEach(function (r) { r.plus.forEach(function (x) { a3.push([r.nom, dfr(x.date), x.lib, x.montant]); }); });
+    var a4 = [['Associé / locataire', 'Date', 'Libellé bancaire', 'Montant du virement', 'Part de cet associé', 'Nature', 'Affectation']];
+    S.rows.forEach(function (r) { r.versements.lignes.forEach(function (g) { g.details.forEach(function (d) { a4.push([r.nom, dfr(g.date), g.libelle, g.montantBanque, d.montant, (Compta.NATURES_VERS.filter(function (n) { return n[0] === d.nature; })[0] || ['', ''])[1], d.lib]); }); }); });
+    [['Situation ' + ANNEE, a1, [28, 14, 14, 14, 12, 14, 14, 16]], ['Dû et payé', a2, [26, 11, 50, 12, 12, 12, 10]], ['Versé en plus', a3, [26, 11, 70, 12]], ['Tous les virements', a4, [26, 11, 60, 14, 14, 30, 40]]].forEach(function (f) {
+      var ws = XLSX.utils.aoa_to_sheet(f[1]); ws['!cols'] = f[2].map(function (w) { return { wch: w }; }); XLSX.utils.book_append_sheet(wb, ws, f[0]);
+    });
+    exporter('Situation_associes_' + ANNEE + '.xlsx', XLSX.write(wb, { type: 'array', bookType: 'xlsx' }), MIME_XLSX, 'Situation ' + ANNEE).catch(erreur);
+  };
+}
+function detailSituation(r) {
+  var coul = { 'payé': 'vert', partiel: 'orange', impayé: 'rouge', attendu: 'bleu', 'à venir': 'gris' };
+  var corps = '<div class="grille" style="margin-bottom:12px">' + carte('Dû ' + ANNEE, eur(r.du), 'loyers, charges, appels…') + carte('Payé sur le dû', eur(r.paye), '') + carte('Reste à payer', eur(r.reste), !Compta.c(r.reste) ? 'à jour' : Compta.c(r.echu) ? 'dont ' + eur(r.echu) + ' déjà échu' : 'rien d’échu pour l’instant') + carte('Versé en plus', eur(r.enPlus), 'au-delà de ce qui est dû') + (r.sciDoit ? carte('La SCI lui doit', eur(r.sciDoit), '') : '') + '</div>';
+  var reste = r.items.filter(function (x) { return x.reste > 0.004; });
+  corps += '<div class="bloc"><h2>Reste à payer</h2>' + (reste.length ? tableau([
+    { t: 'Échéance', v: function (x) { return dfr(x.date); } }, { t: 'Libellé', v: function (x) { return esc(x.lib); } },
+    { t: 'Dû', n: 1, mob: false, v: function (x) { return eur(x.du); } }, { t: 'Payé', n: 1, mob: false, v: function (x) { return eur(x.paye); } },
+    { t: 'Reste', n: 1, v: function (x) { return '<b>' + eur(x.reste) + '</b> ' + puce(x.statut, coul[x.statut] || 'gris'); } }
+  ], reste, { pied: ['Total', '', '', '', eur(r.reste)] }) : '<div class="alerte vert">Rien à payer : tout ce qui est dû en ' + ANNEE + ' est réglé.</div>') + '</div>';
+  corps += '<div class="bloc"><h2>Versé en plus de ce qui est dû</h2>' + (r.plus.length ? tableau([
+    { t: 'Date', v: function (x) { return dfr(x.date); } }, { t: 'Nature', v: function (x) { return esc(x.lib); } }, { t: 'Montant', n: 1, v: function (x) { return '<b>' + eur(x.montant) + '</b>'; } }
+  ], r.plus, { pied: ['Total', '', eur(r.enPlus)] }) : '<div class="vide">Rien de versé en plus.</div>') + '</div>';
+  corps += '<details class="aide"><summary>Tout ce qui était dû en ' + ANNEE + ' (' + r.items.length + ' échéances)</summary>' + tableau([
+    { t: 'Échéance', v: function (x) { return dfr(x.date); } }, { t: 'Libellé', v: function (x) { return esc(x.lib); } },
+    { t: 'Dû', n: 1, v: function (x) { return eur(x.du); } }, { t: 'Payé', n: 1, v: function (x) { return eur(x.paye); } },
+    { t: 'Reste', n: 1, mob: false, v: function (x) { return eurS(x.reste); } }, { t: '', v: function (x) { return puce(x.statut, coul[x.statut] || 'gris'); } }
+  ], r.items, { pied: ['Total', '', eur(r.du), eur(r.paye), '', ''] }) + '</details>';
+  var lib = function (k) { return (Compta.NATURES_VERS.filter(function (n) { return n[0] === k; })[0] || [k, k])[1]; };
+  var lg = r.versements.lignes;
+  corps += '<details class="aide"><summary>Tous ses virements en ' + ANNEE + ' (' + lg.length + ')</summary>' + (lg.length ? tableau([
+    { t: 'Date', v: function (g) { return dfr(g.date); } },
+    { t: 'Virement', v: function (g) { return esc(g.libelle) + (Compta.c(g.montantBanque - g.montant) ? '<div class="doux" style="font-size:11.5px">virement de ' + eur(g.montantBanque) + ' dont ' + eur(g.montant) + ' pour cet associé</div>' : ''); } },
+    { t: 'Affectation', mob: false, v: function (g) { return g.details.map(function (d) { return esc(lib(d.nature)) + (d.lib ? ' <span class="doux">– ' + esc(d.lib) + '</span>' : '') + (g.details.length > 1 ? ' : ' + eur(d.montant) : ''); }).join('<br>'); } },
+    { t: 'Montant', n: 1, v: function (g) { return '<b>' + eur(g.montant) + '</b>'; } }
+  ], lg, { clic: 1, pied: ['Total', '', '', eur(r.verseAnnee)] }) : '<div class="vide">Aucun virement.</div>') + '</details>';
+  var m = modal({ titre: r.nom + ' – situation ' + ANNEE, corps: corps, large: true, boutons: [{ lib: 'Fermer' }] });
+  var dets = $$('details', m.corps), last = dets[dets.length - 1];
+  brancherClics(last, lg, function (g) { var t = byId('transactions', g.transaction_id); if (t) { m.fermer(); detailTransaction(t); } });
+}
 function loyersGrille(c, etat) {
   var auj = aujourdhui(), baux = L('baux').filter(function (b) { return String(b.actif) !== '0' || L('echeances').some(function (e) { return e.bail_id === b.id && Compta.annee(Compta.dateEcheance(e)) === ANNEE; }); });
   var mois = []; for (var i = 1; i <= 12; i++) mois.push(ANNEE + '-' + ('0' + i).slice(-2));
