@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PibraCompta">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2222%22%20fill%3D%22%23eef3fb%22/%3E%3Cg%20transform%3D%22translate%2850%2053%29%20scale%280.86%29%20translate%28-50%20-53%29%22%3E%3Cpath%20d%3D%22M14%2046%20L50%2016%20L86%2046%22%20fill%3D%22none%22%20stroke%3D%22%231f2a37%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2226%22%20y%3D%2248%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%237fb3ea%22/%3E%3Crect%20x%3D%2243%22%20y%3D%2248%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%238fd0a6%22/%3E%3Crect%20x%3D%2260%22%20y%3D%2248%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%23f4b07a%22/%3E%3Crect%20x%3D%2226%22%20y%3D%2261%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%23b39cea%22/%3E%3Crect%20x%3D%2243%22%20y%3D%2261%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%23ee96b2%22/%3E%3Crect%20x%3D%2260%22%20y%3D%2261%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%23ecd067%22/%3E%3Crect%20x%3D%2226%22%20y%3D%2274%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%237cccc5%22/%3E%3Crect%20x%3D%2243%22%20y%3D%2274%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%239aaed3%22/%3E%3Crect%20x%3D%2260%22%20y%3D%2274%22%20width%3D%2214%22%20height%3D%2210%22%20rx%3D%222.5%22%20fill%3D%22%23f09a7c%22/%3E%3Cpath%20d%3D%22M20%2090%20H80%22%20fill%3D%22none%22%20stroke%3D%22%231f2a37%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22/%3E%3C/g%3E%3C/svg%3E">
 <title>PibraCompta – SCI PIBRAMEDIC</title>
 <style>
 :root{
@@ -26,7 +27,7 @@ a{color:var(--accent)}
 .app{display:flex;height:100vh;height:100dvh}
 .nav{width:228px;flex:none;border-right:1px solid var(--bord);display:flex;flex-direction:column;padding:14px 10px;gap:2px;overflow-y:auto;background:var(--fond)}
 .logo{display:flex;align-items:center;gap:10px;padding:4px 8px 14px}
-.logo svg{flex:none}.logo b{font-size:16px;letter-spacing:.2px}.logo small{display:block;color:var(--doux);font-size:11px;line-height:1.2}
+.logo svg{flex:none;border-radius:8px}.logo b{font-size:16px;letter-spacing:.2px}.logo small{display:block;color:var(--doux);font-size:11px;line-height:1.2}
 .nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--texte);cursor:pointer;white-space:nowrap}
 .nav a:hover{background:var(--fond2)}
 .nav a.actif{background:var(--fond2);font-weight:600}
@@ -56,7 +57,7 @@ a{color:var(--accent)}
 .onglets{display:flex;gap:4px;border-bottom:1px solid var(--bord);margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
 .onglets a{padding:8px 12px;cursor:pointer;border-bottom:2px solid transparent;color:var(--doux);white-space:nowrap;text-decoration:none}
 .onglets a.actif{color:var(--texte);border-color:var(--c,var(--accent));font-weight:600}
-input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=search],select,textarea{border:1px solid var(--bord);border-radius:8px;padding:7px 10px;background:#fff;width:100%;min-width:0}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=time],input[type=search],select,textarea{border:1px solid var(--bord);border-radius:8px;padding:7px 10px;background:#fff;width:100%;min-width:0}
 input:focus,select:focus,textarea:focus{outline:2px solid #bcd6f5;border-color:#9cc2ee}
 textarea{min-height:70px;resize:vertical}
 label.champ{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--doux)}
@@ -89,7 +90,7 @@ table.t tr.sep td{background:var(--fond2);font-weight:600;color:var(--doux)}
 .x{background:none;border:none;font-size:22px;cursor:pointer;color:var(--doux);line-height:1}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1f2a37;color:#fff;padding:10px 16px;border-radius:10px;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:90vw}
 .toast.err{background:#9b2c25}
-.charge{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.6);z-index:90;flex-direction:column;gap:10px;color:var(--doux)}
+.charge{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.96);z-index:90;flex-direction:column;gap:12px;color:var(--texte);font-size:15px;-webkit-font-smoothing:antialiased}
 .rond{width:34px;height:34px;border:3px solid var(--bleu);border-top-color:var(--accent);border-radius:50%;animation:t .8s linear infinite}
 @keyframes t{to{transform:rotate(360deg)}}
 .grille-loyers td.m{text-align:center;padding:4px 3px;min-width:52px}
@@ -121,6 +122,79 @@ table.t tr.sep td{background:var(--fond2);font-weight:600;color:var(--doux)}
 .sugg:hover{background:var(--vert)}
 details.aide{background:var(--fond2);border-radius:8px;padding:8px 12px;margin:10px 0;font-size:13px}
 details.aide summary{cursor:pointer;font-weight:600}
+/* agenda */
+.dispo-page{align-items:flex-start}
+.dispo-page p{margin:6px 0}
+.dp-etape{border:1px solid var(--bord);border-radius:var(--r);padding:12px;margin:12px 0}
+.dp-off{opacity:.4;pointer-events:none}
+.ag-dj2{padding:10px 2px;border-bottom:1px solid var(--bord)}
+.ag-dj2-t{display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap}
+.ag-dj2 .jour{width:96px;flex:none;font-weight:600;font-size:13px}
+.ag-dj2.we .jour{color:var(--doux);font-weight:500}
+.ag-slots{display:flex;flex-direction:column;gap:6px;margin:8px 0 2px 106px}
+.ag-slot{position:relative;display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;background:var(--vert);border-radius:10px;padding:6px 38px 6px 10px}
+.ag-slot.nouveau{outline:1.5px dashed var(--vert-f)}
+.ag-slot.faux{background:var(--rouge);outline:1.5px solid var(--rouge-f)}
+.ag-h{display:inline-flex;align-items:center;gap:6px;font-size:13px}
+.ag-slot input[type=time]{width:auto;min-width:92px;padding:5px 6px;font-size:14px;background:#fff}
+.seg{display:inline-flex;border:1px solid var(--bord2,#d5dbe5);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{border:none;background:transparent;padding:6px 10px;font-size:13px;cursor:pointer;color:var(--texte);font-family:inherit;white-space:nowrap}
+.seg button+button{border-left:1px solid var(--bord2,#d5dbe5)}
+.seg button.on{background:var(--accent);color:#fff}
+.seg button.on[data-m=distanciel]{background:var(--violet-f)}
+.seg button.on[data-m=les_deux]{background:var(--teal-f)}
+.ag-x{position:absolute;top:50%;right:4px;transform:translateY(-50%);border:none;background:transparent;font-size:20px;line-height:1;cursor:pointer;color:var(--doux);padding:2px 8px}
+.t-bleu{--tc:var(--bleu);--tf:var(--bleu-f)}.t-violet{--tc:var(--violet);--tf:var(--violet-f)}.t-orange{--tc:var(--orange);--tf:var(--orange-f)}.t-teal{--tc:var(--teal);--tf:var(--teal-f)}.t-rose{--tc:var(--rose);--tf:var(--rose-f)}.t-gris{--tc:var(--gris);--tf:var(--gris-f)}
+.ag-pu{background:var(--tc);color:var(--tf)}
+.ag-grille{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--bord);border:1px solid var(--bord);border-radius:var(--r);overflow:hidden}
+.ag-tete{background:var(--fond2);padding:6px 4px;font-size:12px;color:var(--doux);font-weight:600;text-align:center}
+.ag-j{background:var(--fond);min-height:98px;padding:4px 5px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ag-j:hover{background:#fafcff}
+.ag-j.hors{background:#fbfcfd}.ag-j.hors .ag-n{color:#b4bcc8}
+.ag-j.sel{box-shadow:inset 0 0 0 2px var(--accent)}
+.ag-n{font-size:12px;font-weight:600;color:var(--doux);align-self:flex-start;padding:0 5px;border-radius:10px;line-height:19px}
+.ag-j.auj .ag-n{background:var(--accent);color:#fff}
+.ag-ev{font-size:11.5px;line-height:1.35;padding:1px 5px;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--tc);border-left:3px solid var(--tf)}
+.ag-ev.fait,.ag-barre{text-decoration:line-through;opacity:.6}
+.ag-plus{font-size:11px;color:var(--doux);padding-left:4px}
+.ag-pts{display:none}
+.ag-pt{width:7px;height:7px;border-radius:4px;background:var(--tf);flex:none}
+.ag-filtre:not(.actif-t){opacity:.45;text-decoration:line-through}
+.ag-liste .item{display:flex;gap:10px;padding:9px 4px;border-bottom:1px solid var(--bord);align-items:flex-start;cursor:pointer}
+.ag-liste .item:hover{background:#fafcff}
+.ag-heure{width:70px;flex:none;font-variant-numeric:tabular-nums;color:var(--doux);font-size:12.5px;line-height:1.35}
+.ag-barre-c{width:4px;align-self:stretch;border-radius:2px;background:var(--tf);flex:none}
+.ag-coche{width:18px;height:18px;margin-top:2px;flex:none;cursor:pointer}
+.ag-texte{white-space:pre-wrap;background:var(--fond2);border-radius:8px;padding:8px 10px;margin-top:3px;font-size:13px}
+.ag-bloc{margin-top:14px}.ag-lib{display:block;font-size:12.5px;color:var(--doux);font-weight:550}
+.ag-pers .chip{user-select:none}
+.chip.p-sans{border-style:dashed}
+.ag-dj{display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;padding:8px 2px;border-bottom:1px solid var(--bord)}
+.ag-dj .jour{width:96px;flex:none;font-weight:600;font-size:13px}
+.ag-dj.we .jour{color:var(--doux);font-weight:500}
+.ag-crs{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:120px}
+.ag-presets{display:flex;gap:4px;flex-wrap:wrap}
+.ag-cr{display:inline-flex;align-items:center;gap:4px;padding:2px 2px 2px 9px;border-radius:14px;background:var(--vert);color:#1e6b40;font-size:12px;white-space:nowrap}
+.ag-cr.nouveau{outline:1.5px dashed var(--vert-f)}
+.ag-cr button{border:none;background:transparent;cursor:pointer;color:inherit;font-size:15px;line-height:1;padding:0 6px}
+.ag-enreg{position:sticky;bottom:0;background:var(--fond);padding:10px 0;border-top:1px solid var(--bord);display:flex;gap:8px;z-index:3}
+.ag-mat td,.ag-mat th{text-align:center}.ag-mat td:first-child,.ag-mat th:first-child{text-align:left}
+@media (max-width:900px){
+  .ag-j{min-height:50px;padding:3px}
+  .ag-ev,.ag-plus{display:none}
+  .ag-pts{display:flex;gap:3px;flex-wrap:wrap;padding-left:3px}
+  .ag-enreg{bottom:calc(58px + env(safe-area-inset-bottom))}
+  .ag-dj .jour{width:100%}
+  .ag-dj2 .jour{width:100%}
+  .ag-slots{margin-left:0}
+  .ag-slot{padding-right:8px}
+  .ag-h{flex:1;margin-right:30px;min-width:0}
+  .ag-slot .ag-x{top:8px;transform:none}
+  .seg .ic{display:none}
+  .ag-slot .seg{width:100%}
+  .seg button{flex:1;padding:8px 4px;font-size:12.5px}
+  .ag-slot input[type=time]{min-width:0;flex:1}
+}
 @media (max-width:900px){
   .nav{display:none}
   .entete{padding:10px 14px;min-height:50px;position:sticky;top:0;background:#fff;z-index:5}
@@ -144,11 +218,12 @@ details.aide summary{cursor:pointer;font-weight:600}
 }
 @media (max-width:420px){.grille{grid-template-columns:1fr}.form{grid-template-columns:1fr}}
 @media print{.nav,.mobile-nav,.entete .btn,.barre{display:none!important}.contenu{overflow:visible}}
+.connexion .logo svg{width:52px;height:52px;border-radius:12px}.connexion .logo b{font-size:20px}
 
 </style>
 </head>
 <body>
-<div class="charge"><div class="rond"></div><div>Chargement de PibraCompta…</div></div>
+<div class="charge"><div class="rond"></div><div class="txt">Chargement de PibraCompta…</div></div>
 <script>
 /* ===== compta.js ===== */
 /* =====================================================================
@@ -1120,6 +1195,236 @@ var Imports = (function () {
 })();
 
 
+/* ===== agenda_coeur.js ===== */
+/* =====================================================================
+   Agenda — moteur commun à l'interface et au serveur (rappels par e-mail)
+   Dates « naïves » à l'heure de Paris : 'AAAA-MM-JJ' et 'HH:MM'.
+   ===================================================================== */
+var Agenda = (function () {
+  var TYPES = [
+    ['rdv', 'Rendez-vous', 'bleu'], ['reunion', 'Réunion', 'violet'], ['tache', 'Rappel / tâche', 'orange'],
+    ['intervention', 'Intervention', 'teal'], ['anniversaire', 'Anniversaire', 'rose'], ['autre', 'Autre', 'gris']
+  ];
+  var RECURRENCES = [
+    ['', 'Ne se répète pas'], ['jour:1', 'Chaque jour'], ['semaine:1', 'Chaque semaine'], ['semaine:2', 'Toutes les 2 semaines'],
+    ['mois:1', 'Chaque mois'], ['mois:3', 'Chaque trimestre'], ['mois:6', 'Tous les 6 mois'], ['an:1', 'Chaque année'],
+    ['an:2', 'Tous les 2 ans'], ['an:3', 'Tous les 3 ans'], ['an:5', 'Tous les 5 ans']
+  ];
+  var DELAIS = [
+    ['15:min', '15 minutes avant'], ['30:min', '30 minutes avant'], ['1:h', '1 heure avant'], ['2:h', '2 heures avant'],
+    ['1:j', 'La veille (1 jour avant)'], ['2:j', '2 jours avant'], ['3:j', '3 jours avant'], ['1:sem', '1 semaine avant'],
+    ['2:sem', '2 semaines avant'], ['1:mois', '1 mois avant']
+  ];
+  var MINUTES = { min: 1, h: 60, j: 1440, sem: 10080, mois: 43200 };
+  var MODES = [['presentiel', 'En présentiel'], ['distanciel', 'À distance'], ['les_deux', 'Présentiel ou à distance']];
+  var JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  var MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  var HEURE_DEFAUT = '09:00';
+
+  function pj(s, d) { if (!s) return d; if (typeof s !== 'string') return s; try { return JSON.parse(s); } catch (e) { return d; } }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function jd(s) { return Math.round(Date.UTC(+s.slice(0, 4), +s.slice(5, 7) - 1, +s.slice(8, 10)) / 864e5); }
+  function ds(n) { return new Date(n * 864e5).toISOString().slice(0, 10); }
+  function plusJours(s, n) { return ds(jd(s) + n); }
+  function ecartJours(a, b) { return jd(b) - jd(a); }
+  function joursDuMois(y, m) { return new Date(Date.UTC(y, m + 1, 0)).getUTCDate(); }
+  function plusMois(s, n) {
+    var y = +s.slice(0, 4), m = +s.slice(5, 7) - 1 + n, d = +s.slice(8, 10);
+    y += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
+    return y + '-' + pad(m + 1) + '-' + pad(Math.min(d, joursDuMois(y, m)));
+  }
+  function jourSemaine(s) { return new Date(jd(s) * 864e5).getUTCDay(); }   // 0 = dimanche
+  function hm(h) { if (!h || !/^\d{1,2}:\d{2}/.test(String(h))) return null; var p = String(h).split(':'); return (+p[0]) * 60 + (+p[1]); }
+  function hs(m) { return pad(Math.floor(m / 60)) + ':' + pad(m % 60); }
+  function instant(date, heure) { return jd(date) * 1440 + (hm(heure) || 0); }
+  function journee(ev) { return String(ev.journee) === '1' || !ev.heure; }
+  function dureeJours(ev) { return ev.date_fin && ev.date_fin > ev.date ? ecartJours(ev.date, ev.date_fin) : 0; }
+  function recurrence(ev) { var r = String(ev.recurrence || ''); if (!r) return null; var p = r.split(':'); return { f: p[0], n: Math.max(1, +p[1] || 1) }; }
+
+  // Dates de début des occurrences d'un événement qui touchent la période [debut, fin]
+  function occurrences(ev, debut, fin) {
+    if (!ev || !ev.date || String(ev.supprime) === '1') return [];
+    var r = recurrence(ev), dur = dureeJours(ev), excl = pj(ev.exclusions, []), lim = ev.recurrence_fin || '9999-12-31', out = [], k, d;
+    if (!r) { if (ev.date <= fin && plusJours(ev.date, dur) >= debut) out.push(ev.date); return out; }
+    if (r.f === 'jour' || r.f === 'semaine') {
+      var pas = r.n * (r.f === 'jour' ? 1 : 7);
+      k = Math.max(0, Math.floor((jd(debut) - dur - jd(ev.date)) / pas));
+      for (var i = 0; i < 5000; i++, k++) {
+        d = plusJours(ev.date, k * pas); if (d > fin || d > lim) break;
+        if (plusJours(d, dur) >= debut && excl.indexOf(d) < 0) out.push(d);
+      }
+    } else {
+      var pasM = r.n * (r.f === 'an' ? 12 : 1);
+      var ecartM = (+debut.slice(0, 4) - +ev.date.slice(0, 4)) * 12 + (+debut.slice(5, 7) - +ev.date.slice(5, 7));
+      k = Math.max(0, Math.floor(ecartM / pasM) - 1 - Math.ceil(dur / 28));
+      for (var j = 0; j < 5000; j++, k++) {
+        d = plusMois(ev.date, k * pasM); if (d > fin || d > lim) break;
+        if (plusJours(d, dur) >= debut && excl.indexOf(d) < 0) out.push(d);
+      }
+    }
+    return out;
+  }
+  function prochaine(ev, aPartirDe) { return occurrences(ev, aPartirDe, plusJours(aPartirDe, 366 * 6))[0] || null; }
+
+  // Liste « à plat » des occurrences de plusieurs événements, triées
+  function planning(evs, debut, fin) {
+    var out = [];
+    (evs || []).forEach(function (ev) {
+      occurrences(ev, debut, fin).forEach(function (d) { out.push({ ev: ev, date: d, fin: plusJours(d, dureeJours(ev)), fait: pj(ev.faits, []).indexOf(d) >= 0 }); });
+    });
+    out.sort(function (a, b) { return a.date.localeCompare(b.date) || (journee(a.ev) ? -1 : 0) - (journee(b.ev) ? -1 : 0) || String(a.ev.heure || '').localeCompare(String(b.ev.heure || '')); });
+    return out;
+  }
+
+  function rappels(ev) { return pj(ev.rappels, []).filter(function (r) { var p = String(r).split(':'); return +p[0] > 0 && MINUTES[p[1]]; }).slice(0, 3); }
+  function delaiMinutes(r) { var p = String(r).split(':'); return (+p[0]) * MINUTES[p[1]]; }
+  function libelleDelai(r) { var x = DELAIS.filter(function (d) { return d[0] === r; })[0]; return x ? x[1] : r; }
+
+  // Rappels à envoyer maintenant. maintenant = 'AAAA-MM-JJTHH:MM' (heure de Paris) ; envoyes = {clé: 1}
+  function rappelsDus(evs, maintenant, envoyes) {
+    envoyes = envoyes || {};
+    var auj = maintenant.slice(0, 10), now = instant(auj, maintenant.slice(11, 16)), out = [];
+    (evs || []).forEach(function (ev) {
+      if (String(ev.supprime) === '1') return;
+      var rs = rappels(ev); if (!rs.length) return;
+      var faits = pj(ev.faits, []);
+      var depuis = ev.rappels_depuis ? instant(ev.rappels_depuis.slice(0, 10), ev.rappels_depuis.slice(11, 16) || '00:00') : 0;
+      occurrences(ev, auj, plusJours(auj, 33)).forEach(function (d) {
+        if (faits.indexOf(d) >= 0) return;
+        var debut = instant(d, journee(ev) ? HEURE_DEFAUT : ev.heure);
+        if (debut <= now) return;
+        var dus = [];
+        rs.forEach(function (r, i) {
+          var a = debut - delaiMinutes(r), cle = ev.id + '|' + d + '|' + i;
+          if (a <= now && a >= depuis && !envoyes[cle]) dus.push({ cle: cle, a: a, r: r });
+        });
+        if (!dus.length) return;
+        dus.sort(function (x, y) { return y.a - x.a; });
+        out.push({ ev: ev, date: d, cles: dus.map(function (x) { return x.cle; }), delai: dus[0].r });
+      });
+    });
+    return out;
+  }
+
+  // Créneaux communs : intervalles où le plus de personnes (ou de locaux) sont disponibles
+  function creneauxCommuns(dispos, champ, duree) {
+    duree = +duree || 60;
+    var parDate = {}, cands = [], vus = {};
+    (dispos || []).forEach(function (x) {
+      if (String(x.supprime) === '1') return;
+      var a = hm(x.heure_debut), b = hm(x.heure_fin); if (a === null || b === null || b <= a || !x[champ]) return;
+      (parDate[x.date] = parDate[x.date] || []).push({ k: x[champ], a: a, b: b, x: x });
+    });
+    Object.keys(parDate).sort().forEach(function (date) {
+      var iv = parDate[date], pts = {};
+      iv.forEach(function (v) { pts[v.a] = 1; pts[v.b] = 1; });
+      pts = Object.keys(pts).map(Number).sort(function (a, b) { return a - b; });
+      var segs = [];
+      for (var i = 0; i + 1 < pts.length; i++) {
+        var s = pts[i], e = pts[i + 1], qui = {};
+        iv.forEach(function (v) { if (v.a <= s && v.b >= e) qui[v.k] = 1; });
+        qui = Object.keys(qui).sort(); if (qui.length) segs.push({ s: s, e: e, qui: qui });
+      }
+      var ensembles = {};
+      segs.forEach(function (g) { ensembles[g.qui.join('¤')] = g.qui; });
+      Object.keys(ensembles).forEach(function (cle) {
+        var S = ensembles[cle], cur = null;
+        function fermer() {
+          if (cur && cur.e - cur.s >= duree) {
+            var id = date + cle + cur.s + '-' + cur.e;
+            if (!vus[id]) {
+              vus[id] = 1;
+              var det = S.map(function (k) { var v = iv.filter(function (w) { return w.k === k && w.a < cur.e && w.b > cur.s; })[0]; return v ? v.x : null; }).filter(Boolean);
+              cands.push({ date: date, debut: hs(cur.s), fin: hs(cur.e), qui: S.slice(), details: det });
+            }
+          }
+          cur = null;
+        }
+        segs.forEach(function (g) {
+          var contient = S.every(function (k) { return g.qui.indexOf(k) >= 0; });
+          if (contient && cur && cur.e === g.s) cur.e = g.e;
+          else if (contient) { fermer(); cur = { s: g.s, e: g.e }; }
+          else fermer();
+        });
+        fermer();
+      });
+    });
+    cands.sort(function (a, b) { return b.qui.length - a.qui.length || a.date.localeCompare(b.date) || (hm(b.fin) - hm(b.debut)) - (hm(a.fin) - hm(a.debut)) || a.debut.localeCompare(b.debut); });
+    // on écarte un créneau inclus dans un autre qui réunit au moins les mêmes personnes
+    return cands.filter(function (c, i) {
+      return !cands.some(function (o, j) {
+        return j !== i && o.date === c.date && o.qui.length >= c.qui.length && c.qui.every(function (k) { return o.qui.indexOf(k) >= 0; }) && hm(o.debut) <= hm(c.debut) && hm(o.fin) >= hm(c.fin) && (o.qui.length > c.qui.length || hm(o.fin) - hm(o.debut) > hm(c.fin) - hm(c.debut) || j < i);
+      });
+    });
+  }
+
+  // ---------- textes ----------
+  function dateLongue(d) { if (!d) return ''; return JOURS[jourSemaine(d)] + ' ' + (+d.slice(8, 10) === 1 ? '1er' : +d.slice(8, 10)) + ' ' + MOIS[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4); }
+  function horaire(ev) { if (journee(ev)) return 'toute la journée'; return 'de ' + hFr(ev.heure) + (ev.heure_fin ? ' à ' + hFr(ev.heure_fin) : ''); }
+  function hFr(h) { var m = hm(h); if (m === null) return h || ''; return (Math.floor(m / 60) + ' h ' + (m % 60 ? pad(m % 60) : '')).trim(); }
+  function libelle(liste, v) { var x = liste.filter(function (o) { return o[0] === v; })[0]; return x ? x[1] : (v || ''); }
+  function libelleType(t, extra) { var x = TYPES.concat(extra || []).filter(function (o) { return o[0] === t; })[0]; return x ? x[1] : (t || 'Événement'); }
+  function libelleRecurrence(ev) {
+    var r = libelle(RECURRENCES, ev.recurrence || '');
+    if (!ev.recurrence) return '';
+    return r + (ev.recurrence_fin ? ' jusqu’au ' + ev.recurrence_fin.split('-').reverse().join('/') : '');
+  }
+  // Texte complet d'un événement (e-mails, fichier .ics). nom(id) → nom affiché
+  function texte(ev, d, nom) {
+    var l = [];
+    l.push(libelleType(ev.type) + ' : ' + (ev.titre || ''));
+    l.push('Date : ' + dateLongue(d || ev.date) + (ev.date_fin && ev.date_fin > ev.date ? ' (sur ' + (dureeJours(ev) + 1) + ' jours)' : '') + ', ' + horaire(ev));
+    if (ev.recurrence) l.push('Récurrence : ' + libelleRecurrence(ev));
+    if (ev.lieu) l.push('Lieu : ' + ev.lieu);
+    if (ev.modalite) l.push('Modalité : ' + libelle([['presentiel', 'en présentiel'], ['distanciel', 'à distance'], ['mixte', 'présentiel et distanciel']], ev.modalite));
+    if (ev.lien_visio) l.push('Lien de connexion : ' + ev.lien_visio);
+    var p = pj(ev.participants, []);
+    if (p.length) l.push('Participants : ' + p.map(function (x) { return nom ? nom(x) : x; }).join(', '));
+    if (ev.ordre_du_jour) l.push('', 'Ordre du jour :', ev.ordre_du_jour);
+    if (ev.questions) l.push('', 'Questions et problèmes à évoquer :', ev.questions);
+    if (ev.notes) l.push('', 'Notes :', ev.notes);
+    return l.join('\n');
+  }
+
+  // ---------- fichier .ics (ajout à l'agenda du téléphone / d'Outlook / de Google Agenda) ----------
+  var VTZ = ['BEGIN:VTIMEZONE', 'TZID:Europe/Paris', 'BEGIN:DAYLIGHT', 'TZOFFSETFROM:+0100', 'TZOFFSETTO:+0200', 'TZNAME:CEST', 'DTSTART:19700329T020000', 'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU', 'END:DAYLIGHT',
+    'BEGIN:STANDARD', 'TZOFFSETFROM:+0200', 'TZOFFSETTO:+0100', 'TZNAME:CET', 'DTSTART:19701025T030000', 'RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU', 'END:STANDARD', 'END:VTIMEZONE'];
+  function echap(s) { return String(s || '').replace(/\\/g, '\\\\').replace(/\r?\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;'); }
+  function plier(l) { var o = []; while (l.length > 73) { o.push(l.slice(0, 73)); l = ' ' + l.slice(73); } o.push(l); return o.join('\r\n'); }
+  function dIcs(d) { return d.replace(/-/g, ''); }
+  function ics(evs, opts) {
+    opts = opts || {};
+    var stamp = opts.horodatage || '20260101T000000Z', l = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//SCI PIBRAMEDIC//PibraCompta//FR', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'].concat(VTZ);
+    (Array.isArray(evs) ? evs : [evs]).forEach(function (ev) {
+      var jr = journee(ev), fin = ev.date_fin && ev.date_fin > ev.date ? ev.date_fin : ev.date;
+      l.push('BEGIN:VEVENT', 'UID:' + ev.id + '@pibracompta', 'DTSTAMP:' + stamp);
+      if (jr) { l.push('DTSTART;VALUE=DATE:' + dIcs(ev.date), 'DTEND;VALUE=DATE:' + dIcs(plusJours(fin, 1))); }
+      else {
+        var hf = ev.heure_fin && (fin > ev.date || hm(ev.heure_fin) > hm(ev.heure)) ? ev.heure_fin : hs(Math.min(hm(ev.heure) + 60, 23 * 60 + 59));
+        l.push('DTSTART;TZID=Europe/Paris:' + dIcs(ev.date) + 'T' + ev.heure.replace(':', '') + '00', 'DTEND;TZID=Europe/Paris:' + dIcs(fin) + 'T' + hf.replace(':', '') + '00');
+      }
+      var r = recurrence(ev);
+      if (r) l.push('RRULE:FREQ=' + { jour: 'DAILY', semaine: 'WEEKLY', mois: 'MONTHLY', an: 'YEARLY' }[r.f] + ';INTERVAL=' + r.n + (ev.recurrence_fin ? ';UNTIL=' + dIcs(ev.recurrence_fin) + (jr ? '' : 'T225959Z') : ''));
+      pj(ev.exclusions, []).forEach(function (x) { l.push(jr ? 'EXDATE;VALUE=DATE:' + dIcs(x) : 'EXDATE;TZID=Europe/Paris:' + dIcs(x) + 'T' + ev.heure.replace(':', '') + '00'); });
+      l.push('SUMMARY:' + echap(ev.titre), 'DESCRIPTION:' + echap(texte(ev, ev.date, opts.nom)));
+      if (ev.lieu || ev.lien_visio) l.push('LOCATION:' + echap(ev.lieu || ev.lien_visio));
+      rappels(ev).forEach(function (x) { l.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + echap(ev.titre), 'TRIGGER:-PT' + delaiMinutes(x) + 'M', 'END:VALARM'); });
+      l.push('END:VEVENT');
+    });
+    l.push('END:VCALENDAR');
+    return l.map(plier).join('\r\n') + '\r\n';
+  }
+
+  return {
+    TYPES: TYPES, RECURRENCES: RECURRENCES, DELAIS: DELAIS, MODES: MODES, JOURS: JOURS, MOIS: MOIS,
+    pj: pj, jd: jd, plusJours: plusJours, plusMois: plusMois, ecartJours: ecartJours, jourSemaine: jourSemaine, hm: hm, hs: hs, hFr: hFr,
+    journee: journee, dureeJours: dureeJours, occurrences: occurrences, prochaine: prochaine, planning: planning,
+    rappels: rappels, delaiMinutes: delaiMinutes, libelleDelai: libelleDelai, rappelsDus: rappelsDus, creneauxCommuns: creneauxCommuns,
+    dateLongue: dateLongue, horaire: horaire, libelle: libelle, libelleType: libelleType, libelleRecurrence: libelleRecurrence, texte: texte, ics: ics
+  };
+})();
+
+
 /* ===== app.js ===== */
 /* =====================================================================
    PibraCompta — noyau de l'interface
@@ -1134,6 +1439,7 @@ var LIBS = {
 };
 var SECTIONS = [
   { id: 'accueil', titre: 'Tableau de bord', court: 'Accueil', c: 'var(--gris-f)', fond: 'var(--gris)' },
+  { id: 'agenda', titre: 'Agenda', court: 'Agenda', c: 'var(--violet-f)', fond: 'var(--violet)' },
   { id: 'banque', titre: 'Banque', court: 'Banque', c: 'var(--bleu-f)', fond: 'var(--bleu)' },
   { id: 'loyers', titre: 'Loyers et appels', court: 'Loyers', c: 'var(--vert-f)', fond: 'var(--vert)' },
   { id: 'factures', titre: 'Factures', court: 'Factures', c: 'var(--orange-f)', fond: 'var(--orange)' },
@@ -1146,7 +1452,7 @@ var SECTIONS = [
   { id: 'exports', titre: 'Exports comptable', court: 'Exports', c: 'var(--gris-f)', fond: 'var(--gris)' },
   { id: 'parametres', titre: 'Paramètres', court: 'Réglages', c: 'var(--gris-f)', fond: 'var(--gris)' }
 ];
-var MOBILE_NAV = ['accueil', 'banque', 'loyers', 'documents'];
+var MOBILE_NAV = ['accueil', 'agenda', 'banque', 'loyers', 'documents'];
 
 // ---------- utilitaires ----------
 function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -1209,7 +1515,16 @@ function ecranServeur(msg) {
   };
 }
 
-function chargement(msg) { var v = elt('<div class="charge"><div class="rond"></div><div>' + esc(msg || 'Un instant…') + '</div></div>'); document.body.appendChild(v); return v; }
+// Un seul écran de chargement, opaque, dont le texte est mis à jour (jamais d'empilement)
+var VOILE = { n: 0, el: null };
+function chargement(msg) {
+  $$('.charge').forEach(function (x) { if (x !== VOILE.el) x.remove(); });
+  if (!VOILE.el) VOILE.el = elt('<div class="charge"><div class="rond"></div><div class="txt"></div></div>');
+  if (!VOILE.el.isConnected) { VOILE.n = 0; document.body.appendChild(VOILE.el); }
+  VOILE.n++; $('.txt', VOILE.el).textContent = msg || 'Un instant…';
+  var fini = false;
+  return { remove: function () { if (fini) return; fini = true; VOILE.n = Math.max(0, VOILE.n - 1); if (!VOILE.n && VOILE.el) VOILE.el.remove(); } };
+}
 function toast(msg, err) {
   $$('.toast').forEach(function (t) { t.remove(); });
   var t = elt('<div class="toast' + (err ? ' err' : '') + '">' + esc(msg) + '</div>'); document.body.appendChild(t);
@@ -1410,11 +1725,13 @@ function prochainCompte(racine) {
 }
 function creerCategorie(type) {
   return new Promise(function (ok) {
-    if (type === 'docs' || type === 'coffre') {
+    var SIMPLES = { docs: ['categories_docs', catsDocs], coffre: ['categories_coffre', catsCoffre], agenda: ['categories_agenda', function () { return typesAgenda().map(function (t) { return t[1]; }); }], contacts: ['categories_contacts', catsContacts] };
+    if (SIMPLES[type]) {
       modal({ titre: 'Nouvelle catégorie', corps: formulaire([{ k: 'nom', lib: 'Nom de la catégorie', requis: true, large: true }]), boutons: [{ lib: 'Annuler', action: function () { ok(null); } }, { lib: 'Créer', prim: true, action: function (corps) {
         var v = lireForm(corps, [{ k: 'nom', lib: 'Nom', requis: true }]), nom = v.nom.replace(/[\/]/g, '-').trim();
-        var cle = type === 'docs' ? 'categories_docs' : 'categories_coffre', liste = type === 'docs' ? catsDocs() : catsCoffre();
-        if (liste.some(function (k) { return Compta.normaliser(k) === Compta.normaliser(nom); })) { ok([nom, nom]); return; }
+        var cle = SIMPLES[type][0], liste = SIMPLES[type][1]();
+        var deja = liste.filter(function (k) { return Compta.normaliser(k) === Compta.normaliser(nom); })[0];
+        if (deja) { var t0 = type === 'agenda' ? typesAgenda().filter(function (t) { return t[1] === deja; })[0] : null; ok(t0 ? [t0[0], t0[1]] : [deja, deja]); return; }
         var extra = (Compta.parseJSON(DB.params[cle], []) || []).concat([nom]), p = {}; p[cle] = JSON.stringify(extra);
         return appel('parametres', p, { silencieux: true }).then(function () { DB.params[cle] = p[cle]; toast('Catégorie « ' + nom + ' » créée.'); ok([nom, nom]); });
       } }] });
@@ -1451,7 +1768,7 @@ function optAnnees() {
 function exerciceClos(an) { return L('exercices').some(function (x) { return String(x.annee) === String(an) && x.statut === 'clos'; }); }
 
 // ---------- écrans d'accès ----------
-var LOGO = '<svg width="34" height="34" viewBox="0 0 40 40"><rect x="2" y="2" width="36" height="36" rx="9" fill="#e6dcf7"/><path d="M10 30V16l10-7 10 7v14z" fill="#d6e8fa" stroke="#3d7cc9" stroke-width="1.6" stroke-linejoin="round"/><rect x="14" y="19" width="4" height="4" rx="1" fill="#fde4cc"/><rect x="22" y="19" width="4" height="4" rx="1" fill="#d7f0e1"/><rect x="18" y="25" width="4" height="5" rx="1" fill="#f9dbe6"/></svg>';
+var LOGO = '<svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#eef3fb"/><g transform="translate(50 53) scale(0.86) translate(-50 -53)"><path d="M14 46 L50 16 L86 46" fill="none" stroke="#1f2a37" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><rect x="26" y="48" width="14" height="10" rx="2.5" fill="#7fb3ea"/><rect x="43" y="48" width="14" height="10" rx="2.5" fill="#8fd0a6"/><rect x="60" y="48" width="14" height="10" rx="2.5" fill="#f4b07a"/><rect x="26" y="61" width="14" height="10" rx="2.5" fill="#b39cea"/><rect x="43" y="61" width="14" height="10" rx="2.5" fill="#ee96b2"/><rect x="60" y="61" width="14" height="10" rx="2.5" fill="#ecd067"/><rect x="26" y="74" width="14" height="10" rx="2.5" fill="#7cccc5"/><rect x="43" y="74" width="14" height="10" rx="2.5" fill="#9aaed3"/><rect x="60" y="74" width="14" height="10" rx="2.5" fill="#f09a7c"/><path d="M20 90 H80" fill="none" stroke="#1f2a37" stroke-width="4" stroke-linecap="round"/></g></svg>';
 function ecranConnexion(message) {
   document.body.innerHTML = '<div class="connexion"><div class="carte"><div class="logo" style="padding:0">' + LOGO + '<div><b>PibraCompta</b><small>SCI PIBRAMEDIC</small></div></div>' +
     '<h1>Connexion</h1><p class="doux" style="margin-top:0">Comptabilité et gestion de la SCI</p>' + (message ? '<div class="alerte">' + esc(message) + '</div>' : '') +
@@ -1514,6 +1831,8 @@ function retourBanqueWeb(q) {
 var DEMARRAGE = false;
 function demarrer() {
   if (DEMARRAGE) return; DEMARRAGE = true;
+  var cleD = cleDispoUrl();
+  if (cleD) return ecranDispo(cleD).then(function () { DEMARRAGE = false; });
   var jeton = stockage(CLE_JETON);
   appel('etat', {}, { message: 'Chargement…' }).then(function (e) {
     if (!e.installe) return ecranInstallation();
@@ -1527,6 +1846,15 @@ function demarrer() {
       if (MODE_WEB && DB.urlWeb !== urlIci() && /^https:/.test(urlIci())) appel('parametres', { url_web: urlIci() }, { silencieux: true }).then(function () { DB.urlWeb = urlIci(); }).catch(function () { });
       var q = new URLSearchParams(location.search);
       if (q.get('state') && (q.get('code') || q.get('error'))) { history.replaceState(null, '', location.pathname); return retourBanqueWeb(q); }
+      if (q.get('vue') && sec(q.get('vue')).id === q.get('vue')) {
+        history.replaceState(null, '', location.pathname);
+        if (q.get('sondage')) aller('agenda', { onglet: 'dispos', sondage: q.get('sondage'), brouillon: null });
+        else if (q.get('ev')) {
+          var evx = byId('evenements', q.get('ev')), dx = q.get('d') || (evx && evx.date) || aujourdhui();
+          aller('agenda', { onglet: 'cal', mois: dx.slice(0, 7), jour: dx });
+          if (evx) ouvrirOccurrence({ ev: evx, date: dx, fin: Agenda.plusJours(dx, Agenda.dureeJours(evx)) });
+        } else aller(q.get('vue'));
+      }
       synchroAuDemarrage();
     });
   }).catch(function (e) { if (!/Session|mot de passe requis|^SERVEUR$/.test(e.message)) { document.body.innerHTML = '<div class="vide">' + esc(e.message) + '<br><br><button class="btn" onclick="demarrer()">Réessayer</button></div>'; } }).then(function () { DEMARRAGE = false; });
@@ -1650,6 +1978,7 @@ VUES.accueil = function (c) {
   if (+anPrec >= +(DB.params.premier_exercice || 9999) && !exerciceClos(anPrec) && auj.slice(5) > '04-30') alertes.push(['', 'L’exercice ' + anPrec + ' n’est pas encore clôturé.', 'compta', { onglet: 'cloture' }]);
 
   alertesBanque().forEach(function (a) { alertes.push(a); });
+  alertesAgenda().forEach(function (a) { alertes.unshift(a); });
   var moi = byId('associes', MOI.associe_id);
   var aTrier = L('documents').filter(function (d) { return d.categorie === A_TRIER; }).length;
   if (aTrier) alertes.unshift(['bleu', '<b>' + aTrier + ' pièce(s) à trier</b> (photos ou documents non rattachés).', 'documents', { cat: A_TRIER }]);
@@ -1660,6 +1989,7 @@ VUES.accueil = function (c) {
     carte('À traiter', String(aTraiter.length), 'opérations bancaires ' + ANNEE + ' à rapprocher', 'banque') +
     carte('Résultat ' + ANNEE, eur(ex.resultat.resultat), 'Produits ' + eur(ex.resultat.produits) + ' · charges ' + eur(ex.resultat.charges), 'compta') +
     carte('Emprunts', eur(crd), 'capital restant dû · prochaine échéance ' + eur(prochaines.reduce(function (a, x) { return a + x; }, 0)), 'emprunts') +
+    (function () { var pr = prochainsEvenements(1)[0]; return carte('Agenda', pr ? esc(pr.ev.titre) : 'Rien de prévu', pr ? esc(Agenda.dateLongue(pr.date)) + (Agenda.journee(pr.ev) ? '' : ' à ' + esc(Agenda.hFr(pr.ev.heure))) : '60 prochains jours', 'agenda'); })() +
     (moi ? carte('Mes parts', Compta.partsA(DB, moi.id, auj) + ' / ' + (totParts || '?'), (totParts ? (Compta.partsA(DB, moi.id, auj) / totParts * 100).toFixed(2).replace('.', ',') + ' %' : '') + ' · compte courant ' + eur((Compta.comptesCourants(DB, ANNEE).find(function (x) { return x.associe.id === moi.id; }) || {}).solde || 0), 'associes') : '') +
     '</div>';
   h += '<div class="bloc"><h2>À faire</h2>' + (alertes.length ? alertes.map(function (a, i) { return '<div class="alerte ' + a[0] + '" style="cursor:pointer" data-al="' + i + '">' + a[1] + '</div>'; }).join('') : '<div class="alerte vert">Tout est à jour.</div>') + '</div>';
@@ -1996,7 +2326,7 @@ function loyersBaux(c) {
   $('#nl', c).onclick = function () {
     var ls = L('locaux');
     modal({ titre: 'Locaux', corps: tableau([{ t: 'Désignation', v: function (l) { return esc(l.designation); } }, { t: 'Surface', n: 1, v: function (l) { return esc(l.surface); } }], ls, { clic: 1 }) + '<br><button class="btn" id="nloc">Ajouter un local</button>', ouvert: function (corps, f) {
-      var ch = [{ k: 'designation', lib: 'Désignation', requis: true, large: true }, { k: 'surface', lib: 'Surface (m²)' }, { k: 'notes', lib: 'Notes', large: true }];
+      var ch = [{ k: 'designation', lib: 'Désignation', requis: true, large: true }, { k: 'surface', lib: 'Surface (m²)' }, { k: 'salles', lib: 'Salles (séparées par des virgules)', large: true, ph: 'ex. Salle de soins, Bureau, Salle d’attente' }, { k: 'notes', lib: 'Notes', large: true }];
       brancherClics(corps, ls, function (l) { f(); editer({ titre: 'Local', table: 'locaux', ligne: l, champs: ch, supprimable: true }); });
       $('#nloc', corps).onclick = function () { f(); editer({ titre: 'Nouveau local', table: 'locaux', ligne: {}, champs: ch }); };
     } });
@@ -2162,6 +2492,15 @@ function importerAmortissement(e) {
    ===================================================================== */
 
 // ---------- ASSOCIÉS ----------
+var AIDE_COMPTE_COURANT = '<details class="aide" open style="font-size:13.5px;line-height:1.55"><summary style="font-size:14px">Comprendre le compte courant d’associé</summary>' +
+  '<p><b>Ce que c’est.</b> Le compte courant d’un associé représente <b>ce que la SCI lui doit</b>. C’est une dette de la SCI envers l’associé, distincte de ses parts : les parts correspondent à sa part du capital de la SCI, le compte courant aux sommes qui lui reviennent mais qu’il n’a pas encore récupérées. Un solde positif dans ce tableau est donc une somme que la SCI devra un jour rendre à l’associé.</p>' +
+  '<p><b>D’où vient-il ?</b> Chaque année, les loyers encaissés dépassent les charges et les intérêts d’emprunt : la SCI dégage un bénéfice comptable. Cet argent n’est pas versé aux associés, car il sert à rembourser le capital des emprunts bancaires, qui n’est pas une charge en comptabilité. Lors de l’affectation du résultat, une fois les comptes de l’année approuvés, ce bénéfice est donc inscrit au compte courant de chaque associé, <b>au prorata de ses parts</b>.</p>' +
+  '<p style="background:#fff;border:1px solid var(--bord);border-radius:8px;padding:8px 12px"><b>Exemple.</b> La SCI a réalisé un bénéfice de 70 000 €. Un associé qui détient 36 parts sur 360, soit 10 %, voit son compte courant augmenter de 7 000 €. Année après année, ces montants s’additionnent.</p>' +
+  '<p><b>Autres mouvements.</b> Une dépense personnelle réglée par erreur avec le compte de la SCI diminue le compte courant de l’associé concerné, et son remboursement le rétablit. De même, une somme avancée par un associé à la SCI augmente son compte courant, et le remboursement de cette avance le diminue.</p>' +
+  '<p><b>Où est cet argent ?</b> Il n’est pas sur un compte en banque : il a servi à rembourser l’emprunt. Il se retrouve donc, en pratique, dans la valeur de l’immeuble.</p>' +
+  '<p><b>Et les impôts ?</b> La SCI étant soumise à l’impôt sur le revenu, chaque associé est imposé chaque année sur sa part du revenu foncier de la SCI (déclaration 2072 de la SCI, à reporter sur sa propre déclaration 2044), que l’argent lui soit versé ou non. Le remboursement ultérieur du compte courant n’est donc pas imposé une seconde fois : c’est le remboursement d’une dette, pas un revenu.</p>' +
+  '<p><b>Quand est-il remboursé ?</b> Quand la trésorerie de la SCI le permet, sur décision des associés ; lors d’une vente de parts, le compte courant est généralement racheté par le nouvel associé en plus du prix des parts ; enfin, à la vente de l’immeuble ou à la dissolution de la SCI. Les règles précises figurent dans les statuts et le pacte d’associés.</p>' +
+  '<p style="margin-bottom:0"><b>Dans PibraCompta.</b> Le tableau ci-dessous donne le solde de chaque associé à la fin de l’exercice choisi en haut de l’écran ; un clic sur une ligne affiche le détail des mouvements. L’affectation annuelle du résultat se fait dans Comptabilité › Clôture.</p></details>';
 VUES.associes = function (c, etat) {
   var o = onglets(c, etat, [['liste', 'Associés et parts'], ['cc', 'Comptes courants'], ['fiscal', 'Quote-parts fiscales ' + ANNEE]]);
   var d = elt('<div></div>'); c.appendChild(d);
@@ -2178,7 +2517,7 @@ VUES.associes = function (c, etat) {
     $('#na', d).onclick = function () { ficheAssocie({ ordre: as.length + 1, civilite: 'Mme', date_entree: auj }); };
   } else if (o === 'cc') {
     var ccs2 = Compta.comptesCourants(DB, ANNEE);
-    d.innerHTML = '<p class="doux">Comptes courants d’associés (' + ANNEE + ') : solde créditeur = somme due par la SCI à l’associé (résultats affectés non distribués, avances). Les dépenses personnelles réglées par erreur avec le compte de la SCI s’y imputent (catégorie « Compte courant … » dans la Banque).</p>' +
+    d.innerHTML = AIDE_COMPTE_COURANT + '<h2 style="font-size:15px;margin:18px 0 10px">Soldes ' + ANNEE + '</h2>' +
       tableau([{ t: 'Associé', v: function (x) { return esc(nomA(x.associe)); } }, { t: 'Compte', mob: false, v: function (x) { return esc(x.compte); } }, { t: 'Mouvements', n: 1, mob: false, v: function (x) { return x.mouvements.length; } }, { t: 'Solde', n: 1, v: function (x) { return eur(x.solde); } }], ccs2, { clic: 1, pied: ['Total', '', '', eur(ccs2.reduce(function (a, x) { return a + x.solde; }, 0))] });
     brancherClics(d, ccs2, function (x) { modal({ titre: 'Compte courant ' + nomA(x.associe) + ' – ' + ANNEE, large: true, corps: tableau([{ t: 'Date', v: function (l) { return dfr(l.date); } }, { t: 'Journal', v: function (l) { return l.journal; } }, { t: 'Libellé', v: function (l) { return esc(l.libelle); } }, { t: 'Débit', n: 1, v: function (l) { return l.debit ? eur(l.debit) : ''; } }, { t: 'Crédit', n: 1, v: function (l) { return l.credit ? eur(l.credit) : ''; } }], x.mouvements, { pied: ['', '', 'Solde', '', eur(x.solde)] }) }); });
   } else {
@@ -2961,6 +3300,759 @@ function paramBanque(c) {
   };
   if ($('#sy', c)) $('#sy', c).onclick = function () { synchroBanque(true); };
   if ($('#dc', c)) $('#dc', c).onclick = function () { confirmer('Déconnecter la banque ? La synchronisation automatique s’arrêtera (les opérations déjà récupérées sont conservées).', 'Déconnecter').then(function (o) { if (o) appel('banqueDeconnecter', {}).then(function (e) { DB.banque = e; rendre(); }).catch(erreur); }); };
+}
+
+/* ===== agenda.js ===== */
+/* =====================================================================
+   Agenda de la SCI : calendrier, rappels et tâches, disponibilités
+   (réunions et interventions dans les locaux), contacts.
+   ===================================================================== */
+var CATEGORIES_CONTACTS = ['Centre paramédical', 'Comptable', 'Assureur', 'Banque', 'Notaire / juridique', 'Artisan / entreprise', 'Administration', 'Autre'];
+var MODELES_TACHES = [
+  ['Entretien de la climatisation', 'tache', 'an:1'], ['Vérification des extincteurs', 'tache', 'an:1'], ['Vérification de l’alarme incendie', 'tache', 'an:1'],
+  ['Contrôle de l’éclairage de sécurité', 'tache', 'an:1'], ['Contrôle des installations électriques', 'tache', 'an:1'], ['Échéance de l’assurance de l’immeuble', 'tache', 'an:1'],
+  ['Déclaration 2072', 'tache', 'an:1'], ['Assemblée générale annuelle', 'reunion', 'an:1']
+];
+var PRESETS_DISPO = [['Matin', '08:00', '12:00'], ['Après-midi', '14:00', '18:00'], ['Soir', '18:00', '21:00'], ['Journée', '', '']];
+var COULEURS_AG = { bleu: 1, violet: 1, orange: 1, teal: 1, rose: 1, gris: 1 };
+
+// ---------- listes et personnes ----------
+function catsContacts() { var x = Compta.parseJSON(DB.params.categories_contacts, []) || []; return CATEGORIES_CONTACTS.concat(x.filter(function (k) { return CATEGORIES_CONTACTS.indexOf(k) < 0; })); }
+function optContacts() { var o = catsContacts().map(function (k) { return [k, k]; }); o._ajout = 'contacts'; return o; }
+function typesAgenda() {
+  var x = Compta.parseJSON(DB.params.categories_agenda, []) || [];
+  return Agenda.TYPES.concat(x.filter(function (k) { return !Agenda.TYPES.some(function (t) { return Compta.normaliser(t[1]) === Compta.normaliser(k); }); }).map(function (k) { return [k, k, 'gris']; }));
+}
+function optTypesAgenda() { var o = typesAgenda().map(function (t) { return [t[0], t[1]]; }); o._ajout = 'agenda'; return o; }
+function couleurType(t) { var x = typesAgenda().filter(function (y) { return y[0] === t; })[0]; return x && COULEURS_AG[x[2]] ? x[2] : 'gris'; }
+function libType(t) { return Agenda.libelleType(t, typesAgenda()); }
+function nomContact(c) { var n = ((c.prenom ? c.prenom + ' ' : '') + (c.nom || '')).trim(); return c.societe ? (n ? n + ' (' + c.societe + ')' : c.societe) : n; }
+function emailAssocie(a) {
+  if (a.email) return a.email;
+  var u = (DB.utilisateurs || []).filter(function (x) { return x.associe_id === a.id && x.actif; })[0];
+  return u ? u.email : '';
+}
+function personnes() {
+  var out = Compta.associesOrdonnes(DB).map(function (a) { return { id: a.id, nom: nomA(a), email: emailAssocie(a), groupe: 'Associés', associe: true }; });
+  trier(L('contacts'), function (a, b) { return nomContact(a).localeCompare(nomContact(b)); }).forEach(function (c) { out.push({ id: c.id, nom: nomContact(c), email: c.email, groupe: c.categorie || 'Autre', associe: false }); });
+  return out;
+}
+function personne(id) { return personnes().filter(function (p) { return p.id === id; })[0] || { id: id, nom: '(personne supprimée)', email: '' }; }
+function nomPersonne(id) { return personne(id).nom; }
+function initiales(nom) { return String(nom || '').replace(/\(.*\)/, '').split(/[\s-]+/).filter(Boolean).map(function (m) { return m[0].toUpperCase(); }).join('').slice(0, 3); }
+function occupantsLocal(lid) { return L('baux').filter(function (b) { return b.local_id === lid && String(b.actif) !== '0'; }).map(function (b) { return b.associe_id; }).filter(Boolean); }
+function mesLocaux() { return L('baux').filter(function (b) { return b.associe_id === MOI.associe_id && String(b.actif) !== '0'; }).map(function (b) { return b.local_id; }); }
+function sallesLocal(l) { return String((l && l.salles) || '').split(/[,;\n]/).map(function (s) { return s.trim(); }).filter(Boolean); }
+function maintenantLocal() { var d = new Date(); return aujourdhui() + 'T' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
+var MOIS_C = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+function jourCourt(d) { return Agenda.JOURS[Agenda.jourSemaine(d)].slice(0, 3) + '. ' + (+d.slice(8, 10)) + ' ' + MOIS_C[+d.slice(5, 7) - 1]; }
+function plageFr(a, b) { return Agenda.hFr(a) + ' – ' + Agenda.hFr(b); }
+function puceType(t) { return '<span class="puce ag-pu t-' + couleurType(t) + '">' + esc(libType(t)) + '</span>'; }
+
+// ---------- vue principale ----------
+VUES.agenda = function (c, etat) {
+  var o = onglets(c, etat, [['cal', 'Calendrier'], ['faire', 'Rappels et tâches'], ['dispos', 'Disponibilités'], ['contacts', 'Contacts']]);
+  var z = elt('<div></div>'); c.appendChild(z);
+  ({ cal: agCalendrier, faire: agAFaire, dispos: agDispos, contacts: agContacts })[o](z, etat);
+};
+
+// ---------- CALENDRIER ----------
+function agCalendrier(z, etat) {
+  var auj = aujourdhui();
+  etat.mois = etat.mois || auj.slice(0, 7); etat.jour = etat.jour || auj;
+  var premier = etat.mois + '-01', dec = (Agenda.jourSemaine(premier) + 6) % 7;
+  var nbJ = Agenda.ecartJours(premier, Agenda.plusMois(premier, 1));
+  var debut = Agenda.plusJours(premier, -dec), fin = Agenda.plusJours(debut, Math.ceil((dec + nbJ) / 7) * 7 - 1);
+  var filtre = etat.types || {};
+  var evs = L('evenements').filter(function (e) { return !filtre[e.type]; });
+  var pl = Agenda.planning(evs, debut, fin), parJour = {};
+  pl.forEach(function (o) { for (var d = o.date < debut ? debut : o.date; d <= o.fin && d <= fin; d = Agenda.plusJours(d, 1)) (parJour[d] = parJour[d] || []).push(o); });
+  var m = +etat.mois.slice(5, 7) - 1;
+  var h = '<div class="barre"><button class="btn" id="ag-prec" title="Mois précédent">‹</button><b style="min-width:140px;text-align:center;font-size:15px">' + Agenda.MOIS[m].replace(/^./, function (x) { return x.toUpperCase(); }) + ' ' + etat.mois.slice(0, 4) + '</b><button class="btn" id="ag-suiv" title="Mois suivant">›</button><button class="btn" id="ag-auj">Aujourd’hui</button><span style="flex:1"></span>' +
+    '<button class="btn prim" id="ag-nv">+ Événement</button><button class="btn" id="ag-nt">+ Rappel / tâche</button><button class="btn" id="ag-ics" title="Pour l’importer dans Google Agenda, Outlook ou l’agenda du téléphone">Exporter (.ics)</button></div>' +
+    '<div class="chips" style="margin-bottom:10px">' + typesAgenda().map(function (t) { return '<span class="chip ag-filtre' + (filtre[t[0]] ? '' : ' actif-t') + '" data-t="' + esc(t[0]) + '"><span class="ag-pt t-' + couleurType(t[0]) + '" style="display:inline-block"></span> ' + esc(t[1]) + '</span>'; }).join('') + '</div>';
+  h += '<div class="ag-grille">' + ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(function (j) { return '<div class="ag-tete">' + j + '</div>'; }).join('');
+  for (var d = debut; d <= fin; d = Agenda.plusJours(d, 1)) {
+    var occ = parJour[d] || [];
+    h += '<div class="ag-j' + (d.slice(0, 7) !== etat.mois ? ' hors' : '') + (d === auj ? ' auj' : '') + (d === etat.jour ? ' sel' : '') + '" data-d="' + d + '"><div class="ag-n">' + (+d.slice(8, 10)) + '</div>' +
+      occ.slice(0, 3).map(function (o) { return '<div class="ag-ev t-' + couleurType(o.ev.type) + (o.fait ? ' fait' : '') + '" data-o="' + pl.indexOf(o) + '">' + (Agenda.journee(o.ev) || o.date !== d ? '' : '<b>' + esc(o.ev.heure) + '</b> ') + esc(o.ev.titre) + '</div>'; }).join('') +
+      (occ.length > 3 ? '<div class="ag-plus">+ ' + (occ.length - 3) + '</div>' : '') +
+      '<div class="ag-pts">' + occ.slice(0, 5).map(function (o) { return '<span class="ag-pt t-' + couleurType(o.ev.type) + '"></span>'; }).join('') + '</div></div>';
+  }
+  h += '</div>';
+  var duJour = Agenda.planning(evs, etat.jour, etat.jour);
+  h += '<div class="bloc"><h2>' + esc(Agenda.dateLongue(etat.jour).replace(/^./, function (x) { return x.toUpperCase(); })) + ' <button class="btn petit" id="ag-ajj">+ Ajouter ce jour-là</button></h2>' + listeOcc(duJour, 'Rien de prévu ce jour-là.') + '</div>';
+  var avenir = Agenda.planning(evs, auj, Agenda.plusJours(auj, 45)).filter(function (o) { return !o.fait; });
+  h += '<div class="bloc"><h2>À venir (45 jours)</h2>' + listeOcc(avenir, 'Rien de prévu.', true) + '</div>';
+  z.innerHTML = h;
+  function mois(n) { etat.mois = Agenda.plusMois(etat.mois + '-01', n).slice(0, 7); etat.jour = etat.mois === auj.slice(0, 7) ? auj : etat.mois + '-01'; rendre(); }
+  $('#ag-prec', z).onclick = function () { mois(-1); }; $('#ag-suiv', z).onclick = function () { mois(1); };
+  $('#ag-auj', z).onclick = function () { etat.mois = auj.slice(0, 7); etat.jour = auj; rendre(); };
+  $('#ag-nv', z).onclick = function () { formEvenement({ date: etat.jour }); };
+  $('#ag-nt', z).onclick = function () { formEvenement({ date: etat.jour, type: 'tache' }); };
+  $('#ag-ajj', z).onclick = function () { formEvenement({ date: etat.jour }); };
+  $('#ag-ics', z).onclick = function () { telecharger('agenda_SCI_PIBRAMEDIC.ics', Agenda.ics(L('evenements'), { horodatage: horodatageIcs(), nom: nomPersonne }), 'text/calendar'); };
+  $$('.ag-filtre', z).forEach(function (ch) { ch.onclick = function () { etat.types = etat.types || {}; etat.types[ch.dataset.t] = !etat.types[ch.dataset.t]; rendre(); }; });
+  $$('.ag-j', z).forEach(function (j) { j.onclick = function () { etat.jour = j.dataset.d; rendre(); }; });
+  $$('.ag-ev', z).forEach(function (e) { e.onclick = function (ev) { ev.stopPropagation(); ouvrirOccurrence(pl[+e.dataset.o]); }; });
+  brancherOcc(z, duJour.concat(avenir));
+}
+function horodatageIcs() { return new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, ''); }
+function listeOcc(liste, vide, avecDate) {
+  if (!liste.length) return '<div class="vide" style="padding:14px">' + vide + '</div>';
+  var k = listeOcc.n = (listeOcc.n || 0) + 1;
+  window['__occ' + k] = liste;
+  return '<div class="ag-liste">' + liste.map(function (o, i) {
+    var p = Agenda.pj(o.ev.participants, []);
+    return '<div class="item" data-occ="' + k + ':' + i + '"><span class="ag-barre-c t-' + couleurType(o.ev.type) + '"></span>' +
+      '<div class="ag-heure">' + (avecDate ? '<b style="color:var(--texte)">' + esc(jourCourt(o.date)) + '</b><br>' : '') + (Agenda.journee(o.ev) ? 'journée' : esc(o.ev.heure) + (o.ev.heure_fin ? '<br>' + esc(o.ev.heure_fin) : '')) + '</div>' +
+      '<div style="flex:1;min-width:0"><div class="' + (o.fait ? 'ag-barre' : '') + '"><b>' + esc(o.ev.titre) + '</b> ' + puceType(o.ev.type) + (o.ev.recurrence ? ' <span class="doux" title="' + esc(Agenda.libelleRecurrence(o.ev)) + '">↻</span>' : '') + (o.fait ? ' ' + puce('fait', 'vert') : '') + '</div>' +
+      '<div class="doux" style="font-size:12.5px">' + [o.ev.lieu, o.ev.modalite === 'distanciel' ? 'à distance' : o.ev.modalite === 'mixte' ? 'présentiel et distanciel' : '', p.length ? p.length + ' participant' + (p.length > 1 ? 's' : '') : ''].filter(Boolean).map(esc).join(' · ') + '</div></div></div>';
+  }).join('') + '</div>';
+}
+function brancherOcc(z) {
+  $$('[data-occ]', z).forEach(function (el) { el.onclick = function () { var p = el.dataset.occ.split(':'); ouvrirOccurrence(window['__occ' + p[0]][+p[1]]); }; });
+}
+
+// ---------- détail d'une occurrence ----------
+function ouvrirOccurrence(o) {
+  var ev = byId('evenements', o.ev.id) || o.ev, d = o.date, p = Agenda.pj(ev.participants, []), rs = Agenda.rappels(ev);
+  var fait = Agenda.pj(ev.faits, []).indexOf(d) >= 0;
+  var corps = '<div style="display:grid;gap:10px">' +
+    '<div>' + puceType(ev.type) + (fait ? ' ' + puce('fait', 'vert') : '') + '</div>' +
+    '<div><b>' + esc(Agenda.dateLongue(d).replace(/^./, function (x) { return x.toUpperCase(); })) + '</b>' + (ev.date_fin && ev.date_fin > ev.date ? ' → ' + esc(Agenda.dateLongue(o.fin)) : '') + ', ' + esc(Agenda.horaire(ev)) + (ev.recurrence ? '<br><span class="doux">↻ ' + esc(Agenda.libelleRecurrence(ev)) + '</span>' : '') + '</div>' +
+    (ev.lieu ? '<div><span class="doux">Lieu :</span> ' + esc(ev.lieu) + '</div>' : '') +
+    (ev.modalite ? '<div><span class="doux">Modalité :</span> ' + esc(Agenda.libelle([['presentiel', 'présentiel'], ['distanciel', 'distanciel'], ['mixte', 'présentiel et distanciel']], ev.modalite)) + (ev.lien_visio ? ' – ' + (/^https?:/.test(ev.lien_visio) ? '<a href="' + esc(ev.lien_visio) + '" target="_blank">' + esc(ev.lien_visio) + '</a>' : esc(ev.lien_visio)) : '') + '</div>' : '') +
+    (p.length ? '<div><span class="doux">Participants :</span><div class="chips" style="margin-top:4px">' + p.map(function (id) { var x = personne(id); return '<span class="chip" style="cursor:default" title="' + esc(x.email || 'pas d’adresse e-mail') + '">' + esc(x.nom) + (x.email ? '' : ' <span class="neg">(sans e-mail)</span>') + '</span>'; }).join('') + '</div></div>' : '') +
+    (ev.ordre_du_jour ? '<div><span class="doux">Ordre du jour :</span><div class="ag-texte">' + esc(ev.ordre_du_jour) + '</div></div>' : '') +
+    (ev.questions ? '<div><span class="doux">Questions et problèmes à évoquer :</span><div class="ag-texte">' + esc(ev.questions) + '</div></div>' : '') +
+    (ev.notes ? '<div><span class="doux">Notes :</span><div class="ag-texte">' + esc(ev.notes) + '</div></div>' : '') +
+    '<div class="doux" style="font-size:12.5px">Rappels par e-mail : ' + (rs.length ? rs.map(Agenda.libelleDelai).join(', ') : 'aucun') + (DB.agenda && DB.agenda.erreur ? ' <span class="neg">(envoi automatique inactif : ' + esc(DB.agenda.erreur) + ')</span>' : '') + '</div>' +
+    '</div>';
+  var b = [];
+  b.push({ lib: 'Supprimer', danger: true, action: function () { supprimerEvenement(ev, d); } });
+  b.push({ lib: 'Ajouter à mon agenda', action: function () { telecharger(Compta.normaliser(ev.titre).replace(/[^a-z0-9]+/gi, '_').slice(0, 40) + '.ics', Agenda.ics(ev, { horodatage: horodatageIcs(), nom: nomPersonne }), 'text/calendar'); return false; } });
+  if (p.length) b.push({ lib: 'Envoyer par e-mail', action: function () { return inviterEvenement(ev, d); } });
+  if (ev.type === 'tache') b.push({ lib: fait ? 'Marquer « à faire »' : 'Marquer comme fait', action: function () { return basculerFait(ev, d); } });
+  b.push({ lib: 'Modifier', prim: true, action: function () { formEvenement(ev); } });
+  modal({ titre: ev.titre, corps: corps, boutons: b, large: true });
+}
+function basculerFait(ev, d) {
+  var f = Agenda.pj(ev.faits, []), i = f.indexOf(d);
+  if (i >= 0) f.splice(i, 1); else f.push(d);
+  return enregistrer('evenements', { id: ev.id, faits: JSON.stringify(f.sort()) }).then(function () { toast(i >= 0 ? 'Remis à faire.' : 'Marqué comme fait.'); rendre(); });
+}
+function inviterEvenement(ev, d) {
+  return appel('agendaInviter', { id: ev.id, date: d }, { message: 'Envoi des e-mails…' }).then(function (r) {
+    toast('E-mail envoyé à ' + r.emails.length + ' personne(s).' + (r.sans.length ? ' Sans adresse : ' + r.sans.join(', ') + '.' : ''));
+  });
+}
+function supprimerEvenement(ev, d) {
+  if (!ev.recurrence) return confirmer('Supprimer « ' + esc(ev.titre) + ' » ?', 'Supprimer').then(function (ok) { if (ok) supprimer('evenements', ev.id).then(function () { toast('Supprimé.'); rendre(); }).catch(erreur); });
+  modal({ titre: 'Supprimer un événement répété', corps: '<p>« ' + esc(ev.titre) + ' » se répète (' + esc(Agenda.libelleRecurrence(ev)) + ').</p>', boutons: [
+    { lib: 'Annuler' },
+    { lib: 'Seulement le ' + dfr(d), action: function () { var x = Agenda.pj(ev.exclusions, []); x.push(d); return enregistrer('evenements', { id: ev.id, exclusions: JSON.stringify(x) }).then(function () { toast('Occurrence supprimée.'); rendre(); }); } },
+    { lib: 'Toute la série', danger: true, action: function () { return supprimer('evenements', ev.id).then(function () { toast('Série supprimée.'); rendre(); }); } }
+  ] });
+}
+
+// ---------- formulaire d'événement ----------
+function choixPersonnes(sel, id) {
+  var ps = personnes(), groupes = [];
+  ps.forEach(function (p) { if (groupes.indexOf(p.groupe) < 0) groupes.push(p.groupe); });
+  return '<div class="ag-pers" id="' + id + '">' + groupes.map(function (g) {
+    return '<div class="doux" style="font-size:12px;margin:6px 0 4px">' + esc(g) + '</div><div class="chips">' + ps.filter(function (p) { return p.groupe === g; }).map(function (p) {
+      return '<span class="chip' + (sel.indexOf(p.id) >= 0 ? ' actif' : '') + (p.email ? '' : ' p-sans') + '" data-p="' + esc(p.id) + '" title="' + esc(p.email || 'pas d’adresse e-mail : ne recevra pas les e-mails') + '">' + esc(p.nom) + '</span>';
+    }).join('') + '</div>';
+  }).join('') + '</div><div class="barre" style="margin:8px 0 0"><a class="btn petit" data-pa="tous">Tous les associés</a><a class="btn petit" data-pa="aucun">Aucun</a><a class="btn petit" data-pa="nouveau">+ Nouvelle personne</a></div>';
+}
+function brancherChoixPersonnes(racine, sel, id) {
+  function maj() { $$('#' + id + ' [data-p]', racine).forEach(function (c) { c.classList.toggle('actif', sel.indexOf(c.dataset.p) >= 0); }); }
+  function branche() { $$('#' + id + ' [data-p]', racine).forEach(function (c) { c.onclick = function () { var i = sel.indexOf(c.dataset.p); if (i >= 0) sel.splice(i, 1); else sel.push(c.dataset.p); maj(); }; }); }
+  branche();
+  $$('[data-pa]', racine).forEach(function (b) {
+    b.onclick = function () {
+      if (b.dataset.pa === 'tous') { Compta.associesOrdonnes(DB).forEach(function (a) { if (sel.indexOf(a.id) < 0) sel.push(a.id); }); maj(); }
+      else if (b.dataset.pa === 'aucun') { sel.length = 0; maj(); }
+      else formContact({}, function (c) { sel.push(c.id); var bloc = $('#' + id, racine); bloc.outerHTML = choixPersonnes(sel, id).split('<div class="barre"')[0]; branche(); });
+    };
+  });
+}
+function formEvenement(ev, opts) {
+  opts = opts || {};
+  ev = Object.assign({}, ev);
+  var nouveau = !ev.id;
+  if (nouveau) {
+    ev.type = ev.type || 'rdv';
+    if (ev.rappels === undefined) ev.rappels = JSON.stringify(ev.type === 'tache' ? ['2:sem', '1:j'] : ['1:sem', '1:j']);
+    if (ev.type === 'tache' && ev.journee === undefined) ev.journee = '1';
+    if (ev.type === 'anniversaire') { ev.journee = '1'; ev.recurrence = ev.recurrence || 'an:1'; }
+  }
+  var sel = Agenda.pj(ev.participants, []).slice(), rs = Agenda.rappels(ev);
+  var ch = [
+    { k: 'titre', lib: 'Nom', requis: true, large: true, ph: 'ex. Réunion des associés, entretien climatisation…' },
+    { k: 'type', lib: 'Type', type: 'select', vide: false, options: optTypesAgenda() },
+    { k: 'date', lib: 'Date', type: 'date', requis: true },
+    { k: 'heure', lib: 'Heure de début', type: 'time' },
+    { k: 'heure_fin', lib: 'Heure de fin', type: 'time' },
+    { k: 'journee', lib: 'Toute la journée (sans heure)', type: 'case' },
+    { k: 'date_fin', lib: 'Dernier jour (si sur plusieurs jours)', type: 'date' },
+    { k: 'lieu', lib: 'Lieu' },
+    { k: 'modalite', lib: 'Modalité', type: 'select', options: [['presentiel', 'Présentiel'], ['distanciel', 'Distanciel (visio, téléphone)'], ['mixte', 'Présentiel et distanciel']] },
+    { k: 'lien_visio', lib: 'Lien de visio ou numéro à appeler', large: true },
+    { k: 'recurrence', lib: 'Répétition', type: 'select', vide: false, options: Agenda.RECURRENCES },
+    { k: 'recurrence_fin', lib: 'Répéter jusqu’au (facultatif)', type: 'date' }
+  ];
+  var ch2 = [
+    { k: 'ordre_du_jour', lib: 'Ordre du jour', type: 'textarea', large: true },
+    { k: 'questions', lib: 'Questions et problèmes à évoquer', type: 'textarea', large: true },
+    { k: 'notes', lib: 'Notes', type: 'textarea', large: true }
+  ];
+  var optR = '<option value="">—</option>' + Agenda.DELAIS.map(function (d) { return '<option value="' + d[0] + '">' + esc(d[1]) + '</option>'; }).join('');
+  var corps = formulaire(ch, ev) +
+    '<div class="champ large ag-bloc"><span class="ag-lib">Participants</span>' + choixPersonnes(sel, 'ag-part') + '</div>' +
+    formulaire(ch2, ev) +
+    '<div class="ag-bloc"><span class="ag-lib">Rappels par e-mail aux participants (3 au maximum)</span><div class="form" style="margin-top:6px">' + [0, 1, 2].map(function (i) { return '<label class="champ"><span>Rappel ' + (i + 1) + '</span><select data-r="' + i + '">' + optR + '</select></label>'; }).join('') + '</div>' +
+    '<small class="doux">Envoyés depuis l’adresse de la SCI. Sans participant, le rappel est envoyé à la personne qui a créé l’événement.</small></div>' +
+    '<label class="case" style="margin-top:12px"><input type="checkbox" id="ag-inv"' + (opts.inviter ? ' checked' : '') + '> Envoyer maintenant l’invitation par e-mail aux participants (avec le fichier à ajouter à leur agenda)</label>';
+  var b = [{ lib: 'Annuler' }, { lib: 'Enregistrer', prim: true, action: function (c) {
+    var v = Object.assign({}, ev, lireForm(c, ch.concat(ch2)));
+    var inviter = $('#ag-inv', c).checked; delete v.inviter;
+    v.journee = v.journee || !v.heure ? '1' : '';
+    if (v.journee === '1') { v.heure = ''; v.heure_fin = ''; }
+    if (v.date_fin && v.date_fin < v.date) throw new Error('Le dernier jour est antérieur à la date de début.');
+    if (v.date_fin === v.date) v.date_fin = '';
+    if (!v.date_fin && v.heure && v.heure_fin && v.heure_fin <= v.heure) throw new Error('L’heure de fin doit être après l’heure de début.');
+    if (v.recurrence_fin && v.recurrence_fin < v.date) throw new Error('La date de fin de répétition est antérieure à la date de l’événement.');
+    if (!v.recurrence) v.recurrence_fin = '';
+    v.participants = JSON.stringify(sel);
+    var r = $$('[data-r]', c).map(function (s) { return s.value; }).filter(Boolean);
+    v.rappels = JSON.stringify(r.filter(function (x, i) { return r.indexOf(x) === i; }));
+    v.rappels_depuis = maintenantLocal();
+    if (nouveau) v.cree_par = MOI.id;
+    return enregistrer('evenements', v).then(function (x) {
+      toast('Enregistré.');
+      if (opts.apres) opts.apres(x);
+      rendre();
+      if (inviter && sel.length) return inviterEvenement(x, x.date).catch(erreur);
+    });
+  } }];
+  var m = modal({ titre: nouveau ? (ev.type === 'tache' ? 'Nouveau rappel / tâche' : 'Nouvel événement') : 'Modifier « ' + ev.titre + ' »', corps: corps, boutons: b, large: true });
+  var c = m.corps;
+  rs.forEach(function (r, i) { $('[data-r="' + i + '"]', c).value = r; });
+  brancherChoixPersonnes(c, sel, 'ag-part');
+  var dl = elt('<datalist id="ag-sugg">' + MODELES_TACHES.concat([['Réunion des associés'], ['Rendez-vous avec le comptable'], ['Rendez-vous à la banque'], ['Visite de l’assureur']]).map(function (x) { return '<option value="' + esc(x[0]) + '">'; }).join('') + '</datalist>');
+  c.appendChild(dl); $('[name=titre]', c).setAttribute('list', 'ag-sugg');
+  var jr = $('[name=journee]', c);
+  function heures() { ['heure', 'heure_fin'].forEach(function (k) { var i = $('[name=' + k + ']', c); i.disabled = jr.checked; if (jr.checked) i.value = ''; }); }
+  jr.onchange = heures; heures();
+  $('[name=heure]', c).addEventListener('change', function () { if (this.value) { jr.checked = false; heures(); var f = $('[name=heure_fin]', c); if (!f.value) f.value = Agenda.hs(Math.min(Agenda.hm(this.value) + 60, 1439)); } });
+  var ty = $('[name=type]', c);
+  ty.addEventListener('change', function () { if (ty.value === 'anniversaire') { $('[name=recurrence]', c).value = 'an:1'; jr.checked = true; heures(); } });
+  var mo = $('[name=modalite]', c), lv = $('[name=lien_visio]', c).closest('label');
+  function visio() { lv.style.display = mo.value === 'distanciel' || mo.value === 'mixte' ? '' : 'none'; }
+  mo.onchange = visio; visio();
+  var rf = $('[name=recurrence_fin]', c).closest('label'), rc = $('[name=recurrence]', c);
+  function rep() { rf.style.display = rc.value ? '' : 'none'; }
+  rc.addEventListener('change', rep); rep();
+  return m;
+}
+
+// ---------- RAPPELS ET TÂCHES ----------
+function agAFaire(z, etat) {
+  var auj = aujourdhui(), taches = L('evenements').filter(function (e) { return e.type === 'tache'; });
+  var retard = [], prochaines = [], faites = [];
+  taches.forEach(function (ev) {
+    var passees = Agenda.occurrences(ev, Agenda.plusJours(auj, -366), Agenda.plusJours(auj, -1)), f = Agenda.pj(ev.faits, []);
+    var der = passees[passees.length - 1];
+    if (der && f.indexOf(der) < 0) retard.push({ ev: ev, date: der, fin: der, fait: false });
+    var proch = Agenda.occurrences(ev, auj, Agenda.plusJours(auj, 400)).filter(function (d) { return f.indexOf(d) < 0; })[0];
+    if (proch) prochaines.push({ ev: ev, date: proch, fin: proch, fait: false });
+    f.filter(function (d) { return d >= Agenda.plusJours(auj, -400); }).forEach(function (d) { faites.push({ ev: ev, date: d, fin: d, fait: true }); });
+  });
+  function tri(a, b) { return a.date.localeCompare(b.date); }
+  retard.sort(tri); prochaines.sort(tri); faites.sort(function (a, b) { return b.date.localeCompare(a.date); });
+  var h = '<div class="barre"><button class="btn prim" id="ag-nt">+ Nouveau rappel / tâche</button></div>' +
+    '<div class="doux" style="font-size:12.5px;margin:-4px 0 6px">Modèles (répétés chaque année, modifiables) :</div><div class="chips" style="margin-bottom:14px">' + MODELES_TACHES.map(function (m, i) { return '<span class="chip" data-mod="' + i + '">+ ' + esc(m[0]) + '</span>'; }).join('') + '</div>';
+  function ligne(o, i, k) {
+    return '<div class="item ag-tache" data-k="' + k + '" data-i="' + i + '"><input type="checkbox" class="ag-coche"' + (o.fait ? ' checked' : '') + ' title="Fait"><span class="ag-barre-c t-' + couleurType(o.ev.type) + '"></span>' +
+      '<div style="flex:1;min-width:0"><b class="' + (o.fait ? 'ag-barre' : '') + '">' + esc(o.ev.titre) + '</b><div class="doux" style="font-size:12.5px">' + esc(Agenda.dateLongue(o.date)) + (o.ev.recurrence ? ' · ↻ ' + esc(Agenda.libelleRecurrence(o.ev)) : '') + (Agenda.pj(o.ev.participants, []).length ? ' · ' + esc(Agenda.pj(o.ev.participants, []).map(nomPersonne).join(', ')) : '') + '</div></div></div>';
+  }
+  var L3 = { r: retard, p: prochaines, f: faites.slice(0, 15) };
+  if (retard.length) h += '<div class="bloc"><h2><span class="neg">En retard</span></h2><div class="ag-liste">' + retard.map(function (o, i) { return ligne(o, i, 'r'); }).join('') + '</div></div>';
+  h += '<div class="bloc"><h2>Prochaines échéances</h2>' + (prochaines.length ? '<div class="ag-liste">' + prochaines.map(function (o, i) { return ligne(o, i, 'p'); }).join('') + '</div>' : '<div class="vide">Aucun rappel prévu. Utilisez un modèle ci-dessus pour démarrer.</div>') + '</div>';
+  if (faites.length) h += '<div class="bloc"><h2>Faites récemment</h2><div class="ag-liste">' + L3.f.map(function (o, i) { return ligne(o, i, 'f'); }).join('') + '</div></div>';
+  z.innerHTML = h;
+  $('#ag-nt', z).onclick = function () { formEvenement({ type: 'tache', date: auj }); };
+  $$('[data-mod]', z).forEach(function (c) { c.onclick = function () { var m = MODELES_TACHES[+c.dataset.mod]; formEvenement({ titre: m[0], type: m[1], recurrence: m[2], date: auj, journee: m[1] === 'tache' ? '1' : '', participants: m[1] === 'reunion' ? JSON.stringify(Compta.associesOrdonnes(DB).map(function (a) { return a.id; })) : '[]' }); }; });
+  $$('.ag-tache', z).forEach(function (el) {
+    var o = L3[el.dataset.k][+el.dataset.i];
+    $('.ag-coche', el).onclick = function (e) { e.stopPropagation(); basculerFait(byId('evenements', o.ev.id), o.date).catch(erreur); };
+    el.onclick = function () { ouvrirOccurrence(o); };
+  });
+}
+
+// ---------- DISPONIBILITÉS ----------
+function dispos(s) { return L('disponibilites').filter(function (x) { return x.sondage_id === s.id; }); }
+function sondageOuvert(s) { return s.statut !== 'clos' && s.date_limite >= aujourdhui(); }
+function concerneMoi(s) {
+  if (s.type === 'intervention') return Agenda.pj(s.locaux, []).some(function (l) { return mesLocaux().indexOf(l) >= 0; });
+  return Agenda.pj(s.participants, []).indexOf(MOI.associe_id) >= 0;
+}
+function aRepondu(s) {
+  var d = dispos(s);
+  if (s.type === 'intervention') return mesLocaux().filter(function (l) { return Agenda.pj(s.locaux, []).indexOf(l) >= 0; }).every(function (l) { return d.some(function (x) { return x.local_id === l; }); });
+  return d.some(function (x) { return x.personne === MOI.associe_id; });
+}
+function agDispos(z, etat) {
+  if (etat.sondage) { var s = byId('sondages', etat.sondage); if (s) return agSondage(z, etat, s); etat.sondage = null; }
+  var tous = trier(L('sondages'), function (a, b) { return String(b.date_limite).localeCompare(a.date_limite); });
+  var ouverts = tous.filter(sondageOuvert), autres = tous.filter(function (s) { return !sondageOuvert(s); });
+  var h = '<div class="barre"><button class="btn prim" id="ag-nr">+ Préparer une réunion</button><button class="btn" id="ag-ni">+ Préparer une intervention dans les locaux</button></div>' +
+    '<details class="aide"><summary>Comment ça marche ?</summary><p><b>Réunion</b> : choisissez les participants, la date butoir (la réunion aura lieu au plus tard ce jour-là) et la période proposée. Chacun indique ses disponibilités jour par jour, avec une plage horaire, en présentiel ou en distanciel. Le logiciel propose les meilleurs créneaux ; un clic sur « Fixer » crée la réunion dans l’agenda et prévient les participants.</p><p><b>Intervention</b> (entretien, contrôle, travaux) : pour chaque local concerné, l’occupant indique quand le local est accessible, quelles salles le sont (toutes ou certaines) et si les clés seront disponibles au centre ou s’il est le seul à les avoir.</p></details>';
+  function carteS(s) {
+    var d = dispos(s), interv = s.type === 'intervention';
+    var n = interv ? Agenda.pj(s.locaux, []).filter(function (l) { return d.some(function (x) { return x.local_id === l; }); }).length : Agenda.pj(s.participants, []).filter(function (p) { return d.some(function (x) { return x.personne === p; }); }).length;
+    var N = interv ? Agenda.pj(s.locaux, []).length : Agenda.pj(s.participants, []).length;
+    var moi = concerneMoi(s) && sondageOuvert(s) ? (aRepondu(s) ? puce('ma réponse : faite', 'vert') : puce('ma réponse : à faire', 'orange')) : '';
+    return '<div class="carte marque" style="--c:' + (interv ? 'var(--teal-f)' : 'var(--violet-f)') + ';cursor:pointer" data-s="' + esc(s.id) + '"><h3>' + (interv ? 'Intervention' : 'Réunion') + (s.statut === 'clos' ? ' · ' + (s.evenement_id ? 'date fixée' : 'close') : '') + '</h3><div style="font-weight:650;font-size:15px">' + esc(s.titre) + '</div>' +
+      '<div class="sous">Jusqu’au ' + esc(dfr(s.date_limite)) + ' · ' + n + ' / ' + N + (interv ? ' locaux renseignés' : ' réponses') + '</div><div style="margin-top:6px">' + moi + '</div></div>';
+  }
+  h += '<div class="bloc"><h2>En cours</h2>' + (ouverts.length ? '<div class="grille">' + ouverts.map(carteS).join('') + '</div>' : '<div class="vide">Aucune demande de disponibilités en cours.</div>') + '</div>';
+  if (autres.length) h += '<div class="bloc"><h2>Terminées</h2><div class="grille">' + autres.slice(0, 12).map(carteS).join('') + '</div></div>';
+  z.innerHTML = h;
+  $('#ag-nr', z).onclick = function () { formSondage({ type: 'reunion' }); };
+  $('#ag-ni', z).onclick = function () { formSondage({ type: 'intervention' }); };
+  $$('[data-s]', z).forEach(function (c) { c.onclick = function () { aller('agenda', { sondage: c.dataset.s, brouillon: null }); }; });
+}
+function formSondage(s) {
+  s = Object.assign({}, s);
+  var interv = s.type === 'intervention', nouveau = !s.id, auj = aujourdhui();
+  if (nouveau) { s.date_debut = auj; s.duree = interv ? '120' : '90'; s.heure_min = '08:00'; s.heure_max = interv ? '19:00' : '21:00'; }
+  var sel = Agenda.pj(interv ? s.locaux : s.participants, interv ? L('locaux').map(function (l) { return l.id; }) : Compta.associesOrdonnes(DB).map(function (a) { return a.id; })).slice();
+  var ch = [
+    { k: 'titre', lib: interv ? 'Intervention' : 'Réunion', requis: true, large: true, ph: interv ? 'ex. Entretien de la climatisation' : 'ex. Réunion des associés' },
+    { k: 'description', lib: interv ? 'Détails (entreprise, nature des travaux…)' : 'Objet / ordre du jour envisagé', type: 'textarea', large: true },
+    { k: 'date_debut', lib: 'Proposer des dates à partir du', type: 'date', requis: true },
+    { k: 'date_limite', lib: interv ? 'Date butoir de l’intervention' : 'Date butoir (réunion au plus tard ce jour-là)', type: 'date', requis: true },
+    { k: 'duree', lib: interv ? 'Durée estimée' : 'Durée de la réunion', type: 'select', vide: false, options: [['30', '30 min'], ['60', '1 h'], ['90', '1 h 30'], ['120', '2 h'], ['180', '3 h'], ['240', '4 h'], ['480', 'Journée']] },
+    { k: 'heure_min', lib: 'Plage horaire : de', type: 'time' },
+    { k: 'heure_max', lib: 'à', type: 'time' }
+  ];
+  if (interv) ch.splice(2, 0, { k: 'intervenant', lib: 'Entreprise / intervenant', type: 'select', options: personnes().filter(function (p) { return !p.associe; }).map(function (p) { return [p.id, p.nom]; }) });
+  var corps = formulaire(ch, s) + '<div class="ag-bloc"><span class="ag-lib">' + (interv ? 'Locaux concernés' : 'Participants') + '</span>' +
+    (interv ? '<div class="chips" id="ag-loc">' + L('locaux').map(function (l) { return '<span class="chip' + (sel.indexOf(l.id) >= 0 ? ' actif' : '') + '" data-p="' + l.id + '">' + esc(l.designation) + '</span>'; }).join('') + '</div><div class="barre" style="margin-top:8px"><a class="btn petit" id="ag-ltous">Tous les locaux</a><a class="btn petit" id="ag-laucun">Aucun</a></div>' : choixPersonnes(sel, 'ag-part')) + '</div>' +
+    '<div class="alerte bleu" style="margin-top:12px">' + (nouveau ? 'Dès la création, chaque ' + (interv ? 'occupant des locaux concernés' : 'participant') + ' reçoit un e-mail avec son lien personnel : il arrive directement sur sa page de réponse, sans mot de passe.' : 'Les personnes ajoutées recevront automatiquement leur e-mail avec leur lien personnel.') + '</div>';
+  var b = [{ lib: 'Annuler' }, { lib: nouveau ? 'Créer' : 'Enregistrer', prim: true, action: function (c) {
+    var v = Object.assign({}, s, lireForm(c, ch));
+    if (v.date_limite < v.date_debut) throw new Error('La date butoir est antérieure au début de la période.');
+    if (Agenda.ecartJours(v.date_debut, v.date_limite) > 120) throw new Error('Période trop longue (4 mois au maximum).');
+    if (v.heure_min && v.heure_max && v.heure_max <= v.heure_min) throw new Error('Plage horaire incorrecte.');
+    if (!sel.length) throw new Error(interv ? 'Choisissez au moins un local.' : 'Choisissez au moins un participant.');
+    v[interv ? 'locaux' : 'participants'] = JSON.stringify(sel);
+    if (nouveau) { v.statut = 'ouvert'; v.cree_par = MOI.id; }
+    var avant = nouveau ? [] : (interv ? Agenda.pj(s.locaux, []) : Agenda.pj(s.participants, []));
+    var ajoutes = sel.filter(function (id) { return avant.indexOf(id) < 0; });
+    var cibles = interv ? [] : ajoutes;
+    if (interv) ajoutes.forEach(function (l) { occupantsLocal(l).forEach(function (a) { if (cibles.indexOf(a) < 0) cibles.push(a); }); });
+    return enregistrer('sondages', v).then(function (x) {
+      toast(nouveau ? 'Demande créée.' : 'Enregistré.');
+      aller('agenda', { onglet: 'dispos', sondage: x.id, brouillon: null });
+      if (nouveau || cibles.length) return appel('agendaDemanderDispos', nouveau ? { id: x.id } : { id: x.id, ids: cibles }, { message: 'Envoi des e-mails…' }).then(function (r) { toastEnvoi(r); }).catch(erreur);
+    });
+  } }];
+  var m = modal({ titre: nouveau ? (interv ? 'Préparer une intervention' : 'Préparer une réunion') : 'Modifier la demande', corps: corps, boutons: b, large: true });
+  if (interv) {
+    var maj = function () { $$('#ag-loc [data-p]', m.corps).forEach(function (x) { x.classList.toggle('actif', sel.indexOf(x.dataset.p) >= 0); }); };
+    $$('#ag-loc [data-p]', m.corps).forEach(function (x) { x.onclick = function () { var i = sel.indexOf(x.dataset.p); if (i >= 0) sel.splice(i, 1); else sel.push(x.dataset.p); maj(); }; });
+    $('#ag-ltous', m.corps).onclick = function () { sel.length = 0; L('locaux').forEach(function (l) { sel.push(l.id); }); maj(); };
+    $('#ag-laucun', m.corps).onclick = function () { sel.length = 0; maj(); };
+  } else brancherChoixPersonnes(m.corps, sel, 'ag-part');
+}
+
+function agSondage(z, etat, s) {
+  var interv = s.type === 'intervention', auj = aujourdhui(), ouvert = sondageOuvert(s);
+  var br = etat.brouillon && etat.brouillon.s === s.id ? etat.brouillon : (etat.brouillon = { s: s.id, ajouts: [], suppr: {} });
+  var enregistrees = dispos(s), toutes = enregistrees.filter(function (x) { return !br.suppr[x.id]; }).concat(br.ajouts);
+  var cibles = interv ? Agenda.pj(s.locaux, []) : Agenda.pj(s.participants, []);
+  if (!etat.qui || cibles.indexOf(etat.qui) < 0) {
+    var mien = interv ? cibles.filter(function (l) { return mesLocaux().indexOf(l) >= 0; })[0] : (cibles.indexOf(MOI.associe_id) >= 0 ? MOI.associe_id : null);
+    etat.qui = mien || cibles[0];
+  }
+  etat.mode = etat.mode || 'presentiel';
+  var champ = interv ? 'local_id' : 'personne';
+  var hmin = s.heure_min || '08:00', hmax = s.heure_max || '20:00';
+  var nomCible = function (id) { return interv ? ((byId('locaux', id) || {}).designation || id) : nomPersonne(id); };
+  var h = '<div class="barre"><button class="btn" id="ag-ret">‹ Toutes les demandes</button><span style="flex:1"></span>' +
+    '<button class="btn" id="ag-mod">Modifier</button>' + (ouvert ? '<button class="btn" id="ag-rel">Relancer par e-mail</button>' : '') +
+    '<button class="btn" id="ag-clo">' + (s.statut === 'clos' ? 'Rouvrir' : 'Clore') + '</button><button class="btn danger" id="ag-sup">Supprimer</button></div>';
+  h += '<div class="carte marque" style="--c:' + (interv ? 'var(--teal-f)' : 'var(--violet-f)') + '"><h3>' + (interv ? 'Intervention dans les locaux' : 'Préparation de réunion') + (s.statut === 'clos' ? ' · close' : !ouvert ? ' · date butoir passée' : '') + '</h3><div style="font-weight:650;font-size:16px">' + esc(s.titre) + '</div>' +
+    '<div class="sous">Dates proposées du ' + esc(Agenda.dateLongue(s.date_debut)) + ' au <b>' + esc(Agenda.dateLongue(s.date_limite)) + '</b> (date butoir) · durée ' + esc(Agenda.libelle([['30', '30 min'], ['60', '1 h'], ['90', '1 h 30'], ['120', '2 h'], ['180', '3 h'], ['240', '4 h'], ['480', 'journée']], String(s.duree))) + ' · entre ' + esc(Agenda.hFr(hmin)) + ' et ' + esc(Agenda.hFr(hmax)) +
+    (s.intervenant ? ' · ' + esc(nomPersonne(s.intervenant)) : '') + '</div>' + (s.description ? '<div class="ag-texte" style="margin-top:6px">' + esc(s.description) + '</div>' : '') +
+    (s.evenement_id && byId('evenements', s.evenement_id) ? '<div style="margin-top:8px">' + puce('Date fixée : ' + dfr(byId('evenements', s.evenement_id).date) + (byId('evenements', s.evenement_id).heure ? ' à ' + byId('evenements', s.evenement_id).heure : ''), 'vert') + '</div>' : '') + '</div>';
+
+  // --- saisie ---
+  if (ouvert) {
+    h += '<div class="bloc"><h2>' + (interv ? 'Disponibilités du local' : 'Saisir des disponibilités') + '</h2><div class="barre"><label class="champ" style="min-width:220px"><span>' + (interv ? 'Local' : 'Pour') + '</span><select id="ag-qui">' + cibles.map(function (id) { return '<option value="' + esc(id) + '"' + (id === etat.qui ? ' selected' : '') + '>' + esc(nomCible(id)) + (interv ? ' – ' + esc(occupantsLocal(id).map(nomPersonne).join(', ')) : '') + '</option>'; }).join('') + '</select></label>';
+    h += '</div>';
+    if (interv) {
+      var loc = byId('locaux', etat.qui) || {}, sl = sallesLocal(loc);
+      etat.cles = etat.cles || 'centre'; etat.salles = etat.salles && etat.salles.local === etat.qui ? etat.salles : { local: etat.qui, liste: [] };
+      h += '<div class="carte" style="margin-bottom:10px"><div class="doux" style="font-size:12.5px;font-weight:550;margin-bottom:4px">Clés</div><div class="chips"><span class="chip' + (etat.cles === 'centre' ? ' actif' : '') + '" data-cles="centre">🔑 Disponibles au centre</span><span class="chip' + (etat.cles === 'occupant' ? ' actif' : '') + '" data-cles="occupant">🔒 Seul l’occupant a les clés</span></div>' +
+        '<div class="doux" style="font-size:12.5px;font-weight:550;margin:10px 0 4px">Salles accessibles</div><div class="chips"><span class="chip' + (!etat.salles.liste.length ? ' actif' : '') + '" data-salle="">Toutes les salles</span>' + sl.map(function (x) { return '<span class="chip' + (etat.salles.liste.indexOf(x) >= 0 ? ' actif' : '') + '" data-salle="' + esc(x) + '">' + esc(x) + '</span>'; }).join('') + '<a class="btn petit" id="ag-sal">' + (sl.length ? 'Modifier la liste des salles' : 'Définir les salles du local') + '</a></div>' +
+        '<label class="champ" style="margin-top:10px"><span>Commentaire (facultatif)</span><input type="text" id="ag-com" value="' + esc(etat.com || '') + '" placeholder="ex. clés dans la boîte du secrétariat, prévenir la veille…"></label>' +
+        '<small class="doux">Ces choix s’appliquent aux créneaux que vous ajoutez ci-dessous.</small></div>';
+    }
+    var jours = [];
+    for (var d = s.date_debut < auj ? auj : s.date_debut; d <= s.date_limite; d = Agenda.plusJours(d, 1)) jours.push(d);
+    var mesC = toutes.filter(function (x) { return x[champ] === etat.qui && x.date; }).map(function (x) { x._k = x.id; return x; });
+    h += (interv ? '' : '<p class="doux" style="font-size:12.5px;margin:4px 0 0">Pour chaque jour, ajoutez un ou plusieurs créneaux, puis indiquez pour chacun : présentiel, distanciel ou les deux. Les heures se modifient directement.</p>') + htmlJoursCreneaux(jours, mesC, interv);
+    var nmod = br.ajouts.length + Object.keys(br.suppr).length;
+    h += '<div class="ag-enreg"' + (nmod ? '' : ' style="display:none"') + '><button class="btn prim" id="ag-enr">Enregistrer (' + nmod + ' modification' + (nmod > 1 ? 's' : '') + ')</button><button class="btn" id="ag-ann">Annuler</button></div></div>';
+  }
+
+  // --- synthèse ---
+  var cands = Agenda.creneauxCommuns(toutes.filter(function (x) { return cibles.indexOf(x[champ]) >= 0; }), champ, +s.duree || 60).filter(function (c) { return c.qui.length >= Math.min(2, cibles.length); }).slice(0, 8);
+  var repondu = cibles.filter(function (id) { return toutes.some(function (x) { return x[champ] === id; }); });
+  var attente = cibles.filter(function (id) { return repondu.indexOf(id) < 0; });
+  var aucune = repondu.filter(function (id) { return !toutes.some(function (x) { return x[champ] === id && x.date; }); });
+  var gens = function (ids) { var o = []; ids.forEach(function (id) { (interv ? occupantsLocal(id) : [id]).forEach(function (p) { if (o.indexOf(p) < 0) o.push(p); }); }); return o; };
+  h += '<div class="bloc"><h2>Synthèse <span class="doux" style="font-weight:400;font-size:13px">' + repondu.length + ' / ' + cibles.length + (interv ? ' locaux renseignés' : ' réponses') + '</span></h2>' +
+    (attente.length ? '<div class="alerte">En attente de réponse' + (interv ? ' (' + esc(attente.map(nomCible).join(', ')) + ')' : '') + ' : <div class="chips" style="margin-top:6px">' + gens(attente).map(function (p) { var x = personne(p); return '<span class="chip" data-lien="' + esc(p) + '" title="Obtenir son lien personnel">' + esc(x.nom) + (x.email ? '' : ' <span class="neg">sans e-mail</span>') + ' · lien</span>'; }).join('') + '</div></div>' : (cibles.length ? '<div class="alerte vert">Tout le monde a répondu.</div>' : '')) +
+    (aucune.length ? '<div class="alerte rouge">Aucune disponibilité sur la période : ' + esc(aucune.map(nomCible).join(', ')) + '</div>' : '');
+  if (cands.length) {
+    h += '<h3 style="font-size:13px;margin:14px 0 8px">Meilleurs créneaux ' + (interv ? '(locaux accessibles en même temps)' : '') + '</h3>' + tableau([
+      { t: 'Date', v: function (c) { return '<b>' + esc(jourCourt(c.date)) + '</b>'; } },
+      { t: 'Horaire', v: function (c) { return esc(plageFr(c.debut, c.fin)); } },
+      { t: interv ? 'Locaux' : 'Disponibles', v: function (c) { return '<b>' + c.qui.length + ' / ' + cibles.length + '</b> <span class="doux" style="font-size:12px">' + esc(c.qui.map(interv ? nomCible : function (id) { return initiales(nomPersonne(id)); }).join(', ')) + '</span>'; } },
+      { t: interv ? 'Clés' : 'Présentiel / distanciel', mob: false, v: function (c) {
+        if (interv) { var occ = c.details.filter(function (x) { return x.cles === 'occupant'; }); return occ.length ? '🔒 ' + esc(occ.map(function (x) { return nomCible(x.local_id); }).join(', ')) : '🔑 toutes au centre'; }
+        var p = c.details.filter(function (x) { return x.mode !== 'distanciel'; }).length, di = c.details.filter(function (x) { return x.mode !== 'presentiel'; }).length;
+        return p + ' en présentiel · ' + di + ' à distance';
+      } },
+      { t: '', v: function (c, i) { return '<button class="btn petit prim" data-fix="' + cands.indexOf(c) + '">' + (interv ? 'Planifier' : 'Fixer') + '</button>'; } }
+    ], cands);
+  } else if (repondu.length) h += '<div class="vide" style="padding:14px">Pas encore de créneau commun' + (interv ? '' : ' d’au moins ' + esc(Agenda.libelle([['30', '30 min'], ['60', '1 h'], ['90', '1 h 30'], ['120', '2 h'], ['180', '3 h'], ['240', '4 h'], ['480', 'une journée']], String(s.duree)))) + '.</div>';
+  // détail
+  var joursAvec = {}; toutes.forEach(function (x) { if (x.date && cibles.indexOf(x[champ]) >= 0) joursAvec[x.date] = 1; });
+  var dj = Object.keys(joursAvec).sort();
+  if (dj.length) {
+    h += '<h3 style="font-size:13px;margin:18px 0 8px">Détail par ' + (interv ? 'local' : 'personne') + '</h3>';
+    if (interv) {
+      h += tableau([
+        { t: 'Local', v: function (id) { return '<b>' + esc(nomCible(id)) + '</b><br><span class="doux" style="font-size:12px">' + esc(occupantsLocal(id).map(nomPersonne).join(', ')) + '</span>'; } },
+        { t: 'Créneaux', v: function (id) { var xs = toutes.filter(function (x) { return x.local_id === id && x.date; }).sort(function (a, b) { return (a.date + a.heure_debut).localeCompare(b.date + b.heure_debut); }); return xs.length ? xs.map(function (x) { return esc(jourCourt(x.date) + ' ' + plageFr(x.heure_debut, x.heure_fin)); }).join('<br>') : '<span class="doux">non renseigné</span>'; } },
+        { t: 'Salles', v: function (id) { return esc(sallesResume(toutes.filter(function (x) { return x.local_id === id && x.date; }))); } },
+        { t: 'Clés', v: function (id) { return esc(clesResume(toutes.filter(function (x) { return x.local_id === id && x.date; }), id)); } }
+      ], cibles);
+    } else {
+      h += '<div class="tab-wrap"><table class="t ag-mat"><thead><tr><th>Jour</th>' + cibles.map(function (id) { return '<th title="' + esc(nomPersonne(id)) + '">' + esc(initiales(nomPersonne(id))) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+        dj.map(function (d) { return '<tr><td style="white-space:nowrap"><b>' + esc(jourCourt(d)) + '</b></td>' + cibles.map(function (id) { var xs = toutes.filter(function (x) { return x.personne === id && x.date === d; }); return '<td style="white-space:nowrap;font-size:12px' + (xs.length ? ';background:var(--vert)' : '') + '">' + xs.map(function (x) { return esc(Agenda.hFr(x.heure_debut) + '–' + Agenda.hFr(x.heure_fin)) + ' ' + modeIcone(x.mode); }).join('<br>') + '</td>'; }).join('') + '</tr>'; }).join('') +
+        '</tbody></table></div><div class="doux" style="font-size:12px;margin-top:6px">' + cibles.map(function (id) { return esc(initiales(nomPersonne(id)) + ' = ' + nomPersonne(id)); }).join(' · ') + ' — 🏢 présentiel · 💻 distanciel · 🏢💻 l’un ou l’autre</div>';
+    }
+  }
+  h += '</div>';
+  z.innerHTML = h;
+
+  // --- actions ---
+  $('#ag-ret', z).onclick = function () { aller('agenda', { sondage: null, brouillon: null }); };
+  $('#ag-mod', z).onclick = function () { formSondage(s); };
+  $('#ag-sup', z).onclick = function () { confirmer('Supprimer cette demande et les disponibilités saisies ?', 'Supprimer').then(function (ok) { if (ok) supprimer('sondages', s.id).then(function () { aller('agenda', { sondage: null }); }).catch(erreur); }); };
+  $('#ag-clo', z).onclick = function () { enregistrer('sondages', { id: s.id, statut: s.statut === 'clos' ? 'ouvert' : 'clos' }).then(function () { rendre(); }).catch(erreur); };
+  if ($('#ag-rel', z)) $('#ag-rel', z).onclick = function () { appel('agendaDemanderDispos', { id: s.id, relance: true }, { message: 'Envoi des e-mails…' }).then(toastEnvoi).catch(erreur); };
+  $$('[data-lien]', z).forEach(function (c) { c.onclick = function () { lienPersonnel(s, c.dataset.lien); }; });
+  if (ouvert) {
+    $('#ag-qui', z).onchange = function () {
+      etat.qui = this.value;
+      if (interv) { var ex = toutes.filter(function (x) { return x.local_id === etat.qui; })[0]; etat.cles = ex ? ex.cles || 'centre' : 'centre'; etat.com = ex ? ex.commentaire || '' : ''; etat.salles = { local: etat.qui, liste: ex ? Agenda.pj(ex.salles, []) : [] }; }
+      rendre();
+    };
+    $$('[data-cles]', z).forEach(function (c) { c.onclick = function () { etat.cles = c.dataset.cles; rendre(); }; });
+    $$('[data-salle]', z).forEach(function (c) { c.onclick = function () { var v = c.dataset.salle, l = etat.salles.liste; if (!v) l.length = 0; else { var i = l.indexOf(v); if (i >= 0) l.splice(i, 1); else l.push(v); } rendre(); }; });
+    if ($('#ag-com', z)) $('#ag-com', z).oninput = function () { etat.com = this.value; };
+    if ($('#ag-sal', z)) $('#ag-sal', z).onclick = function () {
+      var l = byId('locaux', etat.qui);
+      modal({ titre: 'Salles – ' + l.designation, corps: formulaire([{ k: 'salles', lib: 'Salles du local (une par ligne)', type: 'textarea', large: true }], { salles: sallesLocal(l).join('\n') }) + '<small class="doux">ex. Salle de soins 1, Bureau, Salle d’attente…</small>', boutons: [{ lib: 'Annuler' }, { lib: 'Enregistrer', prim: true, action: function (c) {
+        var v = lireForm(c); return enregistrer('locaux', { id: l.id, salles: sallesLocal({ salles: v.salles }).join(', ') }).then(function () { rendre(); });
+      } }] });
+    };
+    function ajouter(d, a, b, focus) {
+      var x = { id: nid('DI'), _nouveau: 1, sondage_id: s.id, date: d, heure_debut: a, heure_fin: b, saisi_par: MOI.id };
+      x[champ] = etat.qui;
+      if (interv) { x.cles = etat.cles; x.salles = etat.salles.liste.length ? JSON.stringify(etat.salles.liste) : ''; x.commentaire = etat.com || ''; }
+      else x.mode = etat.mode;
+      if (toutes.some(function (y) { return y[champ] === etat.qui && y.date === d && y.heure_debut === a && y.heure_fin === b; })) return;
+      toutes.filter(function (y) { return y[champ] === etat.qui && !y.date; }).forEach(function (y) { retirer(y.id, true); });
+      br.ajouts.push(x); rendre();
+      if (focus) focusDernier($('#contenu'), d);
+    }
+    function retirer(id, sansRendu) {
+      var i = br.ajouts.findIndex(function (y) { return y.id === id; });
+      if (i >= 0) br.ajouts.splice(i, 1); else br.suppr[id] = 1;
+      if (!sansRendu) rendre();
+    }
+    function maj(k, champ2, v) {
+      var x = br.ajouts.filter(function (y) { return y.id === k; })[0];
+      if (!x) {   // créneau déjà enregistré : remplacé par une copie modifiée
+        var o = enregistrees.filter(function (y) { return y.id === k; })[0]; if (!o) return;
+        x = Object.assign({}, o, { id: nid('DI'), _nouveau: 1, saisi_par: MOI.id }); delete x._k;
+        br.suppr[k] = 1; br.ajouts.push(x);
+      }
+      x[champ2] = v;
+      if (champ2 === 'mode') etat.mode = v;
+      rendre();
+    }
+    brancherCreneaux(z, { ajouter: ajouter, retirer: retirer, maj: maj, liste: function (d) { return toutes.filter(function (y) { return y[champ] === etat.qui && y.date === d; }); } }, hmin, hmax);
+    if ($('#ag-ann', z)) $('#ag-ann', z).onclick = function () { etat.brouillon = null; rendre(); };
+    if ($('#ag-enr', z)) $('#ag-enr', z).onclick = function () {
+      var pb = ''; cibles.forEach(function (id) { pb = pb || erreurCreneaux(toutes.filter(function (y) { return y[champ] === id; })); });
+      if (pb) return erreur(new Error(pb));
+      var nv = br.ajouts.map(function (x) { var y = Object.assign({}, x); delete y._nouveau; delete y.id; delete y._k; return y; }), sup = Object.keys(br.suppr);
+      (nv.length ? inserer('disponibilites', nv) : Promise.resolve()).then(function () { return sup.length ? supprimer('disponibilites', sup) : null; })
+        .then(function () { etat.brouillon = null; toast('Disponibilités enregistrées.'); rendre(); }).catch(erreur);
+    };
+  }
+  $$('[data-fix]', z).forEach(function (bt) { bt.onclick = function () { fixerCreneau(s, cands[+bt.dataset.fix], toutes); }; });
+}
+// ---------- saisie jour par jour : plusieurs créneaux par jour, présentiel / distanciel par créneau ----------
+var MODES_COURTS = [['presentiel', '<span class="ic">🏢 </span>Présentiel'], ['distanciel', '<span class="ic">💻 </span>Distanciel'], ['les_deux', 'Les deux']];
+function htmlJoursCreneaux(jours, liste, interv) {
+  return '<div class="ag-jours">' + jours.map(function (d) {
+    var mes = liste.filter(function (x) { return x.date === d; }).sort(function (a, b) { return String(a.heure_debut).localeCompare(b.heure_debut); });
+    var ch = chevauchements(mes);
+    return '<div class="ag-dj2' + (Agenda.jourSemaine(d) % 6 === 0 ? ' we' : '') + '"><div class="ag-dj2-t"><span class="jour">' + esc(jourCourt(d)) + '</span><span class="ag-presets">' +
+      PRESETS_DISPO.map(function (p, i) { return '<a class="btn petit" data-pre="' + i + '" data-d="' + d + '">+ ' + p[0] + '</a>'; }).join('') + '<a class="btn petit" data-autre="' + d + '">+ Autre créneau</a></span></div>' +
+      (mes.length ? '<div class="ag-slots">' + mes.map(function (x) {
+        var faux = Agenda.hm(x.heure_fin) <= Agenda.hm(x.heure_debut) || ch.indexOf(x) >= 0;
+        return '<div class="ag-slot' + (faux ? ' faux' : '') + (x._nouveau ? ' nouveau' : '') + '" data-k="' + esc(x._k) + '"><span class="ag-h"><input type="time" data-h="heure_debut" value="' + esc(x.heure_debut) + '" aria-label="Début"><span>à</span><input type="time" data-h="heure_fin" value="' + esc(x.heure_fin) + '" aria-label="Fin"></span>' +
+          (interv ? '<span class="doux" style="font-size:12.5px">' + esc(infoDispo(x, true)) + '</span>' : '<span class="seg" role="group" aria-label="Présentiel ou distanciel">' + MODES_COURTS.map(function (m) { return '<button type="button" data-m="' + m[0] + '" class="' + (x.mode === m[0] ? 'on' : '') + '">' + m[1] + '</button>'; }).join('') + '</span>') +
+          '<button type="button" class="ag-x" data-x title="Retirer ce créneau">×</button></div>';
+      }).join('') + '</div>' : '') + '</div>';
+  }).join('') + '</div>';
+}
+function chevauchements(mes) {
+  var o = [];
+  mes.forEach(function (a, i) { mes.forEach(function (b, j) { if (i !== j && Agenda.hm(a.heure_debut) < Agenda.hm(b.heure_fin) && Agenda.hm(b.heure_debut) < Agenda.hm(a.heure_fin) && o.indexOf(a) < 0) o.push(a); }); });
+  return o;
+}
+function erreurCreneaux(liste) {
+  var parJour = {};
+  liste.forEach(function (x) { if (x.date) (parJour[x.date] = parJour[x.date] || []).push(x); });
+  var ds = Object.keys(parJour).sort();
+  for (var i = 0; i < ds.length; i++) {
+    var mes = parJour[ds[i]];
+    if (mes.some(function (x) { return Agenda.hm(x.heure_debut) === null || Agenda.hm(x.heure_fin) === null || Agenda.hm(x.heure_fin) <= Agenda.hm(x.heure_debut); })) return 'Le ' + jourCourt(ds[i]) + ', un créneau a une heure de fin avant l’heure de début.';
+    if (chevauchements(mes).length) return 'Le ' + jourCourt(ds[i]) + ', des créneaux se chevauchent : ajustez les heures.';
+  }
+  return '';
+}
+function bornesPreset(i, hmin, hmax) {
+  var p = PRESETS_DISPO[i], a = p[1] || hmin, b = p[2] || hmax;
+  var a2 = Agenda.hs(Math.max(Agenda.hm(a), Agenda.hm(hmin))), b2 = Agenda.hs(Math.min(Agenda.hm(b), Agenda.hm(hmax)));
+  return Agenda.hm(b2) > Agenda.hm(a2) ? [a2, b2] : [a, b];
+}
+function creneauLibre(mes, hmin, hmax) {
+  var fin = mes.reduce(function (m, x) { return Math.max(m, Agenda.hm(x.heure_fin) || 0); }, 0);
+  var a = Math.max(fin, Agenda.hm(hmin)); if (a >= Agenda.hm(hmax)) a = Agenda.hm(hmin);
+  var b = Math.min(a + 120, Agenda.hm(hmax)); if (b <= a) b = Math.min(a + 60, 1439);
+  return [Agenda.hs(a), Agenda.hs(b)];
+}
+// h : { ajouter(d, a, b), maj(k, champ, valeur), retirer(k), liste(d) }
+function brancherCreneaux(racine, h, hmin, hmax) {
+  $$('[data-pre]', racine).forEach(function (bt) { bt.onclick = function () { var x = bornesPreset(+bt.dataset.pre, hmin, hmax); h.ajouter(bt.dataset.d, x[0], x[1]); }; });
+  $$('[data-autre]', racine).forEach(function (bt) { bt.onclick = function () { var x = creneauLibre(h.liste(bt.dataset.autre), hmin, hmax); h.ajouter(bt.dataset.autre, x[0], x[1], true); }; });
+  $$('.ag-slot', racine).forEach(function (sl) {
+    var k = sl.dataset.k;
+    $$('input[data-h]', sl).forEach(function (i) { i.onchange = function () { if (i.value) h.maj(k, i.dataset.h, i.value); }; });
+    $$('[data-m]', sl).forEach(function (b) { b.onclick = function () { h.maj(k, 'mode', b.dataset.m); }; });
+    $('[data-x]', sl).onclick = function () { h.retirer(k); };
+  });
+}
+function focusDernier(racine, d) { var x = $$('.ag-dj2', racine).filter(function (j) { return $('[data-autre="' + d + '"]', j); })[0]; if (x) { var i = $$('.ag-slot input[data-h="heure_debut"]', x).pop(); if (i) i.focus(); } }
+
+function toastEnvoi(r) {
+  if (!r.emails.length && !r.sans.length) return toast('Personne à prévenir.');
+  toast('E-mail envoyé à ' + r.emails.length + ' personne(s).' + (r.sans.length ? ' Sans adresse e-mail : ' + r.sans.join(', ') + ' (transmettez-leur leur lien depuis la synthèse).' : ''), r.sans.length > 0);
+}
+function lienPersonnel(s, pid) {
+  appel('agendaLienDispo', { id: s.id, personne: pid }, { message: 'Création du lien…' }).then(function (r) {
+    var m = modal({ titre: 'Lien personnel – ' + nomPersonne(pid), corps: '<p>À envoyer à ' + esc(nomPersonne(pid)) + ' (SMS, WhatsApp, e-mail…). Il ouvre directement sa page de réponse, sans mot de passe.</p><input type="text" readonly value="' + esc(r.lien) + '" style="font-size:12px">', boutons: [{ lib: 'Fermer' }, { lib: 'Copier', prim: true, action: function (c) { var i = $('input', c); i.select(); try { navigator.clipboard.writeText(r.lien); } catch (e) { document.execCommand('copy'); } toast('Lien copié.'); } }] });
+  }).catch(erreur);
+}
+function modeIcone(m) { return m === 'distanciel' ? '💻' : m === 'les_deux' ? '🏢💻' : '🏢'; }
+function infoDispo(x, interv) {
+  if (!interv) return Agenda.libelle(Agenda.MODES, x.mode);
+  var s = Agenda.pj(x.salles, []);
+  return (x.cles === 'occupant' ? 'Seul l’occupant a les clés' : 'Clés disponibles au centre') + ' · ' + (s.length ? 'Salles : ' + s.join(', ') : 'Toutes les salles') + (x.commentaire ? ' · ' + x.commentaire : '');
+}
+function sallesResume(xs) {
+  if (!xs.length) return '';
+  var toutesS = xs.some(function (x) { return !Agenda.pj(x.salles, []).length; });
+  if (toutesS) return 'Toutes';
+  var u = []; xs.forEach(function (x) { Agenda.pj(x.salles, []).forEach(function (s) { if (u.indexOf(s) < 0) u.push(s); }); });
+  return u.join(', ');
+}
+function clesResume(xs, lid) {
+  if (!xs.length) return '';
+  var occ = xs.some(function (x) { return x.cles === 'occupant'; }), com = xs.map(function (x) { return x.commentaire; }).filter(Boolean);
+  return (occ ? '🔒 Seul l’occupant (' + occupantsLocal(lid).map(nomPersonne).join(', ') + ')' : '🔑 Au centre') + (com.length ? ' – ' + com.filter(function (c, i) { return com.indexOf(c) === i; }).join(' ; ') : '');
+}
+function fixerCreneau(s, c, toutes) {
+  var interv = s.type === 'intervention', duree = +s.duree || 60;
+  var fin = Agenda.hs(Math.min(Agenda.hm(c.debut) + duree, Agenda.hm(c.fin)));
+  var ev = { type: interv ? 'intervention' : 'reunion', titre: s.titre, date: c.date, heure: c.debut, heure_fin: duree >= 480 ? c.fin : fin, sondage_id: s.id, rappels: JSON.stringify(['1:sem', '1:j']) };
+  if (interv) {
+    var occ = []; c.qui.forEach(function (l) { occupantsLocal(l).forEach(function (a) { if (occ.indexOf(a) < 0) occ.push(a); }); });
+    if (s.intervenant) occ.push(s.intervenant);
+    ev.participants = JSON.stringify(occ);
+    ev.lieu = [DB.params.adresse, [DB.params.cp, DB.params.ville].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+    var lignes = Agenda.pj(s.locaux, []).map(function (l) {
+      var xs = toutes.filter(function (x) { return x.local_id === l && x.date === c.date; });
+      return '• ' + ((byId('locaux', l) || {}).designation || l) + ' : ' + (c.qui.indexOf(l) < 0 ? 'NON ACCESSIBLE sur ce créneau' : 'salles : ' + sallesResume(xs) + ' ; clés : ' + clesResume(xs, l).replace(/^🔒 |^🔑 /, ''));
+    });
+    ev.notes = 'Accès aux locaux :\n' + lignes.join('\n');
+    ev.ordre_du_jour = s.description || '';
+  } else {
+    ev.participants = s.participants;
+    ev.ordre_du_jour = s.description || '';
+    var p = c.details.filter(function (x) { return x.mode !== 'distanciel'; }).length, di = c.details.filter(function (x) { return x.mode === 'distanciel'; }).length;
+    ev.modalite = di && p ? 'mixte' : di ? 'distanciel' : 'presentiel';
+    ev.lieu = ev.modalite !== 'distanciel' ? 'Centre paramédical' : '';
+  }
+  formEvenement(ev, { inviter: true, apres: function (x) { enregistrer('sondages', { id: s.id, statut: 'clos', evenement_id: x.id }).catch(erreur); } });
+}
+
+// ---------- CONTACTS ----------
+function formContact(c, apres) {
+  var ch = [
+    { k: 'civilite', lib: 'Civilité', type: 'select', options: [['M.', 'M.'], ['Mme', 'Mme']] }, { k: 'prenom', lib: 'Prénom' }, { k: 'nom', lib: 'Nom' },
+    { k: 'categorie', lib: 'Catégorie', type: 'select', options: optContacts(), defaut: 'Autre' }, { k: 'fonction', lib: 'Fonction / rôle', ph: 'ex. secrétaire, chargé de clientèle…' },
+    { k: 'societe', lib: 'Société / cabinet' }, { k: 'email', lib: 'E-mail', type: 'email' }, { k: 'telephone', lib: 'Téléphone' },
+    { k: 'adresse', lib: 'Adresse', large: true }, { k: 'notes', lib: 'Notes', type: 'textarea', large: true }
+  ];
+  editer({ titre: c.id ? 'Contact' : 'Nouvelle personne', table: 'contacts', ligne: c, champs: ch, supprimable: true, large: true,
+    avant: function (v) { if (!v.nom && !v.societe && !v.prenom) throw new Error('Indiquez au moins un nom ou une société.'); if (v.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) throw new Error('Adresse e-mail incorrecte.'); return v; },
+    apres: apres });
+}
+function agContacts(z, etat) {
+  var q = Compta.normaliser(etat.q || '');
+  var cs = trier(L('contacts'), function (a, b) { return String(a.categorie).localeCompare(b.categorie) || nomContact(a).localeCompare(nomContact(b)); })
+    .filter(function (c) { return !q || Compta.normaliser([nomContact(c), c.categorie, c.fonction, c.email, c.telephone].join(' ')).indexOf(q) >= 0; });
+  var lignes = [], cat = null;
+  cs.forEach(function (c) { if (c.categorie !== cat) { cat = c.categorie; lignes.push({ _sep: esc(cat || 'Sans catégorie') }); } lignes.push(c); });
+  var sansMail = Compta.associesOrdonnes(DB).filter(function (a) { return !emailAssocie(a); });
+  var h = '<div class="barre"><button class="btn prim" id="ag-nc">+ Nouvelle personne</button><input type="search" id="ag-q" placeholder="Rechercher…" value="' + esc(etat.q || '') + '" style="max-width:260px"></div>' +
+    '<p class="doux" style="font-size:12.5px;margin-top:0">Personnes à inviter en plus des associés : personnel du centre, comptable, assureur, banquier, entreprises… Leur adresse e-mail sert aux invitations et aux rappels.</p>' +
+    (sansMail.length ? '<div class="alerte" style="cursor:pointer" id="ag-sm">Associé(s) sans adresse e-mail (ne recevront pas les rappels) : ' + esc(sansMail.map(nomA).join(', ')) + '. À compléter dans Associés.</div>' : '');
+  h += tableau([
+    { t: 'Nom', v: function (c) { return '<b>' + esc(nomContact(c)) + '</b>'; } },
+    { t: 'Fonction', mob: false, v: function (c) { return esc(c.fonction); } },
+    { t: 'E-mail', v: function (c) { return c.email ? '<a href="mailto:' + esc(c.email) + '" onclick="event.stopPropagation()">' + esc(c.email) + '</a>' : '<span class="doux">—</span>'; } },
+    { t: 'Téléphone', v: function (c) { return c.telephone ? '<a href="tel:' + esc(String(c.telephone).replace(/\s/g, '')) + '" onclick="event.stopPropagation()">' + esc(c.telephone) + '</a>' : ''; } }
+  ], lignes, { clic: 1, vide: 'Aucun contact pour l’instant.', mobListe: function (c) { return '<b>' + esc(nomContact(c)) + '</b><div class="doux" style="font-size:12.5px">' + esc([c.fonction, c.email, c.telephone].filter(Boolean).join(' · ')) + '</div>'; } });
+  z.innerHTML = h;
+  $('#ag-nc', z).onclick = function () { formContact({ categorie: 'Autre' }); };
+  var qi = $('#ag-q', z); qi.oninput = function () { etat.q = qi.value; clearTimeout(qi._t); qi._t = setTimeout(function () { rendre(); var n = $('#ag-q'); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }, 300); };
+  if ($('#ag-sm', z)) $('#ag-sm', z).onclick = function () { aller('associes'); };
+  brancherClics(z, lignes, function (c) { if (!c._sep) formContact(c); });
+}
+
+// ---------- tableau de bord ----------
+function alertesAgenda() {
+  var out = [], auj = aujourdhui();
+  var retard = L('evenements').filter(function (e) { return e.type === 'tache'; }).filter(function (ev) {
+    var p = Agenda.occurrences(ev, Agenda.plusJours(auj, -366), Agenda.plusJours(auj, -1)), der = p[p.length - 1];
+    return der && Agenda.pj(ev.faits, []).indexOf(der) < 0;
+  });
+  if (retard.length) out.push(['rouge', '<b>' + retard.length + ' rappel(s) ou tâche(s) en retard</b> : ' + esc(retard.slice(0, 3).map(function (e) { return e.titre; }).join(', ')) + (retard.length > 3 ? '…' : '') + '.', 'agenda', { onglet: 'faire' }]);
+  L('sondages').filter(function (s) { return sondageOuvert(s) && concerneMoi(s) && !aRepondu(s); }).forEach(function (s) {
+    out.push(['bleu', (s.type === 'intervention' ? '<b>Accès à votre local demandé</b> pour « ' : '<b>Vos disponibilités sont demandées</b> pour « ') + esc(s.titre) + ' » (avant le ' + dfr(s.date_limite) + ').', 'agenda', { onglet: 'dispos', sondage: s.id, brouillon: null }]);
+  });
+  return out;
+}
+function prochainsEvenements(n) { var auj = aujourdhui(); return Agenda.planning(L('evenements'), auj, Agenda.plusJours(auj, 60)).filter(function (o) { return !o.fait; }).slice(0, n || 3); }
+
+// ---------- PAGE PUBLIQUE DE RÉPONSE (lien personnel reçu par e-mail, sans compte) ----------
+var DISPO = null;
+function cleDispoUrl() { var q = new URLSearchParams(location.search).get('dispo'); return q || (typeof PIBRA_DISPO !== 'undefined' ? PIBRA_DISPO : ''); }
+function ecranDispo(cle) {
+  return appel('dispoLire', { cle: cle }, { message: 'Chargement…' }).then(function (r) {
+    var interv = r.sondage.type === 'intervention';
+    DISPO = { cle: cle, r: r, interv: interv, n: 0, liste: r.dispos.filter(function (x) { return x.date; }).map(function (x, i) { x._k = 'e' + i; return x; }), aucune: r.dispos.some(function (x) { return x.mode === 'aucune'; }), mode: 'presentiel', local: (r.locaux[0] || {}).id, reglages: {}, envoye: false };
+    r.locaux.forEach(function (l) { var ex = r.dispos.filter(function (x) { return x.local_id === l.id && x.date; })[0]; DISPO.reglages[l.id] = { cles: ex ? ex.cles || 'centre' : 'centre', salles: ex ? Agenda.pj(ex.salles, []) : [], com: ex ? ex.commentaire || '' : '' }; });
+    rendreDispo();
+  }).catch(function (e) {
+    document.body.innerHTML = '<div class="connexion"><div class="carte" style="max-width:480px"><div class="logo" style="padding:0">' + LOGO + '<div><b>PibraCompta</b><small>SCI PIBRAMEDIC</small></div></div><h1>Lien indisponible</h1><div class="alerte rouge">' + esc(e.message) + '</div><a class="btn" href="' + esc(location.pathname) + '">Ouvrir PibraCompta</a></div></div>';
+  });
+}
+function rendreDispo() {
+  var D = DISPO, r = D.r, s = r.sondage, interv = D.interv, auj = r.aujourdhui || aujourdhui();
+  var hmin = s.heure_min || '08:00', hmax = s.heure_max || '20:00', reg = interv ? D.reglages[D.local] : null;
+  var loc = interv ? r.locaux.filter(function (l) { return l.id === D.local; })[0] : null, sl = loc ? sallesLocal(loc) : [];
+  var h = '<div class="connexion dispo-page"><div class="carte" style="max-width:720px">' +
+    '<div class="logo" style="padding:0">' + LOGO + '<div><b>PibraCompta</b><small>' + esc(r.societe) + '</small></div></div>' +
+    '<h1>' + esc(s.titre) + '</h1><p class="doux" style="margin:2px 0 12px">' + (interv ? 'Intervention dans les locaux' + (s.intervenant ? ' – ' + esc(s.intervenant) : '') : 'Préparation de réunion') + '</p>' +
+    '<p>Bonjour ' + esc(r.nom) + ',</p><p>' + (interv
+      ? 'Indiquez quand ' + (r.locaux.length > 1 ? 'vos locaux sont accessibles' : 'votre local est accessible') + ', quelles salles sont concernées et où seront les clés.'
+      : 'Indiquez vos disponibilités : pour chaque jour possible, ajoutez une plage horaire et précisez si vous pouvez venir <b>en présentiel</b>, <b>à distance</b>, ou <b>les deux</b>.') + '</p>' +
+    '<div class="alerte bleu">Dates proposées du <b>' + esc(Agenda.dateLongue(s.date_debut)) + '</b> au <b>' + esc(Agenda.dateLongue(s.date_limite)) + '</b> (date butoir), entre ' + esc(Agenda.hFr(hmin)) + ' et ' + esc(Agenda.hFr(hmax)) + '. Durée prévue : ' + esc(Agenda.libelle([['30', '30 min'], ['60', '1 h'], ['90', '1 h 30'], ['120', '2 h'], ['180', '3 h'], ['240', '4 h'], ['480', 'une journée']], String(s.duree))) + '.</div>' +
+    (s.description ? '<div class="ag-texte" style="margin-bottom:10px">' + esc(s.description) + '</div>' : '') +
+    (r.fixe ? '<div class="alerte vert">La date est fixée : <b>' + esc(Agenda.dateLongue(r.fixe.date)) + (r.fixe.heure ? ' à ' + esc(Agenda.hFr(r.fixe.heure)) : '') + '</b>' + (r.fixe.lieu ? ' – ' + esc(r.fixe.lieu) : '') + '.</div>' : '');
+  if (D.envoye) {
+    h += '<div class="alerte vert"><b>Merci, c’est enregistré.</b> ' + (D.aucune ? 'Vous avez indiqué n’être disponible à aucune de ces dates.' : D.liste.length + ' créneau(x) transmis.') + ' Vous pouvez revenir sur ce lien pour les modifier jusqu’au ' + esc(dfr(s.date_limite)) + '.</div><button class="btn" id="dp-mod">Modifier mes réponses</button>';
+  } else if (!r.ouvert) {
+    h += '<div class="alerte">Cette demande est close : les réponses ne peuvent plus être modifiées.</div>' + resumeDispo();
+  } else {
+    if (interv) {
+      if (r.locaux.length > 1) h += '<label class="champ"><span>Local</span><select id="dp-loc">' + r.locaux.map(function (l) { return '<option value="' + esc(l.id) + '"' + (l.id === D.local ? ' selected' : '') + '>' + esc(l.designation) + '</option>'; }).join('') + '</select></label>';
+      else h += '<p><b>' + esc(loc.designation) + '</b></p>';
+      h += '<div class="dp-etape"><b>Clés</b><div class="chips" style="margin-top:6px"><span class="chip' + (reg.cles === 'centre' ? ' actif' : '') + '" data-dc="centre">🔑 Disponibles au centre</span><span class="chip' + (reg.cles === 'occupant' ? ' actif' : '') + '" data-dc="occupant">🔒 Je suis seul(e) à avoir les clés</span></div>' +
+        '<b style="display:block;margin-top:10px">Salles accessibles</b><div class="chips" style="margin-top:6px"><span class="chip' + (!reg.salles.length ? ' actif' : '') + '" data-ds="">Toutes les salles</span>' + sl.map(function (x) { return '<span class="chip' + (reg.salles.indexOf(x) >= 0 ? ' actif' : '') + '" data-ds="' + esc(x) + '">' + esc(x) + '</span>'; }).join('') + '</div>' +
+        '<label class="champ" style="margin-top:10px"><span>Commentaire (facultatif)</span><input type="text" id="dp-com" value="' + esc(reg.com) + '" placeholder="ex. prévenir la veille, clés au secrétariat…"></label></div>';
+    }
+    h += '<div class="dp-etape"><b>' + (interv ? 'Créneaux où le local est accessible' : 'Mes disponibilités, jour par jour') + '</b>' +
+      (interv ? '' : '<p class="doux" style="font-size:12.5px;margin:4px 0 0">Ajoutez autant de créneaux que vous voulez pour chaque jour, puis choisissez pour chacun <b>🏢 Présentiel</b>, <b>💻 Distanciel</b> ou <b>Les deux</b>. Les heures se modifient directement.</p>');
+    var jours = [];
+    for (var d = s.date_debut < auj ? auj : s.date_debut; d <= s.date_limite; d = Agenda.plusJours(d, 1)) jours.push(d);
+    h += '<div class="' + (D.aucune ? 'dp-off' : '') + '">' + htmlJoursCreneaux(jours, D.liste.filter(function (x) { return !interv || x.local_id === D.local; }), interv) + '</div></div>';
+    h += '<label class="case" style="margin:12px 0"><input type="checkbox" id="dp-aucune"' + (D.aucune ? ' checked' : '') + '> ' + (interv ? 'Le local n’est accessible à aucune de ces dates' : 'Je ne suis disponible à aucune de ces dates') + '</label>' +
+      '<div class="ag-enreg" style="bottom:0"><button class="btn prim" id="dp-env" style="padding:10px 18px">Envoyer mes réponses</button><span class="doux" style="font-size:12.5px;align-self:center">' + D.liste.length + ' créneau(x)</span></div>';
+  }
+  h += '<p class="doux" style="font-size:12px;margin-top:16px">Ce lien vous est personnel. <a href="' + esc(location.pathname) + '">Ouvrir PibraCompta</a> (associés)</p></div></div>';
+  document.body.innerHTML = h;
+  var b = document.body;
+  function ajouterP(d, a, z, focus) {
+    if (D.liste.some(function (y) { return y.date === d && (!interv || y.local_id === D.local) && y.heure_debut === a && y.heure_fin === z; })) return;
+    var x = { _k: 'k' + (++DISPO.n), date: d, heure_debut: a, heure_fin: z };
+    if (interv) { x.local_id = D.local; x.cles = reg.cles; x.salles = reg.salles.slice(); x.commentaire = reg.com; } else x.mode = D.mode;
+    D.liste.push(x); D.aucune = false; rendreDispo();
+    if (focus) focusDernier(document.body, d);
+  }
+  brancherCreneaux(b, {
+    ajouter: ajouterP,
+    retirer: function (k) { D.liste = D.liste.filter(function (y) { return y._k !== k; }); rendreDispo(); },
+    maj: function (k, c, v) { var x = D.liste.filter(function (y) { return y._k === k; })[0]; if (!x) return; x[c] = v; if (c === 'mode') D.mode = v; rendreDispo(); },
+    liste: function (d) { return D.liste.filter(function (y) { return y.date === d && (!interv || y.local_id === D.local); }); }
+  }, hmin, hmax);
+  $$('[data-dc]', b).forEach(function (c) { c.onclick = function () { reg.cles = c.dataset.dc; D.liste.forEach(function (x) { if (x.local_id === D.local) x.cles = reg.cles; }); rendreDispo(); }; });
+  $$('[data-ds]', b).forEach(function (c) { c.onclick = function () { var v = c.dataset.ds; if (!v) reg.salles = []; else { var i = reg.salles.indexOf(v); if (i >= 0) reg.salles.splice(i, 1); else reg.salles.push(v); } D.liste.forEach(function (x) { if (x.local_id === D.local) x.salles = reg.salles.slice(); }); rendreDispo(); }; });
+  if ($('#dp-com')) $('#dp-com').oninput = function () { reg.com = this.value; D.liste.forEach(function (x) { if (x.local_id === D.local) x.commentaire = reg.com; }); };
+  if ($('#dp-loc')) $('#dp-loc').onchange = function () { D.local = this.value; rendreDispo(); };
+  if ($('#dp-aucune')) $('#dp-aucune').onchange = function () { D.aucune = this.checked; if (D.aucune) D.liste = D.liste.filter(function (x) { return interv && x.local_id !== D.local; }); rendreDispo(); };
+  if ($('#dp-mod')) $('#dp-mod').onclick = function () { D.envoye = false; rendreDispo(); };
+  if ($('#dp-env')) $('#dp-env').onclick = function () {
+    var pb = erreurCreneaux(D.liste.filter(function (x) { return !interv; })) || (interv ? r.locaux.map(function (l) { return erreurCreneaux(D.liste.filter(function (x) { return x.local_id === l.id; })); }).filter(Boolean)[0] || '' : '');
+    if (pb) return erreur(new Error(pb));
+    if (!D.liste.length && !D.aucune) return erreur(new Error('Ajoutez au moins un créneau, ou cochez « ' + (interv ? 'Le local n’est accessible à aucune de ces dates' : 'Je ne suis disponible à aucune de ces dates') + ' ».'));
+    var envoi = D.liste.map(function (x) { var y = Object.assign({}, x); delete y._k; return y; });
+    if (D.aucune) (interv ? [D.local] : ['']).forEach(function (l) { envoi.push({ aucune: 1, local_id: l }); });
+    appel('dispoEnregistrer', { cle: D.cle, dispos: envoi }, { message: 'Envoi…' }).then(function () { D.envoye = true; rendreDispo(); window.scrollTo(0, 0); }).catch(erreur);
+  };
+}
+function resumeDispo() {
+  var D = DISPO;
+  if (D.aucune && !D.liste.length) return '<p>Réponse : aucune disponibilité.</p>';
+  return '<ul>' + D.liste.slice().sort(function (a, b) { return (a.date + a.heure_debut).localeCompare(b.date + b.heure_debut); }).map(function (x) { return '<li>' + esc(jourCourt(x.date) + ' : ' + plageFr(x.heure_debut, x.heure_fin)) + ' ' + (D.interv ? (x.cles === 'occupant' ? '🔒' : '🔑') : modeIcone(x.mode)) + '</li>'; }).join('') + '</ul>';
 }
 
 </script>
