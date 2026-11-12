@@ -809,6 +809,7 @@ var Compta = (function () {
     regul: /REGUL|RATTRAPAGE/, tf: /TAXE FON|(^|[^A-Z])TF([^A-Z]|$)/,
     special: /COMPTA|HONORAIRE|UCF|CLIM|REPARATION|FACTURE|REMBOURS|RMBST|ERREUR|COMPLEMENT|RAJOUT/
   };
+  var ECART_ARRONDI = 1.00;   // écart de règlement absorbé automatiquement (arrondis des virements)
   function autoLettrage(DB, transactions, aujourdhui) {
     var res = [], pris = {};   // pris[cle] = montant déjà affecté pendant ce passage
     var dejaParTx = {};
@@ -821,6 +822,11 @@ var Compta = (function () {
     transactions.slice().sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); }).forEach(function (t) {
       var m = r2(num(t.montant) - (dejaParTx[t.id] || 0)); if (!c(m)) return;
       if (t.categorie) return;   // déjà traitée à la main
+      // reliquat d'arrondi (≤ 1 €) sur un virement déjà rapproché d'une échéance : rattaché à cette même échéance
+      if (dejaParTx[t.id] && Math.abs(m) <= ECART_ARRONDI && Math.sign(m) === Math.sign(num(t.montant))) {
+        var dl = L(DB, 'lettrages').filter(function (l) { return l.transaction_id === t.id && (l.cible_type === 'echeance' || l.cible_type === 'solde_initial'); }).pop();
+        if (dl) { affecter(t, dl.cible_type, dl.cible_id, dl.cible_ref, m); return; }
+      }
       var lib = normaliser(t.libelle);
       if (m > 0 || /REGUL/.test(lib)) {
         var b = bailDepuisLibelle(DB, t.libelle); if (!b) return;
@@ -859,7 +865,11 @@ var Compta = (function () {
           var sp = sOuverts.find(function (s) { return Math.abs(reste('solde_initial', s)) + 0.02 >= Math.abs(m); });
           if (sp) cand = { type: 'solde_initial', x: sp };
         }
-        if (cand) { affecter(t, cand.type, cand.x.id, '', Math.abs(reste(cand.type, cand.x)) < Math.abs(m) ? reste(cand.type, cand.x) : m); return; }
+        if (cand) {
+          var rc = reste(cand.type, cand.x);
+          // un écart d'arrondi de quelques centimes (≤ 1 €) est rattaché à l'échéance avec le reste du virement
+          affecter(t, cand.type, cand.x.id, '', Math.abs(rc) < Math.abs(m) && Math.abs(m) - Math.abs(rc) > ECART_ARRONDI ? rc : m); return;
+        }
         // 2. loyers et provisions : affectation chronologique (règlements séparés loyer / charges)
         if (m > 0 && !isRegul && !isTF && !isSpecial) {
           var limite = addMonths(t.date, 2);
