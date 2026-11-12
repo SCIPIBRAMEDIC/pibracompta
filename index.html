@@ -729,13 +729,16 @@ var Compta = (function () {
   function normaliser(s) { return String(s || '').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim(); }
   function suggererCategorie(DB, t) {
     var lib = normaliser(t.libelle);
-    var regles = L(DB, 'regles').slice().sort(function (a, b) { return num(b.priorite) - num(a.priorite); });
+    // une règle avec montant est plus précise : elle passe avant les règles sur le texte seul
+    var poids = function (r) { return num(r.priorite) + (num(r.montant) ? 1000 : 0); };
+    var regles = L(DB, 'regles').slice().sort(function (a, b) { return poids(b) - poids(a); });
     for (var i = 0; i < regles.length; i++) {
-      var r = regles[i], motif = normaliser(r.motif);
-      if (!motif) continue;
+      var r = regles[i], motif = normaliser(r.motif), mt = Math.abs(num(r.montant));
+      if (!motif && !mt) continue;
       if (r.sens === 'debit' && num(t.montant) > 0) continue;
       if (r.sens === 'credit' && num(t.montant) < 0) continue;
-      if (lib.indexOf(motif) >= 0) return r.categorie;
+      if (mt && Math.abs(Math.abs(num(t.montant)) - mt) > 0.005) continue;
+      if (!motif || lib.indexOf(motif) >= 0) return r.categorie;
     }
     return '';
   }
@@ -2107,12 +2110,13 @@ function detailTransaction(t) {
   var h = '<dl class="kv"><dt>Date</dt><dd>' + dfr(t.date) + '</dd><dt>Montant</dt><dd class="gras">' + eurS(t.montant) + '</dd><dt>Libellé</dt><dd>' + esc(t.libelle) + '</dd>' + (t.maj_par ? '<dt>Modifié par</dt><dd>' + esc(t.maj_par) + ' le ' + dfr(t.maj_le) + '</dd>' : '') + '</dl>';
   h += '<div class="bloc"><h2>Rapprochement</h2>' + (ls.length ? ls.map(function (l) { return '<div class="sugg" style="cursor:default;background:var(--vert)"><span style="flex:1">' + esc(libCible(l)) + '</span><b>' + eur(l.montant) + '</b><button class="btn petit danger" data-del="' + l.id + '">Retirer</button></div>'; }).join('') : '') +
     (Math.abs(reste) > 0.004 ? (sugg.length ? '<div class="doux" style="margin:6px 0">Propositions pour ' + eur(reste) + ' :</div>' + sugg.map(function (s, i) { return '<div class="sugg" data-s="' + i + '"><span style="flex:1">' + esc(s.lib) + '</span><b>' + eur(s.montant) + '</b></div>'; }).join('') : '') +
-      '<div class="barre" style="margin-top:8px"><button class="btn petit" id="m-loc">Affecter à un locataire…</button><button class="btn petit" id="m-fac">Affecter à une facture…</button></div>' : '<div class="alerte vert">Opération entièrement rapprochée.</div>') + '</div>';
+      '<div class="barre" style="margin-top:8px"><button class="btn petit" id="m-loc">Affecter à un locataire…</button><button class="btn petit" id="m-fac">Affecter à une facture…</button>' + (reste > 0 ? '<button class="btn petit" id="m-vl">Versement libre d’un associé…</button>' : '') + '</div>' : '<div class="alerte vert">Opération entièrement rapprochée.</div>') + '</div>';
   if (Math.abs(reste) > 0.004) {
     h += '<div class="bloc"><h2>Catégorie' + (deja ? ' du reste (' + eur(reste) + ')' : '') + '</h2>' + formulaire([
       { k: 'categorie', lib: 'Catégorie comptable', type: 'select', options: optCategories(), large: true },
-      { k: 'regle', lib: 'Créer une règle : les prochaines opérations contenant ce texte auront cette catégorie', large: true, ph: 'ex. EDF' }
-    ], { categorie: t.categorie, regle: '' }) +
+      { k: 'regle', lib: 'Créer une règle : les prochaines opérations contenant ce texte auront cette catégorie', large: true, ph: 'ex. EDF (facultatif si vous choisissez le montant ci-dessous)' },
+      { k: 'regle_montant', lib: 'Montant de la règle', type: 'select', vide: false, large: true, options: [['', 'Quel que soit le montant'], ['1', 'Seulement pour ' + eur(Math.abs(num(t.montant))) + ' (ex. virement mensuel fixe)']] }
+    ], { categorie: t.categorie, regle: '', regle_montant: '' }) +
       '<details class="aide"' + (vent.length ? ' open' : '') + '><summary>Ventiler sur plusieurs catégories</summary><div id="vent"></div><button class="btn petit" id="v-aj" style="margin-top:6px">+ ligne</button></details></div>';
   }
   h += '<div class="bloc"><h2>Note et pièces</h2>' + formulaire([{ k: 'note', lib: 'Note', large: true }], t) + '<div style="margin-top:8px">' + pieces.map(function (d) { return '<a class="btn petit" data-doc="' + d.id + '">📄 ' + esc(d.titre) + '</a> '; }).join('') + '<button class="btn petit" id="pj">Joindre une pièce</button></div></div>';
@@ -2125,7 +2129,7 @@ function detailTransaction(t) {
       if (ventil.length) { var s = r2(ventil.reduce(function (a, x) { return a + x.montant; }, 0)); if (Math.abs(s - reste) > 0.004) throw new Error('La ventilation (' + eur(s) + ') doit être égale au montant à affecter (' + eur(reste) + ').'); }
       var maj = Object.assign({}, t, { note: v.note || '', categorie: v.categorie !== undefined ? v.categorie : t.categorie, ventilation: ventil.length ? JSON.stringify(ventil) : '' });
       var p = enregistrer('transactions', maj);
-      if (v.regle && v.categorie) p = p.then(function () { return enregistrer('regles', { motif: v.regle.toUpperCase(), sens: num(t.montant) < 0 ? 'debit' : 'credit', categorie: v.categorie, priorite: v.regle.length }); }).then(function () {
+      if ((v.regle || v.regle_montant) && v.categorie) p = p.then(function () { return enregistrer('regles', { motif: String(v.regle || '').trim().toUpperCase(), montant: v.regle_montant ? String(Math.abs(num(t.montant))) : '', sens: num(t.montant) < 0 ? 'debit' : 'credit', categorie: v.categorie, priorite: String(v.regle || '').trim().length || 1 }); }).then(function () {
         var autres = L('transactions').filter(function (x) { return x.id !== t.id && !x.categorie && etatTx(x) === 'à traiter' && Compta.suggererCategorie(DB, x) === v.categorie; });
         if (autres.length) return confirmer(autres.length + ' autre(s) opération(s) correspondent à cette règle. Les catégoriser aussi ?', 'Oui').then(function (o) { if (o) return enregistrerPlusieurs('transactions', autres.map(function (x) { return Object.assign({}, x, { categorie: v.categorie }); })); });
       });
@@ -2144,6 +2148,36 @@ function detailTransaction(t) {
   };
   if ($('#m-loc', m.corps)) $('#m-loc', m.corps).onclick = function () { choisirEcheances(t, reste, function () { m.fermer(); detailTransaction(t); }); };
   if ($('#m-fac', m.corps)) $('#m-fac', m.corps).onclick = function () { choisirFacture(t, reste, function () { m.fermer(); detailTransaction(t); }); };
+  if ($('#m-vl', m.corps)) $('#m-vl', m.corps).onclick = function () { versementLibre(t, reste, function () { m.fermer(); detailTransaction(t); }); };
+}
+// Versement d'un associé sans appel ni facture : compté dans ses charges payées (ou hors charges)
+function versementLibre(t, reste, apres) {
+  var b0 = Compta.bailDepuisLibelle(DB, t.libelle);
+  var ch = [
+    { k: 'bail_id', lib: 'Associé / locataire', type: 'select', options: optBaux(), requis: true, large: true },
+    { k: 'nature', lib: 'Nature du versement', type: 'select', vide: false, large: true, options: [['appel', 'Versement sur les charges (compté comme charges payées, déduit à la régularisation)'], ['autre', 'Autre versement, hors charges']] },
+    { k: 'montant', lib: 'Montant', type: 'num', requis: true },
+    { k: 'date', lib: 'Date', type: 'date', requis: true },
+    { k: 'libelle', lib: 'Libellé', large: true, requis: true },
+    { k: 'notes', lib: 'Notes', large: true }
+  ];
+  modal({ titre: 'Versement libre de ' + eur(reste), large: true,
+    corps: '<p class="doux" style="margin-top:0">Pour un versement qui ne correspond à aucun appel ni à aucune facture (avance, complément, participation…). La somme est ajoutée à ce que la personne a versé, sans être affectée à une dépense.</p>' + formulaire(ch, { bail_id: b0 ? b0.id : '', nature: 'appel', montant: reste, date: t.date, libelle: 'Versement complémentaire sur charges' }),
+    ouvert: function (corps) {
+      var n = $('[name=nature]', corps), l = $('[name=libelle]', corps);
+      n.onchange = function () { if (/^Versement (complémentaire sur charges|hors charges)$/.test(l.value)) l.value = n.value === 'appel' ? 'Versement complémentaire sur charges' : 'Versement hors charges'; };
+    },
+    boutons: [{ lib: 'Annuler' }, { lib: 'Enregistrer', prim: true, action: function (corps) {
+      var v = lireForm(corps, ch), mt = r2(num(v.montant));
+      if (!(mt > 0)) throw new Error('Montant incorrect.');
+      if (mt > r2(reste) + 0.004) throw new Error('Le montant dépasse ce qui reste à affecter sur ce virement (' + eur(reste) + ').');
+      var e = { id: nid('EC'), bail_id: v.bail_id, type: v.nature, date: v.date, periode: String(v.date).slice(0, 7), libelle: v.libelle, notes: (v.notes ? v.notes + ' – ' : '') + 'Versement libre du ' + dfr(t.date) };
+      e[v.nature] = mt;
+      return inserer('echeances', [e], 'versement libre : ' + v.libelle).then(function (r) {
+        var id = (r && r[0] && r[0].id) || e.id;
+        return lettrer(t, 'echeance', id, '', mt);
+      }).then(function () { toast('Versement enregistré.'); apres(); });
+    } }] });
 }
 function lettrer(t, type, id, ref, montant) {
   return inserer('lettrages', [{ id: nid('LT'), transaction_id: t.id, cible_type: type, cible_id: id, cible_ref: ref || '', montant: r2(montant) }], 'rapprochement manuel').then(function () { rendre(); }).catch(erreur);
@@ -2858,11 +2892,19 @@ function paramCats(c) {
   $('#nk', c).onclick = function () { editer({ titre: 'Nouvelle catégorie', table: 'categories', ligne: { type: 'charge', actif: 1, ordre: ks.length + 1 }, champs: champs }); };
 }
 function paramRegles(c) {
-  var rs = trier(L('regles'), function (a, b) { return String(a.motif).localeCompare(b.motif); });
-  var champs = [{ k: 'motif', lib: 'Texte contenu dans le libellé bancaire', requis: true, large: true }, { k: 'sens', lib: 'Sens', type: 'select', options: [['debit', 'Dépenses'], ['credit', 'Recettes']] }, { k: 'categorie', lib: 'Catégorie', type: 'select', options: optCategories(), requis: true, large: true }, { k: 'priorite', lib: 'Priorité (la plus haute l’emporte)', type: 'num' }];
-  c.innerHTML = '<div class="barre"><button class="btn" id="nr">Nouvelle règle</button><button class="btn" id="ap">Appliquer aux opérations à traiter</button></div>' + tableau([{ t: 'Texte', v: function (r) { return '<code>' + esc(r.motif) + '</code>'; } }, { t: 'Sens', v: function (r) { return esc(r.sens); } }, { t: 'Catégorie', v: function (r) { return esc(libCategorie(r.categorie)); } }], rs, { clic: 1 });
-  brancherClics(c, rs, function (r) { editer({ titre: 'Règle', table: 'regles', ligne: r, champs: champs, supprimable: true }); });
-  $('#nr', c).onclick = function () { editer({ titre: 'Nouvelle règle', table: 'regles', ligne: { sens: 'debit', priorite: 1 }, champs: champs }); };
+  var rs = trier(L('regles'), function (a, b) { return String(a.motif).localeCompare(b.motif) || num(a.montant) - num(b.montant); });
+  var champs = [{ k: 'motif', lib: 'Texte contenu dans le libellé bancaire (facultatif si un montant est indiqué)', large: true, ph: 'ex. EDF, VIR PERMANENT…' }, { k: 'montant', lib: 'Montant exact (facultatif)', type: 'num', ph: 'ex. 270,19' }, { k: 'sens', lib: 'Sens', type: 'select', vide: false, options: [['debit', 'Dépenses'], ['credit', 'Recettes']] }, { k: 'categorie', lib: 'Catégorie', type: 'select', options: optCategories(), requis: true, large: true }, { k: 'priorite', lib: 'Priorité (la plus haute l’emporte)', type: 'num' }];
+  var avant = function (v) {
+    v.motif = String(v.motif || '').trim().toUpperCase();
+    v.montant = v.montant ? String(Math.abs(r2(num(v.montant)))) : '';
+    if (!v.motif && !num(v.montant)) throw new Error('Indiquez un texte, un montant, ou les deux.');
+    if (!v.priorite) v.priorite = v.motif.length || 1;
+    return v;
+  };
+  c.innerHTML = '<p class="doux" style="margin-top:0">Une règle donne automatiquement une catégorie aux opérations bancaires : par le texte du libellé, par le montant exact (ex. 270,19 € chaque mois), ou les deux à la fois. Une règle avec montant passe avant une règle sur le texte seul.</p>' +
+    '<div class="barre"><button class="btn" id="nr">Nouvelle règle</button><button class="btn" id="ap">Appliquer aux opérations à traiter</button></div>' + tableau([{ t: 'Texte', v: function (r) { return r.motif ? '<code>' + esc(r.motif) + '</code>' : '<span class="doux">(tout libellé)</span>'; } }, { t: 'Montant', n: 1, v: function (r) { return num(r.montant) ? eur(num(r.montant)) : '<span class="doux">tout montant</span>'; } }, { t: 'Sens', v: function (r) { return r.sens === 'credit' ? 'Recettes' : 'Dépenses'; } }, { t: 'Catégorie', v: function (r) { return esc(libCategorie(r.categorie)); } }], rs, { clic: 1 });
+  brancherClics(c, rs, function (r) { editer({ titre: 'Règle', table: 'regles', ligne: r, champs: champs, supprimable: true, avant: avant }); });
+  $('#nr', c).onclick = function () { editer({ titre: 'Nouvelle règle', table: 'regles', ligne: { sens: 'debit' }, champs: champs, avant: avant }); };
   $('#ap', c).onclick = function () {
     var maj = L('transactions').filter(function (t) { return etatTx(t) === 'à traiter'; }).map(function (t) { var k = Compta.suggererCategorie(DB, t); return k && k.indexOf('EMP:') !== 0 ? Object.assign({}, t, { categorie: k }) : null; }).filter(Boolean);
     if (!maj.length) return toast('Aucune opération concernée.');
